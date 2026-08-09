@@ -1,0 +1,43 @@
+# Book settings
+
+title: Libro Modelos de Decisión en el Tiempo - IIND 3518
+author: Equipo Modelos de Decisión en el Tiempo | Uniandes
+logo: uniandes.png
+
+execute:
+  execute_notebooks: force
+  kernel_name: libromobi
+  timeout: 180
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+bibtex_bibfiles:
+  - references.bib
+
+repository:
+  path_to_book: content
+  branch: main
+
+html:
+  extra_css:
+    - _static/custom.css
+
+parse:
+  myst_enable_extensions:
+    - dollarmath
+    - amsmath
+    - colon_fence
+
+sphinx:
+  config:
+    nb_render_markdown_format: myst
+    myst_dmath_double_inline: true
+    myst_update_mathjax: false
+    mathjax3_config:
+      options:
+        processHtmlClass: "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"
+
+launch_buttons:
+  thebe: false

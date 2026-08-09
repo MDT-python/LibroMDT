@@ -1,0 +1,23 @@
+# Table of contents
+
+# Learn more at [https://jupyterbook.org/customize/toc.html](https://jupyterbook.org/customize/toc.html)
+
+format: jb-book
+root: intro
+parts:
+
+- caption: Complementarias
+  numbered: false
+  chapters:
+  - file: content/complementarias/Complementaria_0_Fundamentos_de_Python_SOLUCIONES.ipynb
+  - file: content/complementarias/Semana_1_Cadenas_de_Markov_en_Python_v3.ipynb
+  - file: content/complementarias/Semana_2_Transitorio_y_Estado_Estable_v3.ipynb
+  - file: content/complementarias/Semana_3_Primera_Pasada_y_Ocupacion_v3.ipynb
+  - file: content/complementarias/Semana_4_Cadenas_Absorbentes_v3.ipynb
+  - file: content/complementarias/Semana_7_MDP_y_Backward_Induction_v4.ipynb
+  - file: content/complementarias/Semana_8_Horizonte_Infinito_VI_PI_LP_v3.ipynb
+  - file: content/complementarias/Semana_9_Horizonte_Rodante_v4_final.ipynb
+  - file: content/complementarias/Semana_10_Rollout_y_Benchmarking_v4_final.ipynb
+  - file: content/complementarias/Semana_12_MC_y_TD0_v4_final.ipynb
+  - file: content/complementarias/Semana_13_SARSA_Q_learning_v4_final.ipynb
+  - file: content/complementarias/Semana_14_Double_Q_y_Shaping_v4_final.ipynb
