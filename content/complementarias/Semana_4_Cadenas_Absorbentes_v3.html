@@ -1,0 +1,2548 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semana 4 — Cadenas absorbentes &#8212; Libro Modelos de Decisión en el Tiempo - IIND 3518</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0361f5db" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Semana_4_Cadenas_Absorbentes_v3';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Semana 7 — MDP y Backward Induction" href="Semana_7_MDP_y_Backward_Induction_v4.html" />
+    <link rel="prev" title="Semana 3 — Tiempos de Primera Pasada y Ocupación" href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>
+    <script>document.write(`<img src="../../_static/uniandes.png" class="logo__image only-dark" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bienvenidos al libro del curso Modelos de Decisión en el Tiempo
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html">Complementaria 0 — Fundamentos de Python</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_1_Cadenas_de_Markov_en_Python_v3.html">Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_2_Transitorio_y_Estado_Estable_v3.html">Semana 2 — Análisis transitorio y estado estable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html">Semana 3 — Tiempos de Primera Pasada y Ocupación</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semana 4 — Cadenas absorbentes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_7_MDP_y_Backward_Induction_v4.html">Semana 7 — MDP y Backward Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_8_Horizonte_Infinito_VI_PI_LP_v3.html">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_9_Horizonte_Rodante_v4_final.html">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_10_Rollout_y_Benchmarking_v4_final.html">Semana 10 — Rollout y benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_12_MC_y_TD0_v4_final.html">Semana 12 — Evaluación Monte Carlo y TD(0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_13_SARSA_Q_learning_v4_final.html">Semana 13 — SARSA y Q-learning: control TD sin modelo</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_14_Double_Q_y_Shaping_v4_final.html">Semana 14 — Double Q-learning y diseño de recompensas</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Semana_4_Cadenas_Absorbentes_v3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semana 4 — Cadenas absorbentes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conexion-con-la-semana-3">Conexión con la semana 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-trabajar-con-este-cuaderno">Cómo trabajar con este cuaderno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramienta-nueva-la-matriz-identidad">🧩 Herramienta nueva: la matriz identidad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-portafolio-de-proyectos-de-inversion-basico">Ejercicio 1 — Portafolio de proyectos de inversión <em>(básico)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-construccion-y-verificacion-de-la-matriz">a) Construcción y verificación de la matriz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-matriz-fundamental">b) Matriz fundamental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-probabilidades-de-absorcion">c) Probabilidades de absorción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-ganancia-neta-acumulada-esperada">d) Ganancia neta acumulada esperada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reutilizacion-del-procedimiento">🧩 Reutilización del procedimiento</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-ciclo-de-vida-de-una-turbina-industrial-intermedio">Ejercicio 2 — Ciclo de vida de una turbina industrial <em>(intermedio)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-construccion-y-verificacion">a) Construcción y verificación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-matriz-fundamental-y-vida-util">b) Matriz fundamental y vida útil</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-probabilidad-de-falla-y-costo-total-esperado">c) Probabilidad de falla y costo total esperado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-programa-de-mantenimiento-preventivo">d) Programa de mantenimiento preventivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-bono-corporativo-con-ciclo-economico-profundizacion-guiada">Ejercicio 3 — Bono corporativo con ciclo económico <em>(profundización guiada)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-datos-del-modelo-y-construccion-de-una-fila">a) Datos del modelo y construcción de una fila</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalizacion-de-la-construccion">🧩 Generalización de la construcción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">b) Matriz fundamental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-tiempo-total-desde-cada-estado">c) Tiempo total desde cada estado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-cupones-acumulados-esperados">d) Cupones acumulados esperados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-probabilidades-de-absorcion">e) Probabilidades de absorción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-sensibilidad-economia-siempre-en-expansion">f) Sensibilidad: economía siempre en expansión</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-integrador-paciente-con-tratamiento-y-dos-variables-de-estado">Ejercicio integrador — Paciente con tratamiento y dos variables de estado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tareas">Tareas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoints-antes-de-aceptar-codigo-generado-por-ia">Checkpoints antes de aceptar código generado por IA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido-para-una-ia">Prompt sugerido para una IA</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semana-4-cadenas-absorbentes">
+<h1>Semana 4 — Cadenas absorbentes<a class="headerlink" href="#semana-4-cadenas-absorbentes" title="Link to this heading">#</a></h1>
+<p>En esta sesión estudiamos cadenas de Markov con <strong>estados absorbentes</strong>: una vez que el proceso entra en uno de ellos, no puede salir.</p>
+<p>La matriz de transición tiene la forma canónica:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=
+\begin{pmatrix}
+\mathbf Q &amp; \mathbf R\\
+\mathbf 0 &amp; \mathbf I
+\end{pmatrix},
+\end{split}\]</div>
+<p>donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf Q\)</span> contiene las transiciones entre estados <strong>transitorios</strong>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf R\)</span> contiene las transiciones desde estados transitorios hacia estados <strong>absorbentes</strong>.</p></li>
+</ul>
+<section id="conexion-con-la-semana-3">
+<h2>Conexión con la semana 3<a class="headerlink" href="#conexion-con-la-semana-3" title="Link to this heading">#</a></h2>
+<p>En la semana anterior calculamos ocupaciones durante un horizonte finito:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf M(H)=\mathbf I+\mathbf P+\mathbf P^2+\cdots+\mathbf P^{H-1}.
+\]</div>
+<p>Ahora acumularemos la ocupación de los estados transitorios <strong>hasta que ocurra la absorción</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf N
+=
+\mathbf I+\mathbf Q+\mathbf Q^2+\mathbf Q^3+\cdots
+=
+(\mathbf I-\mathbf Q)^{-1}.
+\]</div>
+<p>El elemento <span class="math notranslate nohighlight">\(N_{ij}\)</span> representa el <strong>número esperado de períodos que el proceso pasa en el estado transitorio <span class="math notranslate nohighlight">\(j\)</span> antes de la absorción</strong>, si comienza en el estado transitorio <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<blockquote>
+<div><p><strong>Importante:</strong> <span class="math notranslate nohighlight">\(N_{ij}\)</span> no es un tiempo de primera pasada hacia <span class="math notranslate nohighlight">\(j\)</span>.<br />
+La suma de la fila <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\sum_j N_{ij}\)</span>, sí representa el tiempo total esperado antes de la absorción.</p>
+</div></blockquote>
+<p>Una vez calculada <span class="math notranslate nohighlight">\(\mathbf N\)</span>, las probabilidades de terminar en cada estado absorbente se obtienen mediante:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf B=\mathbf N\mathbf R.
+\]</div>
+<p>Como en las semanas anteriores, primero calculamos con NumPy y al final utilizamos <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> para verificar.</p>
+</section>
+<section id="como-trabajar-con-este-cuaderno">
+<h2>Cómo trabajar con este cuaderno<a class="headerlink" href="#como-trabajar-con-este-cuaderno" title="Link to this heading">#</a></h2>
+<p>Encontrará tres tipos de código:</p>
+<ul class="simple">
+<li><p>🧠 <strong>Código central:</strong> debe poder explicar qué representa cada instrucción.</p></li>
+<li><p>🧩 <strong>Herramienta nueva:</strong> se introduce con una explicación breve.</p></li>
+<li><p>✅ <strong>Verificación:</strong> se usa para comprobar resultados ya calculados.</p></li>
+</ul>
+<p>Ejecute las celdas de arriba hacia abajo. Antes de comenzar, reinicie el kernel y ejecute todo el cuaderno.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>jmarkov
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: jmarkov in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (0.3.9)
+Requirement already satisfied: numpy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (2.4.1)
+Requirement already satisfied: scipy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (1.17.0)
+Requirement already satisfied: typing in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (3.7.4.3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jmarkov.dtmc</span><span class="w"> </span><span class="kn">import</span> <span class="n">dtmc</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="herramienta-nueva-la-matriz-identidad">
+<h2>🧩 Herramienta nueva: la matriz identidad<a class="headerlink" href="#herramienta-nueva-la-matriz-identidad" title="Link to this heading">#</a></h2>
+<p>La función <code class="docutils literal notranslate"><span class="pre">np.eye(n)</span></code> construye la matriz identidad de tamaño <span class="math notranslate nohighlight">\(n\times n\)</span>.</p>
+<p>La necesitamos porque el primer término de la serie de la matriz fundamental es:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf Q^0=\mathbf I.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">identidad_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz identidad de tamaño 3:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">identidad_3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriz identidad de tamaño 3:
+[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-1-portafolio-de-proyectos-de-inversion-basico">
+<h2>Ejercicio 1 — Portafolio de proyectos de inversión <em>(básico)</em><a class="headerlink" href="#ejercicio-1-portafolio-de-proyectos-de-inversion-basico" title="Link to this heading">#</a></h2>
+<p>Un gestor de portafolios clasifica cada proyecto al cierre del año según su rentabilidad.</p>
+<div class="math notranslate nohighlight">
+\[
+X_n=\text{clasificación del proyecto al final del año }n
+\]</div>
+<p>Los estados son:</p>
+<ul class="simple">
+<li><p><strong>PR:</strong> Poco rentable.</p></li>
+<li><p><strong>R:</strong> Rentable.</p></li>
+<li><p><strong>MR:</strong> Muy rentable.</p></li>
+<li><p><strong>NR:</strong> No rentable, absorbente.</p></li>
+<li><p><strong>L:</strong> Liquidado, absorbente.</p></li>
+</ul>
+<p>La matriz de transición es:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=
+\begin{pmatrix}
+0.30&amp;0.20&amp;0.00&amp;0.30&amp;0.20\\
+0.10&amp;0.50&amp;0.20&amp;0.10&amp;0.10\\
+0.00&amp;0.20&amp;0.80&amp;0.00&amp;0.00\\
+0.00&amp;0.00&amp;0.00&amp;1.00&amp;0.00\\
+0.00&amp;0.00&amp;0.00&amp;0.00&amp;1.00
+\end{pmatrix}.
+\end{split}\]</div>
+<p>Los ingresos anuales son:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_{PR}=\$38\)</span> millones;</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_R=\$76\)</span> millones;</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{MR}=\$114\)</span> millones.</p></li>
+</ul>
+<p>Al producirse la absorción se incurre en un costo de salida:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_{NR}=\$152\)</span> millones;</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_L=\$190\)</span> millones.</p></li>
+</ul>
+<p>Para concentrarnos en cadenas absorbentes, <strong>no aplicaremos descuento financiero</strong>. Por tanto, los resultados representan ingresos y costos acumulados esperados sin valor temporal del dinero.</p>
+<section id="a-construccion-y-verificacion-de-la-matriz">
+<h3>a) Construcción y verificación de la matriz<a class="headerlink" href="#a-construccion-y-verificacion-de-la-matriz" title="Link to this heading">#</a></h3>
+<p>Construya la matriz <span class="math notranslate nohighlight">\(P\)</span>, identifique los estados transitorios y absorbentes y verifique que cada fila suma 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados_proyecto</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PR&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;MR&quot;</span><span class="p">,</span> <span class="s2">&quot;NR&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">]</span>
+
+<span class="n">numero_transitorios_proyecto</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">numero_absorbentes_proyecto</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">P_proyecto</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_proyecto</span><span class="p">)):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_proyecto</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila&quot;</span><span class="p">,</span>
+        <span class="n">estados_proyecto</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estados transitorios:&quot;</span><span class="p">,</span> <span class="n">estados_proyecto</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estados absorbentes:&quot;</span><span class="p">,</span> <span class="n">estados_proyecto</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila PR - suma: 1.0
+Fila R - suma: 1.0
+Fila MR - suma: 1.0
+Fila NR - suma: 1.0
+Fila L - suma: 1.0
+
+Estados transitorios: [&#39;PR&#39;, &#39;R&#39;, &#39;MR&#39;]
+Estados absorbentes: [&#39;NR&#39;, &#39;L&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-matriz-fundamental">
+<h3>b) Matriz fundamental<a class="headerlink" href="#b-matriz-fundamental" title="Link to this heading">#</a></h3>
+<p>Separe los bloques <span class="math notranslate nohighlight">\(\mathbf Q\)</span> y <span class="math notranslate nohighlight">\(\mathbf R\)</span>.</p>
+<p>Primero calcularemos <span class="math notranslate nohighlight">\(\mathbf Q^2\)</span> término a término:</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf Q^2]_{ij}
+=
+\sum_k Q_{ik}Q_{kj}.
+\]</div>
+<p>Después acumularemos:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf N=\mathbf I+\mathbf Q+\mathbf Q^2+\cdots
+\]</div>
+<p>hasta que el término <span class="math notranslate nohighlight">\(\mathbf Q^n\)</span> sea despreciable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_proyecto</span> <span class="o">=</span> <span class="n">P_proyecto</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">R_proyecto</span> <span class="o">=</span> <span class="n">P_proyecto</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">:]</span>
+
+<span class="n">Q2_termino_a_termino</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">fila</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">columna</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+        <span class="n">suma</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">estado_intermedio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">suma</span>
+                <span class="o">+</span> <span class="n">Q_proyecto</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span> <span class="n">estado_intermedio</span><span class="p">]</span>
+                <span class="o">*</span> <span class="n">Q_proyecto</span><span class="p">[</span><span class="n">estado_intermedio</span><span class="p">,</span> <span class="n">columna</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">Q2_termino_a_termino</span><span class="p">[</span><span class="n">fila</span><span class="p">,</span> <span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q^2 calculada término a término:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Q2_termino_a_termino</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q^2 calculada con Q @ Q:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">Q_proyecto</span> <span class="o">@</span> <span class="n">Q_proyecto</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Q^2 calculada término a término:
+[[0.11 0.16 0.04]
+ [0.08 0.31 0.26]
+ [0.02 0.26 0.68]]
+
+Q^2 calculada con Q @ Q:
+[[0.11 0.16 0.04]
+ [0.08 0.31 0.26]
+ [0.02 0.26 0.68]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_transitorios</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">tolerancia</span> <span class="o">=</span> <span class="mf">0.0000000001</span>
+<span class="n">maximo_iteraciones</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">matriz_fundamental_proyecto</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_transitorios</span><span class="p">)</span>
+<span class="n">potencia_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_transitorios</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+    <span class="n">potencia_Q</span> <span class="o">=</span> <span class="n">potencia_Q</span> <span class="o">@</span> <span class="n">Q_proyecto</span>
+
+    <span class="n">matriz_fundamental_proyecto</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">matriz_fundamental_proyecto</span> <span class="o">+</span> <span class="n">potencia_Q</span>
+    <span class="p">)</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">potencia_Q</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteraciones hasta convergencia:&quot;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz fundamental N:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">matriz_fundamental_proyecto</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 234
+
+Matriz fundamental N:
+[[1.5789 1.0526 1.0526]
+ [0.5263 3.6842 3.6842]
+ [0.5263 3.6842 8.6842]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indice_PR</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">indice_R</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">indice_MR</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ocupaciones esperadas antes de la absorción desde MR:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">ocupacion</span> <span class="o">=</span> <span class="n">matriz_fundamental_proyecto</span><span class="p">[</span>
+        <span class="n">indice_MR</span><span class="p">,</span>
+        <span class="n">estado_visitado</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Estado&quot;</span><span class="p">,</span>
+        <span class="n">estados_proyecto</span><span class="p">[</span><span class="n">estado_visitado</span><span class="p">],</span>
+        <span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;años&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">tiempo_total_MR</span> <span class="o">=</span> <span class="n">matriz_fundamental_proyecto</span><span class="p">[</span>
+    <span class="n">indice_MR</span><span class="p">,</span>
+    <span class="p">:</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">tiempo_total_PR</span> <span class="o">=</span> <span class="n">matriz_fundamental_proyecto</span><span class="p">[</span>
+    <span class="n">indice_PR</span><span class="p">,</span>
+    <span class="p">:</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo total esperado en el portafolio desde MR:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total_MR</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;años&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo total esperado en el portafolio desde PR:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total_PR</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;años&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Razón MR/PR:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total_MR</span> <span class="o">/</span> <span class="n">tiempo_total_PR</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ocupaciones esperadas antes de la absorción desde MR:
+Estado PR : 0.5263 años
+Estado R : 3.6842 años
+Estado MR : 8.6842 años
+
+Tiempo total esperado en el portafolio desde MR: 12.89 años
+Tiempo total esperado en el portafolio desde PR: 3.68 años
+Razón MR/PR: 3.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-probabilidades-de-absorcion">
+<h3>c) Probabilidades de absorción<a class="headerlink" href="#c-probabilidades-de-absorcion" title="Link to this heading">#</a></h3>
+<p>Calcule:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf B=\mathbf N\mathbf R.
+\]</div>
+<p>Cada fila de <span class="math notranslate nohighlight">\(\mathbf B\)</span> debe sumar 1 porque el proyecto termina finalmente en <strong>NR</strong> o en <strong>L</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probabilidades_absorcion_proyecto</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">matriz_fundamental_proyecto</span> <span class="o">@</span> <span class="n">R_proyecto</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probabilidades de absorción:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">probabilidad_NR</span> <span class="o">=</span> <span class="n">probabilidades_absorcion_proyecto</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">]</span>
+
+    <span class="n">probabilidad_L</span> <span class="o">=</span> <span class="n">probabilidades_absorcion_proyecto</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="mi">1</span>
+    <span class="p">]</span>
+
+    <span class="n">suma_probabilidades</span> <span class="o">=</span> <span class="n">probabilidad_NR</span> <span class="o">+</span> <span class="n">probabilidad_L</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inicio:&quot;</span><span class="p">,</span> <span class="n">estados_proyecto</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(NR):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_NR</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(L):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_L</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suma:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">suma_probabilidades</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">suma_probabilidades</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.000001</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Advertencia: las probabilidades no suman 1.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probabilidades de absorción:
+
+Inicio: PR
+P(NR): 0.5789
+P(L): 0.4211
+Suma: 1.0
+
+Inicio: R
+P(NR): 0.5263
+P(L): 0.4737
+Suma: 1.0
+
+Inicio: MR
+P(NR): 0.5263
+P(L): 0.4737
+Suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-ganancia-neta-acumulada-esperada">
+<h3>d) Ganancia neta acumulada esperada<a class="headerlink" href="#d-ganancia-neta-acumulada-esperada" title="Link to this heading">#</a></h3>
+<p>Para un proyecto que inicia en <strong>MR</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+E[\text{ganancia}\mid MR]
+=
+\sum_j c_jN_{MR,j}
+-
+\sum_k c_kB_{MR,k}.
+\]</div>
+<p>La matriz <span class="math notranslate nohighlight">\(\mathbf N\)</span> incluye la ocupación del estado inicial. Por tanto, suponemos que el proyecto genera el ingreso correspondiente a su clasificación inicial.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ingresos_por_estado</span> <span class="o">=</span> <span class="p">[</span><span class="mi">38</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">114</span><span class="p">]</span>
+<span class="n">costos_de_salida</span> <span class="o">=</span> <span class="p">[</span><span class="mi">152</span><span class="p">,</span> <span class="mi">190</span><span class="p">]</span>
+
+<span class="n">ingresos_esperados</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">estado_transitorio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">ingreso_estado</span> <span class="o">=</span> <span class="n">ingresos_por_estado</span><span class="p">[</span><span class="n">estado_transitorio</span><span class="p">]</span>
+
+    <span class="n">ocupacion_estado</span> <span class="o">=</span> <span class="n">matriz_fundamental_proyecto</span><span class="p">[</span>
+        <span class="n">indice_MR</span><span class="p">,</span>
+        <span class="n">estado_transitorio</span>
+    <span class="p">]</span>
+
+    <span class="n">ingresos_esperados</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ingresos_esperados</span>
+        <span class="o">+</span> <span class="n">ingreso_estado</span> <span class="o">*</span> <span class="n">ocupacion_estado</span>
+    <span class="p">)</span>
+
+<span class="n">costos_esperados_salida</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">estado_absorbente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+
+    <span class="n">costo_estado</span> <span class="o">=</span> <span class="n">costos_de_salida</span><span class="p">[</span><span class="n">estado_absorbente</span><span class="p">]</span>
+
+    <span class="n">probabilidad_estado</span> <span class="o">=</span> <span class="n">probabilidades_absorcion_proyecto</span><span class="p">[</span>
+        <span class="n">indice_MR</span><span class="p">,</span>
+        <span class="n">estado_absorbente</span>
+    <span class="p">]</span>
+
+    <span class="n">costos_esperados_salida</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">costos_esperados_salida</span>
+        <span class="o">+</span> <span class="n">costo_estado</span> <span class="o">*</span> <span class="n">probabilidad_estado</span>
+    <span class="p">)</span>
+
+<span class="n">ganancia_neta_esperada</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ingresos_esperados</span> <span class="o">-</span> <span class="n">costos_esperados_salida</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Ingresos acumulados esperados:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">ingresos_esperados</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;millones de pesos&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Costos esperados de salida:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">costos_esperados_salida</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;millones de pesos&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Ganancia neta acumulada esperada:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">ganancia_neta_esperada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;millones de pesos&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ingresos acumulados esperados: 1290.0 millones de pesos
+Costos esperados de salida: 170.0 millones de pesos
+Ganancia neta acumulada esperada: 1120.0 millones de pesos
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="verificacion-con-jmarkov">
+<h3>✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#verificacion-con-jmarkov" title="Link to this heading">#</a></h3>
+<p>Construimos las matrices de verificación mediante ciclos explícitos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cadena_proyecto</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_proyecto</span><span class="p">)</span>
+
+<span class="n">N_proyecto_jmarkov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">cadena_proyecto</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">estado_visitado</span>
+        <span class="p">)</span>
+
+        <span class="n">N_proyecto_jmarkov</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">estado_visitado</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+
+<span class="n">B_proyecto_jmarkov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">estado_absorbente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+
+        <span class="n">indice_absorbente</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">estado_absorbente</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">cadena_proyecto</span><span class="o">.</span><span class="n">absorbtion_probabilities</span><span class="p">(</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">indice_absorbente</span>
+        <span class="p">)</span>
+
+        <span class="n">B_proyecto_jmarkov</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">estado_absorbente</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N calculada con NumPy:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">matriz_fundamental_proyecto</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N calculada con jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">N_proyecto_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B calculada con NumPy:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">probabilidades_absorcion_proyecto</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B calculada con jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">B_proyecto_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N calculada con NumPy:
+[[1.5789 1.0526 1.0526]
+ [0.5263 3.6842 3.6842]
+ [0.5263 3.6842 8.6842]]
+
+N calculada con jmarkov:
+[[1.5789 1.0526 1.0526]
+ [0.5263 3.6842 3.6842]
+ [0.5263 3.6842 8.6842]]
+
+B calculada con NumPy:
+[[0.5789 0.4211]
+ [0.5263 0.4737]
+ [0.5263 0.4737]]
+
+B calculada con jmarkov:
+[[0.5789 0.4211]
+ [0.5263 0.4737]
+ [0.5263 0.4737]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reutilizacion-del-procedimiento">
+<h3>🧩 Reutilización del procedimiento<a class="headerlink" href="#reutilizacion-del-procedimiento" title="Link to this heading">#</a></h3>
+<p>En los ejercicios siguientes repetiremos varias veces el cálculo de:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf N=\mathbf I+\mathbf Q+\mathbf Q^2+\cdots
+\]</div>
+<p>Como ya desarrollamos el algoritmo completo, ahora lo reunimos en una función. Las funciones fueron trabajadas en la semana 3 y permiten evitar copiar el mismo bloque varias veces.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calcular_matriz_fundamental</span><span class="p">(</span>
+    <span class="n">Q</span><span class="p">,</span>
+    <span class="n">tolerancia</span><span class="p">,</span>
+    <span class="n">maximo_iteraciones</span>
+<span class="p">):</span>
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">matriz_fundamental</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+    <span class="n">potencia_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="n">potencia_Q</span> <span class="o">=</span> <span class="n">potencia_Q</span> <span class="o">@</span> <span class="n">Q</span>
+
+        <span class="n">matriz_fundamental</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">matriz_fundamental</span> <span class="o">+</span> <span class="n">potencia_Q</span>
+        <span class="p">)</span>
+
+        <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">potencia_Q</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">matriz_fundamental</span><span class="p">,</span> <span class="n">iteracion</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-2-ciclo-de-vida-de-una-turbina-industrial-intermedio">
+<h2>Ejercicio 2 — Ciclo de vida de una turbina industrial <em>(intermedio)</em><a class="headerlink" href="#ejercicio-2-ciclo-de-vida-de-una-turbina-industrial-intermedio" title="Link to this heading">#</a></h2>
+<p>Una empresa energética monitorea semanalmente una turbina.</p>
+<p>Los estados son:</p>
+<ul class="simple">
+<li><p><strong>O:</strong> Operativo.</p></li>
+<li><p><strong>DM:</strong> Desgaste menor.</p></li>
+<li><p><strong>DG:</strong> Desgaste grave.</p></li>
+<li><p><strong>F:</strong> Falla irreparable, absorbente.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=
+\begin{pmatrix}
+0.85&amp;0.13&amp;0.02&amp;0.00\\
+0.00&amp;0.65&amp;0.30&amp;0.05\\
+0.00&amp;0.00&amp;0.50&amp;0.50\\
+0.00&amp;0.00&amp;0.00&amp;1.00
+\end{pmatrix}.
+\end{split}\]</div>
+<p>Costos semanales de mantenimiento, en miles de COP:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_O=500\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{DM}=1200\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{DG}=3000\)</span>.</p></li>
+</ul>
+<p>El costo de reemplazo al fallar es <span class="math notranslate nohighlight">\(c_F=20000\)</span> miles de COP.</p>
+<section id="a-construccion-y-verificacion">
+<h3>a) Construcción y verificación<a class="headerlink" href="#a-construccion-y-verificacion" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados_turbina</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="s2">&quot;DM&quot;</span><span class="p">,</span> <span class="s2">&quot;DG&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">]</span>
+
+<span class="n">P_turbina</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_turbina</span><span class="p">)):</span>
+
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_turbina</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila&quot;</span><span class="p">,</span>
+        <span class="n">estados_turbina</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;F es el único estado absorbente.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila O - suma: 1.0
+Fila DM - suma: 1.0
+Fila DG - suma: 1.0
+Fila F - suma: 1.0
+
+F es el único estado absorbente.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-matriz-fundamental-y-vida-util">
+<h3>b) Matriz fundamental y vida útil<a class="headerlink" href="#b-matriz-fundamental-y-vida-util" title="Link to this heading">#</a></h3>
+<p>Calcule la matriz fundamental y recuerde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N_{ij}\)</span>: semanas esperadas en el estado <span class="math notranslate nohighlight">\(j\)</span> antes de fallar, comenzando en <span class="math notranslate nohighlight">\(i\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_jN_{ij}\)</span>: vida útil esperada antes de fallar.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_turbina</span> <span class="o">=</span> <span class="n">P_turbina</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">R_turbina</span> <span class="o">=</span> <span class="n">P_turbina</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">:]</span>
+
+<span class="n">matriz_fundamental_turbina</span><span class="p">,</span> <span class="n">iteraciones_turbina</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">calcular_matriz_fundamental</span><span class="p">(</span>
+        <span class="n">Q_turbina</span><span class="p">,</span>
+        <span class="mf">0.0000000001</span><span class="p">,</span>
+        <span class="mi">2000</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Iteraciones hasta convergencia:&quot;</span><span class="p">,</span>
+    <span class="n">iteraciones_turbina</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz fundamental de la turbina:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">matriz_fundamental_turbina</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 142
+
+Matriz fundamental de la turbina:
+[[6.667 2.476 1.752]
+ [0.    2.857 1.714]
+ [0.    0.    2.   ]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vida útil esperada desde cada estado:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">vida_util</span> <span class="o">=</span> <span class="n">matriz_fundamental_turbina</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="p">:</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estado inicial:&quot;</span><span class="p">,</span> <span class="n">estados_turbina</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Semanas:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">vida_util</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Años aproximados:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">vida_util</span> <span class="o">/</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vida útil esperada desde cada estado:
+
+Estado inicial: O
+Semanas: 10.9
+Años aproximados: 0.21
+
+Estado inicial: DM
+Semanas: 4.57
+Años aproximados: 0.09
+
+Estado inicial: DG
+Semanas: 2.0
+Años aproximados: 0.04
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-probabilidad-de-falla-y-costo-total-esperado">
+<h3>c) Probabilidad de falla y costo total esperado<a class="headerlink" href="#c-probabilidad-de-falla-y-costo-total-esperado" title="Link to this heading">#</a></h3>
+<p>Como <strong>F</strong> es el único estado absorbente, la probabilidad de terminar en F debe ser 1 desde cualquier estado transitorio.</p>
+<p>El costo total esperado incluye:</p>
+<ol class="arabic simple">
+<li><p>los costos semanales acumulados en los estados transitorios;</p></li>
+<li><p>el costo de reemplazo, pagado una sola vez cuando ocurre la falla.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probabilidades_absorcion_turbina</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">matriz_fundamental_turbina</span> <span class="o">@</span> <span class="n">R_turbina</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">probabilidad_falla</span> <span class="o">=</span> <span class="n">probabilidades_absorcion_turbina</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;P(Falla | inicio&quot;</span><span class="p">,</span>
+        <span class="n">estados_turbina</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">],</span>
+        <span class="s2">&quot;) =&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_falla</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P(Falla | inicio O ) = 1.0
+P(Falla | inicio DM ) = 1.0
+P(Falla | inicio DG ) = 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">costos_mantenimiento</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]</span>
+<span class="n">costo_reemplazo</span> <span class="o">=</span> <span class="mi">20000</span>
+
+<span class="n">costos_totales_turbina</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Costo total esperado, en miles de COP:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">costo_mantenimiento_esperado</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+        <span class="n">costo_mantenimiento_esperado</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">costo_mantenimiento_esperado</span>
+            <span class="o">+</span> <span class="n">costos_mantenimiento</span><span class="p">[</span><span class="n">estado_visitado</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">matriz_fundamental_turbina</span><span class="p">[</span>
+                <span class="n">estado_inicial</span><span class="p">,</span>
+                <span class="n">estado_visitado</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">costo_total</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">costo_mantenimiento_esperado</span> <span class="o">+</span> <span class="n">costo_reemplazo</span>
+    <span class="p">)</span>
+
+    <span class="n">costos_totales_turbina</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">]</span> <span class="o">=</span> <span class="n">costo_total</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estado inicial:&quot;</span><span class="p">,</span> <span class="n">estados_turbina</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Mantenimiento:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">costo_mantenimiento_esperado</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reemplazo:&quot;</span><span class="p">,</span> <span class="n">costo_reemplazo</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Costo total:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">costo_total</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Costo total esperado, en miles de COP:
+
+Estado inicial: O
+Mantenimiento: 11561.9
+Reemplazo: 20000
+Costo total: 31561.9
+
+Estado inicial: DM
+Mantenimiento: 8571.43
+Reemplazo: 20000
+Costo total: 28571.43
+
+Estado inicial: DG
+Mantenimiento: 6000.0
+Reemplazo: 20000
+Costo total: 26000.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-programa-de-mantenimiento-preventivo">
+<h3>d) Programa de mantenimiento preventivo<a class="headerlink" href="#d-programa-de-mantenimiento-preventivo" title="Link to this heading">#</a></h3>
+<p>El programa modifica la fila de <strong>DM</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+P'_{DM}=[0.10,\;0.65,\;0.20,\;0.05].
+\]</div>
+<p>Compare desde <strong>O</strong>:</p>
+<ul class="simple">
+<li><p>la vida útil esperada;</p></li>
+<li><p>el costo acumulado esperado.</p></li>
+</ul>
+<blockquote>
+<div><p>Una vida útil mayor no implica automáticamente que el programa sea económicamente conveniente. Para decidirlo también necesitaríamos el valor de las semanas adicionales de operación y el costo directo del programa preventivo.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_turbina_preventivo</span> <span class="o">=</span> <span class="n">P_turbina</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">P_turbina_preventivo</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.10</span><span class="p">,</span>
+    <span class="mf">0.65</span><span class="p">,</span>
+    <span class="mf">0.20</span><span class="p">,</span>
+    <span class="mf">0.05</span>
+<span class="p">]</span>
+
+<span class="n">Q_turbina_preventivo</span> <span class="o">=</span> <span class="n">P_turbina_preventivo</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">matriz_fundamental_preventivo</span><span class="p">,</span> <span class="n">iteraciones_preventivo</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">calcular_matriz_fundamental</span><span class="p">(</span>
+        <span class="n">Q_turbina_preventivo</span><span class="p">,</span>
+        <span class="mf">0.0000000001</span><span class="p">,</span>
+        <span class="mi">2000</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">vida_original</span> <span class="o">=</span> <span class="n">matriz_fundamental_turbina</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">vida_preventiva</span> <span class="o">=</span> <span class="n">matriz_fundamental_preventivo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">costo_original</span> <span class="o">=</span> <span class="n">costos_totales_turbina</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">costo_mantenimiento_preventivo</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+    <span class="n">costo_mantenimiento_preventivo</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">costo_mantenimiento_preventivo</span>
+        <span class="o">+</span> <span class="n">costos_mantenimiento</span><span class="p">[</span><span class="n">estado_visitado</span><span class="p">]</span>
+        <span class="o">*</span> <span class="n">matriz_fundamental_preventivo</span><span class="p">[</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">estado_visitado</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">costo_preventivo</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">costo_mantenimiento_preventivo</span> <span class="o">+</span> <span class="n">costo_reemplazo</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparación desde el estado O:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vida útil original:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">vida_original</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;semanas&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Vida útil con preventivo:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">vida_preventiva</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;semanas&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Incremento de vida útil:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">vida_preventiva</span> <span class="o">-</span> <span class="n">vida_original</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;semanas&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Costo acumulado original:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">costo_original</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;miles de COP&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Costo acumulado con preventivo:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">costo_preventivo</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;miles de COP&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Incremento del costo acumulado:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">costo_preventivo</span> <span class="o">-</span> <span class="n">costo_original</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;miles de COP&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación desde el estado O:
+
+Vida útil original: 10.9 semanas
+Vida útil con preventivo: 13.82 semanas
+Incremento de vida útil: 2.93 semanas
+
+Costo acumulado original: 31561.9 miles de COP
+Costo acumulado con preventivo: 33392.41 miles de COP
+Incremento del costo acumulado: 1830.5 miles de COP
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cadena_turbina</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_turbina</span><span class="p">)</span>
+<span class="n">cadena_turbina_preventivo</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_turbina_preventivo</span><span class="p">)</span>
+
+<span class="n">N_turbina_jmarkov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">N_preventivo_jmarkov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+
+        <span class="n">valor_original</span> <span class="o">=</span> <span class="n">cadena_turbina</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">estado_visitado</span>
+        <span class="p">)</span>
+
+        <span class="n">valor_preventivo</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">cadena_turbina_preventivo</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span>
+                <span class="n">start</span><span class="o">=</span><span class="n">estado_inicial</span><span class="p">,</span>
+                <span class="n">target</span><span class="o">=</span><span class="n">estado_visitado</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">N_turbina_jmarkov</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">estado_visitado</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor_original</span><span class="p">)</span>
+
+        <span class="n">N_preventivo_jmarkov</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">estado_visitado</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor_preventivo</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N original con NumPy:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">matriz_fundamental_turbina</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N original con jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">N_turbina_jmarkov</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N preventivo con NumPy:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">matriz_fundamental_preventivo</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N preventivo con jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">N_preventivo_jmarkov</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N original con NumPy:
+[[6.667 2.476 1.752]
+ [0.    2.857 1.714]
+ [0.    0.    2.   ]]
+
+N original con jmarkov:
+[[6.667 2.476 1.752]
+ [0.    2.857 1.714]
+ [0.    0.    2.   ]]
+
+N preventivo con NumPy:
+[[8.861 3.291 1.671]
+ [2.532 3.797 1.62 ]
+ [0.    0.    2.   ]]
+
+N preventivo con jmarkov:
+[[8.861 3.291 1.671]
+ [2.532 3.797 1.62 ]
+ [0.    0.    2.   ]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-3-bono-corporativo-con-ciclo-economico-profundizacion-guiada">
+<h2>Ejercicio 3 — Bono corporativo con ciclo económico <em>(profundización guiada)</em><a class="headerlink" href="#ejercicio-3-bono-corporativo-con-ciclo-economico-profundizacion-guiada" title="Link to this heading">#</a></h2>
+<p>Un bono corporativo evoluciona trimestralmente según:</p>
+<ol class="arabic simple">
+<li><p>su <strong>rating crediticio</strong>: AAA, BBB o CCC;</p></li>
+<li><p>el <strong>ciclo económico</strong>: Expansión o Recesión.</p></li>
+</ol>
+<p>El bono puede terminar en:</p>
+<ul class="simple">
+<li><p><strong>Default</strong>, absorbente;</p></li>
+<li><p><strong>Prepago</strong>, absorbente.</p></li>
+</ul>
+<p>Los seis estados transitorios son:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>Índice</p></th>
+<th class="head"><p>Estado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p>0</p></td>
+<td><p>(AAA, Exp)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>1</p></td>
+<td><p>(AAA, Rec)</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>2</p></td>
+<td><p>(BBB, Exp)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>3</p></td>
+<td><p>(BBB, Rec)</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>4</p></td>
+<td><p>(CCC, Exp)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>5</p></td>
+<td><p>(CCC, Rec)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Los estados 6 y 7 son <strong>Default</strong> y <strong>Prepago</strong>.</p>
+<p>La probabilidad de pasar de <span class="math notranslate nohighlight">\((r,e)\)</span> a <span class="math notranslate nohighlight">\((r',e')\)</span> es:</p>
+<div class="math notranslate nohighlight">
+\[
+(1-p_m)\,\alpha(r,e,r')\,q(e,e').
+\]</div>
+<p>La probabilidad de default es:</p>
+<div class="math notranslate nohighlight">
+\[
+(1-p_m)\,\alpha(r,e,\text{Default}),
+\]</div>
+<p>y la probabilidad de prepago es <span class="math notranslate nohighlight">\(p_m\)</span>.</p>
+<section id="a-datos-del-modelo-y-construccion-de-una-fila">
+<h3>a) Datos del modelo y construcción de una fila<a class="headerlink" href="#a-datos-del-modelo-y-construccion-de-una-fila" title="Link to this heading">#</a></h3>
+<p>Primero representamos la migración de rating mediante una matriz de seis filas. Cada fila corresponde directamente a uno de los seis estados conjuntos.</p>
+<p>Las columnas son:</p>
+<div class="math notranslate nohighlight">
+\[
+[\text{AAA},\text{BBB},\text{CCC},\text{Default}].
+\]</div>
+<p>Después construiremos como ejemplo la fila correspondiente a <strong>(BBB, Rec)</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados_bono</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;(AAA, Exp)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;(AAA, Rec)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;(BBB, Exp)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;(BBB, Rec)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;(CCC, Exp)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;(CCC, Rec)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Default&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Prepago&quot;</span>
+<span class="p">]</span>
+
+<span class="n">transicion_economica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">migracion_rating</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.92</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.37</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">probabilidad_prepago</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.04</span><span class="p">,</span>
+    <span class="mf">0.04</span><span class="p">,</span>
+    <span class="mf">0.02</span><span class="p">,</span>
+    <span class="mf">0.02</span><span class="p">,</span>
+    <span class="mf">0.01</span><span class="p">,</span>
+    <span class="mf">0.01</span>
+<span class="p">]</span>
+
+<span class="n">ciclo_del_estado</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejemplo: construcción de la fila de (BBB, Rec)</span>
+
+<span class="n">estado_actual</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">ciclo_actual</span> <span class="o">=</span> <span class="n">ciclo_del_estado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+
+<span class="n">factor_no_prepago</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">1</span> <span class="o">-</span> <span class="n">probabilidad_prepago</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">fila_BBB_Rec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">rating_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ciclo_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+
+        <span class="n">estado_siguiente</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">rating_siguiente</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ciclo_siguiente</span>
+        <span class="p">)</span>
+
+        <span class="n">fila_BBB_Rec</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">factor_no_prepago</span>
+            <span class="o">*</span> <span class="n">migracion_rating</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">rating_siguiente</span>
+            <span class="p">]</span>
+            <span class="o">*</span> <span class="n">transicion_economica</span><span class="p">[</span>
+                <span class="n">ciclo_actual</span><span class="p">,</span>
+                <span class="n">ciclo_siguiente</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+<span class="n">fila_BBB_Rec</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">factor_no_prepago</span>
+    <span class="o">*</span> <span class="n">migracion_rating</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">fila_BBB_Rec</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">probabilidad_prepago</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fila correspondiente a (BBB, Rec):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fila_BBB_Rec</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suma de la fila:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fila_BBB_Rec</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila correspondiente a (BBB, Rec):
+[0.00686 0.01274 0.25725 0.47775 0.06174 0.11466 0.049   0.02   ]
+Suma de la fila: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generalizacion-de-la-construccion">
+<h3>🧩 Generalización de la construcción<a class="headerlink" href="#generalizacion-de-la-construccion" title="Link to this heading">#</a></h3>
+<p>La siguiente función repite exactamente el procedimiento anterior para los seis estados transitorios. Esta celda se desarrolla paso a paso en clase.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">construir_matriz_bono</span><span class="p">(</span>
+    <span class="n">matriz_ciclo</span><span class="p">,</span>
+    <span class="n">migracion</span><span class="p">,</span>
+    <span class="n">probabilidades_prepago</span><span class="p">,</span>
+    <span class="n">ciclos_actuales</span>
+<span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+        <span class="n">ciclo_actual</span> <span class="o">=</span> <span class="n">ciclos_actuales</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+
+        <span class="n">factor_no_prepago</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="o">-</span> <span class="n">probabilidades_prepago</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">rating_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ciclo_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+
+                <span class="n">estado_siguiente</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">rating_siguiente</span> <span class="o">*</span> <span class="mi">2</span>
+                    <span class="o">+</span> <span class="n">ciclo_siguiente</span>
+                <span class="p">)</span>
+
+                <span class="n">P</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">estado_siguiente</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">factor_no_prepago</span>
+                    <span class="o">*</span> <span class="n">migracion</span><span class="p">[</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">rating_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">*</span> <span class="n">matriz_ciclo</span><span class="p">[</span>
+                        <span class="n">ciclo_actual</span><span class="p">,</span>
+                        <span class="n">ciclo_siguiente</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="n">P</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">factor_no_prepago</span>
+            <span class="o">*</span> <span class="n">migracion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">P</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">probabilidades_prepago</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">P</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">P</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="k">return</span> <span class="n">P</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_bono</span> <span class="o">=</span> <span class="n">construir_matriz_bono</span><span class="p">(</span>
+    <span class="n">transicion_economica</span><span class="p">,</span>
+    <span class="n">migracion_rating</span><span class="p">,</span>
+    <span class="n">probabilidad_prepago</span><span class="p">,</span>
+    <span class="n">ciclo_del_estado</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimensión de P:&quot;</span><span class="p">,</span> <span class="n">P_bono</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_bono</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila&quot;</span><span class="p">,</span>
+        <span class="n">estados_bono</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensión de P: (8, 8)
+
+Fila (AAA, Exp) - suma: 1.0
+Fila (AAA, Rec) - suma: 1.0
+Fila (BBB, Exp) - suma: 1.0
+Fila (BBB, Rec) - suma: 1.0
+Fila (CCC, Exp) - suma: 1.0
+Fila (CCC, Rec) - suma: 1.0
+Fila Default - suma: 1.0
+Fila Prepago - suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>b) Matriz fundamental<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Calcule <span class="math notranslate nohighlight">\(\mathbf N\)</span> para los seis estados transitorios y analice un bono que comienza en <strong>(BBB, Rec)</strong>, cuyo índice es 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q_bono</span> <span class="o">=</span> <span class="n">P_bono</span><span class="p">[:</span><span class="mi">6</span><span class="p">,</span> <span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">R_bono</span> <span class="o">=</span> <span class="n">P_bono</span><span class="p">[:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">:]</span>
+
+<span class="n">matriz_fundamental_bono</span><span class="p">,</span> <span class="n">iteraciones_bono</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">calcular_matriz_fundamental</span><span class="p">(</span>
+        <span class="n">Q_bono</span><span class="p">,</span>
+        <span class="mf">0.0000000001</span><span class="p">,</span>
+        <span class="mi">5000</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">indice_BBB_Rec</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteraciones hasta convergencia:&quot;</span><span class="p">,</span> <span class="n">iteraciones_bono</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Ocupaciones esperadas antes de la absorción&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;desde (BBB, Rec):&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+    <span class="n">ocupacion</span> <span class="o">=</span> <span class="n">matriz_fundamental_bono</span><span class="p">[</span>
+        <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+        <span class="n">estado_visitado</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_bono</span><span class="p">[</span><span class="n">estado_visitado</span><span class="p">],</span>
+        <span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;trimestres&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">tiempo_total_BBB_Rec</span> <span class="o">=</span> <span class="n">matriz_fundamental_bono</span><span class="p">[</span>
+    <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+    <span class="p">:</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo total antes de la absorción:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total_BBB_Rec</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;trimestres&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Años aproximados:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total_BBB_Rec</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 251
+
+Ocupaciones esperadas antes de la absorción desde (BBB, Rec):
+(AAA, Exp) : 1.0929 trimestres
+(AAA, Rec) : 0.4348 trimestres
+(BBB, Exp) : 3.3299 trimestres
+(BBB, Rec) : 2.8805 trimestres
+(CCC, Exp) : 2.0863 trimestres
+(CCC, Rec) : 1.0329 trimestres
+
+Tiempo total antes de la absorción: 10.86 trimestres
+Años aproximados: 2.71
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-tiempo-total-desde-cada-estado">
+<h3>c) Tiempo total desde cada estado<a class="headerlink" href="#c-tiempo-total-desde-cada-estado" title="Link to this heading">#</a></h3>
+<p>Compare los estados de expansión y recesión para un mismo rating.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tiempo total esperado antes de la absorción:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+    <span class="n">tiempo_total</span> <span class="o">=</span> <span class="n">matriz_fundamental_bono</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="p">:</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estado:&quot;</span><span class="p">,</span> <span class="n">estados_bono</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trimestres:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Años aproximados:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_total</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tiempo total esperado antes de la absorción:
+
+Estado: (AAA, Exp)
+Trimestres: 15.44
+Años aproximados: 3.86
+
+Estado: (AAA, Rec)
+Trimestres: 14.6
+Años aproximados: 3.65
+
+Estado: (BBB, Exp)
+Trimestres: 12.77
+Años aproximados: 3.19
+
+Estado: (BBB, Rec)
+Trimestres: 10.86
+Años aproximados: 2.71
+
+Estado: (CCC, Exp)
+Trimestres: 8.38
+Años aproximados: 2.09
+
+Estado: (CCC, Rec)
+Trimestres: 5.02
+Años aproximados: 1.26
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-cupones-acumulados-esperados">
+<h3>d) Cupones acumulados esperados<a class="headerlink" href="#d-cupones-acumulados-esperados" title="Link to this heading">#</a></h3>
+<p>El bono paga por trimestre:</p>
+<ul class="simple">
+<li><p>AAA: 0.03 del principal;</p></li>
+<li><p>BBB: 0.06 del principal;</p></li>
+<li><p>CCC: 0.12 del principal.</p></li>
+</ul>
+<p>Calcularemos cupones acumulados esperados <strong>sin descuento financiero</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cupon_por_estado</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.03</span><span class="p">,</span>
+    <span class="mf">0.03</span><span class="p">,</span>
+    <span class="mf">0.06</span><span class="p">,</span>
+    <span class="mf">0.06</span><span class="p">,</span>
+    <span class="mf">0.12</span><span class="p">,</span>
+    <span class="mf">0.12</span>
+<span class="p">]</span>
+
+<span class="n">cupones_acumulados</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+    <span class="n">cupon_esperado</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+        <span class="n">cupon_esperado</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">cupon_esperado</span>
+            <span class="o">+</span> <span class="n">cupon_por_estado</span><span class="p">[</span><span class="n">estado_visitado</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">matriz_fundamental_bono</span><span class="p">[</span>
+                <span class="n">estado_inicial</span><span class="p">,</span>
+                <span class="n">estado_visitado</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">cupones_acumulados</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">cupon_esperado</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Inicio&quot;</span><span class="p">,</span>
+        <span class="n">estados_bono</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">],</span>
+        <span class="s2">&quot;- cupón acumulado esperado:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">cupon_esperado</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Inicio (AAA, Exp) - cupón acumulado esperado: 0.8029
+Inicio (AAA, Rec) - cupón acumulado esperado: 0.7807
+Inicio (BBB, Exp) - cupón acumulado esperado: 0.9026
+Inicio (BBB, Rec) - cupón acumulado esperado: 0.7928
+Inicio (CCC, Exp) - cupón acumulado esperado: 0.789
+Inicio (CCC, Rec) - cupón acumulado esperado: 0.5029
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e-probabilidades-de-absorcion">
+<h3>e) Probabilidades de absorción<a class="headerlink" href="#e-probabilidades-de-absorcion" title="Link to this heading">#</a></h3>
+<p>Calcule:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf B=\mathbf N\mathbf R.
+\]</div>
+<p>Interprete por separado la probabilidad de <strong>Default</strong> y la probabilidad de <strong>Prepago</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probabilidades_absorcion_bono</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">matriz_fundamental_bono</span> <span class="o">@</span> <span class="n">R_bono</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+    <span class="n">probabilidad_default</span> <span class="o">=</span> <span class="n">probabilidades_absorcion_bono</span><span class="p">[</span>
+        <span class="n">estado_inicial</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">]</span>
+
+    <span class="n">probabilidad_prepago_estado</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">probabilidades_absorcion_bono</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="mi">1</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">probabilidad_default</span>
+        <span class="o">+</span> <span class="n">probabilidad_prepago_estado</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inicio:&quot;</span><span class="p">,</span> <span class="n">estados_bono</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;P(Default):&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;P(Prepago):&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_prepago_estado</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suma:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">suma</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Inicio: (AAA, Exp)
+P(Default): 0.5387
+P(Prepago): 0.4613
+Suma: 1.0
+
+Inicio: (AAA, Rec)
+P(Default): 0.5732
+P(Prepago): 0.4268
+Suma: 1.0
+
+Inicio: (BBB, Exp)
+P(Default): 0.736
+P(Prepago): 0.264
+Suma: 1.0
+
+Inicio: (BBB, Rec)
+P(Default): 0.7835
+P(Prepago): 0.2165
+Suma: 1.0
+
+Inicio: (CCC, Exp)
+P(Default): 0.8669
+P(Prepago): 0.1331
+Suma: 1.0
+
+Inicio: (CCC, Rec)
+P(Default): 0.9274
+P(Prepago): 0.0726
+Suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="f-sensibilidad-economia-siempre-en-expansion">
+<h3>f) Sensibilidad: economía siempre en expansión<a class="headerlink" href="#f-sensibilidad-economia-siempre-en-expansion" title="Link to this heading">#</a></h3>
+<p>Ahora suponemos:</p>
+<div class="math notranslate nohighlight">
+\[
+q'(Exp\to Exp)=1,
+\qquad
+q'(Rec\to Exp)=1.
+\]</div>
+<p>Reutilice las funciones anteriores y compare desde <strong>(BBB, Rec)</strong>:</p>
+<ul class="simple">
+<li><p>la probabilidad de default;</p></li>
+<li><p>el tiempo total esperado antes de la absorción.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">economia_siempre_expansion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">P_bono_expansion</span> <span class="o">=</span> <span class="n">construir_matriz_bono</span><span class="p">(</span>
+    <span class="n">economia_siempre_expansion</span><span class="p">,</span>
+    <span class="n">migracion_rating</span><span class="p">,</span>
+    <span class="n">probabilidad_prepago</span><span class="p">,</span>
+    <span class="n">ciclo_del_estado</span>
+<span class="p">)</span>
+
+<span class="n">Q_bono_expansion</span> <span class="o">=</span> <span class="n">P_bono_expansion</span><span class="p">[:</span><span class="mi">6</span><span class="p">,</span> <span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">R_bono_expansion</span> <span class="o">=</span> <span class="n">P_bono_expansion</span><span class="p">[:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">:]</span>
+
+<span class="n">matriz_fundamental_expansion</span><span class="p">,</span> <span class="n">iteraciones_expansion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">calcular_matriz_fundamental</span><span class="p">(</span>
+        <span class="n">Q_bono_expansion</span><span class="p">,</span>
+        <span class="mf">0.00000001</span><span class="p">,</span>
+        <span class="mi">20000</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">probabilidades_absorcion_expansion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">matriz_fundamental_expansion</span>
+    <span class="o">@</span> <span class="n">R_bono_expansion</span>
+<span class="p">)</span>
+
+<span class="n">probabilidad_default_original</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">probabilidades_absorcion_bono</span><span class="p">[</span>
+        <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">probabilidad_default_expansion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">probabilidades_absorcion_expansion</span><span class="p">[</span>
+        <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">tiempo_original</span> <span class="o">=</span> <span class="n">matriz_fundamental_bono</span><span class="p">[</span>
+    <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+    <span class="p">:</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">tiempo_expansion</span> <span class="o">=</span> <span class="n">matriz_fundamental_expansion</span><span class="p">[</span>
+    <span class="n">indice_BBB_Rec</span><span class="p">,</span>
+    <span class="p">:</span>
+<span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparación desde (BBB, Rec):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default), economía mixta:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default_original</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default), solo expansión:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default_expansion</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo, economía mixta:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_original</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;trimestres&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo, solo expansión:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_expansion</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;trimestres&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación desde (BBB, Rec):
+
+P(Default), economía mixta: 0.7835
+P(Default), solo expansión: 0.6438
+Tiempo, economía mixta: 10.86 trimestres
+Tiempo, solo expansión: 16.94 trimestres
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cadena_bono</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_bono</span><span class="p">)</span>
+<span class="n">cadena_bono_expansion</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_bono_expansion</span><span class="p">)</span>
+
+<span class="n">N_bono_jmarkov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">estado_visitado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">cadena_bono</span><span class="o">.</span><span class="n">absorbtion_times</span><span class="p">(</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">estado_visitado</span>
+        <span class="p">)</span>
+
+        <span class="n">N_bono_jmarkov</span><span class="p">[</span>
+            <span class="n">estado_inicial</span><span class="p">,</span>
+            <span class="n">estado_visitado</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+
+<span class="n">valor_default_original</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_bono</span><span class="o">.</span><span class="n">absorbtion_probabilities</span><span class="p">(</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">indice_BBB_Rec</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="mi">6</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">valor_default_expansion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_bono_expansion</span><span class="o">.</span><span class="n">absorbtion_probabilities</span><span class="p">(</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">indice_BBB_Rec</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="mi">6</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">probabilidad_default_jmarkov</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+    <span class="n">valor_default_original</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">probabilidad_default_expansion_jmarkov</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+    <span class="n">valor_default_expansion</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fila de N desde (BBB, Rec), NumPy:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+        <span class="n">matriz_fundamental_bono</span><span class="p">[</span><span class="n">indice_BBB_Rec</span><span class="p">,</span> <span class="p">:],</span>
+        <span class="mi">4</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fila de N desde (BBB, Rec), jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+        <span class="n">N_bono_jmarkov</span><span class="p">[</span><span class="n">indice_BBB_Rec</span><span class="p">,</span> <span class="p">:],</span>
+        <span class="mi">4</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default) original, NumPy:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default_original</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default) original, jmarkov:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default) expansión, NumPy:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">probabilidad_default_expansion</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(Default) expansión, jmarkov:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span>
+        <span class="n">probabilidad_default_expansion_jmarkov</span><span class="p">,</span>
+        <span class="mi">4</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila de N desde (BBB, Rec), NumPy:
+[1.0929 0.4348 3.3299 2.8805 2.0863 1.0329]
+
+Fila de N desde (BBB, Rec), jmarkov:
+[1.0929 0.4348 3.3299 2.8805 2.0863 1.0329]
+
+P(Default) original, NumPy: 0.7835
+P(Default) original, jmarkov: 0.7835
+P(Default) expansión, NumPy: 0.6438
+P(Default) expansión, jmarkov: 0.6438
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-integrador-paciente-con-tratamiento-y-dos-variables-de-estado">
+<h2>Ejercicio integrador — Paciente con tratamiento y dos variables de estado<a class="headerlink" href="#ejercicio-integrador-paciente-con-tratamiento-y-dos-variables-de-estado" title="Link to this heading">#</a></h2>
+<p>Un sistema de salud monitorea trimestralmente pacientes con una enfermedad crónica.</p>
+<p>Las variables son:</p>
+<ul class="simple">
+<li><p>Severidad: Leve, Moderada o Grave;</p></li>
+<li><p>Adherencia: Alta o Baja.</p></li>
+</ul>
+<p>Los estados transitorios son:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>Índice</p></th>
+<th class="head"><p>Estado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p>0</p></td>
+<td><p>(Leve, Alta)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>1</p></td>
+<td><p>(Leve, Baja)</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>2</p></td>
+<td><p>(Moderada, Alta)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>3</p></td>
+<td><p>(Moderada, Baja)</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>4</p></td>
+<td><p>(Grave, Alta)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>5</p></td>
+<td><p>(Grave, Baja)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Los estados absorbentes son:</p>
+<ul class="simple">
+<li><p>6: Recuperado;</p></li>
+<li><p>7: Salida.</p></li>
+</ul>
+<p>Para que todos trabajen sobre el mismo modelo, utilizaremos las siguientes reglas fijas:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Estado actual</p></th>
+<th class="head"><p>Transiciones con probabilidad positiva</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>(L,A)</p></td>
+<td><p>(L,A): 0.70; (L,B): 0.10; (M,A): 0.07; (M,B): 0.03; Recuperado: 0.10</p></td>
+</tr>
+<tr class="row-odd"><td><p>(L,B)</p></td>
+<td><p>(L,A): 0.20; (L,B): 0.55; (M,A): 0.05; (M,B): 0.12; (G,B): 0.04; Recuperado: 0.04</p></td>
+</tr>
+<tr class="row-even"><td><p>(M,A)</p></td>
+<td><p>(L,A): 0.10; (M,A): 0.55; (M,B): 0.15; (G,A): 0.05; (G,B): 0.05; Recuperado: 0.10</p></td>
+</tr>
+<tr class="row-odd"><td><p>(M,B)</p></td>
+<td><p>(L,B): 0.08; (M,A): 0.15; (M,B): 0.50; (G,A): 0.05; (G,B): 0.15; Recuperado: 0.02; Salida: 0.05</p></td>
+</tr>
+<tr class="row-even"><td><p>(G,A)</p></td>
+<td><p>(M,A): 0.10; (M,B): 0.05; (G,A): 0.45; (G,B): 0.20; Recuperado: 0.05; Salida: 0.15</p></td>
+</tr>
+<tr class="row-odd"><td><p>(G,B)</p></td>
+<td><p>(M,B): 0.05; (G,A): 0.10; (G,B): 0.50; Salida: 0.35</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="tareas">
+<h3>Tareas<a class="headerlink" href="#tareas" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Construya <span class="math notranslate nohighlight">\(P\)</span> de tamaño <span class="math notranslate nohighlight">\(8\times8\)</span>.</p></li>
+<li><p>Separe <span class="math notranslate nohighlight">\(\mathbf Q\)</span> y <span class="math notranslate nohighlight">\(\mathbf R\)</span>.</p></li>
+<li><p>Calcule <span class="math notranslate nohighlight">\(\mathbf N\)</span> con la serie.</p></li>
+<li><p>Calcule <span class="math notranslate nohighlight">\(\mathbf B=\mathbf N\mathbf R\)</span>.</p></li>
+<li><p>Calcule el costo esperado acumulado del tratamiento antes de la absorción.</p></li>
+<li><p>Verifique con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p></li>
+</ol>
+<p>Los costos trimestrales, en millones de COP, son:</p>
+<div class="math notranslate nohighlight">
+\[
+[200,\;200,\;500,\;500,\;1200,\;1200].
+\]</div>
+</section>
+<section id="checkpoints-antes-de-aceptar-codigo-generado-por-ia">
+<h3>Checkpoints antes de aceptar código generado por IA<a class="headerlink" href="#checkpoints-antes-de-aceptar-codigo-generado-por-ia" title="Link to this heading">#</a></h3>
+<p>Antes de ejecutar una solución completa, compruebe estos valores:</p>
+<ol class="arabic simple">
+<li><p>La fila de <code class="docutils literal notranslate"><span class="pre">(L,A)</span></code> debe ser:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>La fila de <code class="docutils literal notranslate"><span class="pre">(M,B)</span></code> debe ser:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Cada fila debe sumar 1.</p></li>
+<li><p>Después de construir <code class="docutils literal notranslate"><span class="pre">Q</span></code>, compare la primera fila de <code class="docutils literal notranslate"><span class="pre">Q</span> <span class="pre">&#64;</span> <span class="pre">Q</span></code> con el valor de referencia calculado en la siguiente celda.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Referencia para verificar Q^2.</span>
+<span class="c1"># Ejecute esta celda después de construir P_paciente y Q_paciente.</span>
+
+<span class="n">fila_Q2_referencia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="mf">0.5170</span><span class="p">,</span>
+    <span class="mf">0.1274</span><span class="p">,</span>
+    <span class="mf">0.0970</span><span class="p">,</span>
+    <span class="mf">0.0585</span><span class="p">,</span>
+    <span class="mf">0.0050</span><span class="p">,</span>
+    <span class="mf">0.0120</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fila de referencia de Q^2 desde (L,A):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fila_Q2_referencia</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila de referencia de Q^2 desde (L,A):
+[0.517  0.1274 0.097  0.0585 0.005  0.012 ]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="prompt-sugerido-para-una-ia">
+<h3>Prompt sugerido para una IA<a class="headerlink" href="#prompt-sugerido-para-una-ia" title="Link to this heading">#</a></h3>
+<p>El prompt debe exigir que la IA utilice únicamente herramientas ya trabajadas: arreglos de NumPy, ciclos, condicionales, funciones sencillas y productos matriciales.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Estoy resolviendo una cadena de Markov absorbente con 8 estados:
+
+0=(L,A), 1=(L,B), 2=(M,A), 3=(M,B),
+4=(G,A), 5=(G,B), 6=Recuperado, 7=Salida.
+
+Usa exactamente las reglas de transición de la tabla del cuaderno.
+
+Necesito que, en este orden:
+
+1. Construyas P como un arreglo de NumPy y verifiques cada fila
+   con un ciclo range.
+2. Separes Q=P[:6,:6] y R=P[:6,6:].
+3. Calcules N=I+Q+Q^2+... con un ciclo hasta que
+   max(abs(Q^n)) sea menor que la tolerancia.
+4. Calcules B=N@R.
+5. Calcules el costo acumulado esperado usando ciclos,
+   con costos [200,200,500,500,1200,1200].
+6. Verifiques N y B con jmarkov únicamente al final.
+
+No uses enumerate, zip, comprensiones de listas,
+expresiones ternarias, axis=1, join ni generadores dentro de sum.
+Usa nombres de variables descriptivos.
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construya aquí su solución o pegue el código generado por la IA.</span>
+<span class="c1"># Compare primero las filas de P y la fila de Q @ Q</span>
+<span class="c1"># con los checkpoints anteriores.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><small>Universidad de los Andes · Departamento de Ingeniería Industrial · Modelos de Decisión en el Tiempo</small></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Semana 3 — Tiempos de Primera Pasada y Ocupación</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Semana_7_MDP_y_Backward_Induction_v4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Semana 7 — MDP y Backward Induction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conexion-con-la-semana-3">Conexión con la semana 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-trabajar-con-este-cuaderno">Cómo trabajar con este cuaderno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramienta-nueva-la-matriz-identidad">🧩 Herramienta nueva: la matriz identidad</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-portafolio-de-proyectos-de-inversion-basico">Ejercicio 1 — Portafolio de proyectos de inversión <em>(básico)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-construccion-y-verificacion-de-la-matriz">a) Construcción y verificación de la matriz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-matriz-fundamental">b) Matriz fundamental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-probabilidades-de-absorcion">c) Probabilidades de absorción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-ganancia-neta-acumulada-esperada">d) Ganancia neta acumulada esperada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reutilizacion-del-procedimiento">🧩 Reutilización del procedimiento</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-ciclo-de-vida-de-una-turbina-industrial-intermedio">Ejercicio 2 — Ciclo de vida de una turbina industrial <em>(intermedio)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-construccion-y-verificacion">a) Construcción y verificación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-matriz-fundamental-y-vida-util">b) Matriz fundamental y vida útil</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-probabilidad-de-falla-y-costo-total-esperado">c) Probabilidad de falla y costo total esperado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-programa-de-mantenimiento-preventivo">d) Programa de mantenimiento preventivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-bono-corporativo-con-ciclo-economico-profundizacion-guiada">Ejercicio 3 — Bono corporativo con ciclo económico <em>(profundización guiada)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-datos-del-modelo-y-construccion-de-una-fila">a) Datos del modelo y construcción de una fila</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalizacion-de-la-construccion">🧩 Generalización de la construcción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">b) Matriz fundamental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-tiempo-total-desde-cada-estado">c) Tiempo total desde cada estado</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-cupones-acumulados-esperados">d) Cupones acumulados esperados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-probabilidades-de-absorcion">e) Probabilidades de absorción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#f-sensibilidad-economia-siempre-en-expansion">f) Sensibilidad: economía siempre en expansión</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">✅ Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-integrador-paciente-con-tratamiento-y-dos-variables-de-estado">Ejercicio integrador — Paciente con tratamiento y dos variables de estado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tareas">Tareas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoints-antes-de-aceptar-codigo-generado-por-ia">Checkpoints antes de aceptar código generado por IA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido-para-una-ia">Prompt sugerido para una IA</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos de Decisión en el Tiempo | Uniandes
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

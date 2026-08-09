@@ -1,0 +1,2881 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semana 8 — MDP de horizonte infinito: VI, PI y LP &#8212; Libro Modelos de Decisión en el Tiempo - IIND 3518</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0361f5db" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Semana_8_Horizonte_Infinito_VI_PI_LP_v3';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional" href="Semana_9_Horizonte_Rodante_v4_final.html" />
+    <link rel="prev" title="Semana 7 — MDP y Backward Induction" href="Semana_7_MDP_y_Backward_Induction_v4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>
+    <script>document.write(`<img src="../../_static/uniandes.png" class="logo__image only-dark" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bienvenidos al libro del curso Modelos de Decisión en el Tiempo
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html">Complementaria 0 — Fundamentos de Python</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_1_Cadenas_de_Markov_en_Python_v3.html">Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_2_Transitorio_y_Estado_Estable_v3.html">Semana 2 — Análisis transitorio y estado estable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html">Semana 3 — Tiempos de Primera Pasada y Ocupación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_4_Cadenas_Absorbentes_v3.html">Semana 4 — Cadenas absorbentes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_7_MDP_y_Backward_Induction_v4.html">Semana 7 — MDP y Backward Induction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_9_Horizonte_Rodante_v4_final.html">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_10_Rollout_y_Benchmarking_v4_final.html">Semana 10 — Rollout y benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_12_MC_y_TD0_v4_final.html">Semana 12 — Evaluación Monte Carlo y TD(0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_13_SARSA_Q_learning_v4_final.html">Semana 13 — SARSA y Q-learning: control TD sin modelo</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_14_Double_Q_y_Shaping_v4_final.html">Semana 14 — Double Q-learning y diseño de recompensas</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Semana_8_Horizonte_Infinito_VI_PI_LP_v3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semana 8 — MDP de horizonte infinito: VI, PI y LP</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentos-teoricos">Fundamentos teóricos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuacion-de-bellman-de-optimalidad">Ecuación de Bellman de optimalidad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-valor">Iteración de Valor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-politica">Iteración de Política</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-lineal">Programación Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparacion-del-entorno">Preparación del entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramienta-np-argmax">Herramienta: <code class="docutils literal notranslate"><span class="pre">np.argmax</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-gestion-de-activos-reemplazo-de-un-generador">Ejercicio 1 — Gestión de activos: reemplazo de un generador</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#una-actualizacion-de-bellman">1.1 Una actualización de Bellman</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2 Iteración de Valor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.3 Iteración de Política</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.4 Programación Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-los-tres-metodos">1.5 Comparación de los tres métodos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-proporcionada-con-jmarkov">Verificación proporcionada con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-reutilizables">Funciones reutilizables</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-estacionario">Ejercicio 2 — Inventario estacionario</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#politica-estacionaria-s-s">Política estacionaria <span class="math notranslate nohighlight">\((s^*,S^*)\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensibilidad-al-costo-de-escasez">Sensibilidad al costo de escasez</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-gestion-de-flota-de-vehiculos">Ejercicio abierto — Gestión de flota de vehículos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actividades">Actividades</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-critico-de-ia">Uso crítico de IA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido">Prompt sugerido</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semana-8-mdp-de-horizonte-infinito-vi-pi-y-lp">
+<h1>Semana 8 — MDP de horizonte infinito: VI, PI y LP<a class="headerlink" href="#semana-8-mdp-de-horizonte-infinito-vi-pi-y-lp" title="Link to this heading">#</a></h1>
+<p>En esta sesión estudiamos tres métodos exactos para resolver MDP de horizonte infinito con factor de descuento <span class="math notranslate nohighlight">\(\gamma&lt;1\)</span>:</p>
+<ul class="simple">
+<li><p><strong>Iteración de Valor (VI)</strong>.</p></li>
+<li><p><strong>Iteración de Política (PI)</strong>.</p></li>
+<li><p><strong>Programación Lineal (LP)</strong>.</p></li>
+</ul>
+<p>La dificultad central de esta semana es comprender cómo cada método usa las ecuaciones de Bellman. El código se escribe con ciclos, condicionales, arreglos de NumPy y funciones sencillas, siguiendo el estilo de los cuadernos anteriores.</p>
+<blockquote>
+<div><p><strong>Conexión con la semana 7:</strong> en backward induction recorríamos las épocas desde el final hasta el comienzo. En horizonte infinito no existe una última época conocida. Buscamos una función <span class="math notranslate nohighlight">\(V^*\)</span> que permanezca igual después de aplicar nuevamente el operador de Bellman.</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="fundamentos-teoricos">
+<h2>Fundamentos teóricos<a class="headerlink" href="#fundamentos-teoricos" title="Link to this heading">#</a></h2>
+<section id="ecuacion-de-bellman-de-optimalidad">
+<h3>Ecuación de Bellman de optimalidad<a class="headerlink" href="#ecuacion-de-bellman-de-optimalidad" title="Link to this heading">#</a></h3>
+<p>Para un MDP <span class="math notranslate nohighlight">\((\mathcal S,\mathcal A,P,r,\gamma)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+V^*(s)
+=
+\max_{a\in\mathcal A}
+\left[
+r(s,a)
++
+\gamma
+\sum_{s'}
+P(s'\mid s,a)V^*(s')
+\right].
+\]</div>
+</section>
+<section id="iteracion-de-valor">
+<h3>Iteración de Valor<a class="headerlink" href="#iteracion-de-valor" title="Link to this heading">#</a></h3>
+<p>Partimos de un vector inicial <span class="math notranslate nohighlight">\(V^{(0)}\)</span> y repetimos:</p>
+<div class="math notranslate nohighlight">
+\[
+V^{(k+1)}(s)
+=
+\max_a
+\left[
+r(s,a)
++
+\gamma
+\sum_{s'}
+P(s'\mid s,a)V^{(k)}(s')
+\right].
+\]</div>
+</section>
+<section id="iteracion-de-politica">
+<h3>Iteración de Política<a class="headerlink" href="#iteracion-de-politica" title="Link to this heading">#</a></h3>
+<p>Alternamos dos pasos:</p>
+<ol class="arabic simple">
+<li><p><strong>Evaluación:</strong> resolver <span class="math notranslate nohighlight">\((I-\gamma P^\pi)V^\pi=r^\pi\)</span>.</p></li>
+<li><p><strong>Mejora:</strong> elegir en cada estado la acción con mayor valor.</p></li>
+</ol>
+</section>
+<section id="programacion-lineal">
+<h3>Programación Lineal<a class="headerlink" href="#programacion-lineal" title="Link to this heading">#</a></h3>
+<p>La función óptima también se obtiene resolviendo:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_V \sum_s V_s
+\]</div>
+<p>sujeto a:</p>
+<div class="math notranslate nohighlight">
+\[
+V_s
+\geq
+r(s,a)
++
+\gamma
+\sum_{s'}P(s'\mid s,a)V_{s'}
+\qquad
+\forall(s,a).
+\]</div>
+<p>Los tres métodos deben producir el mismo <span class="math notranslate nohighlight">\(V^*\)</span> y una política óptima equivalente.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="preparacion-del-entorno">
+<h2>Preparación del entorno<a class="headerlink" href="#preparacion-del-entorno" title="Link to this heading">#</a></h2>
+<p>Ejecute las celdas de arriba hacia abajo. La instalación de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> se utiliza solamente para verificar resultados al final de algunos ejercicios.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>jmarkov
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: jmarkov in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (0.3.9)
+Requirement already satisfied: numpy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (2.4.1)
+Requirement already satisfied: scipy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (1.17.0)
+Requirement already satisfied: typing in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (3.7.4.3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">linprog</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="herramienta-np-argmax">
+<h2>Herramienta: <code class="docutils literal notranslate"><span class="pre">np.argmax</span></code><a class="headerlink" href="#herramienta-np-argmax" title="Link to this heading">#</a></h2>
+<p>Para cada estado calcularemos un valor por acción. Necesitamos distinguir:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">np.max(valores)</span></code>: devuelve el mayor valor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.argmax(valores)</span></code>: devuelve la posición donde se encuentra ese mayor valor.</p></li>
+</ul>
+<p>La posición permite identificar la acción óptima.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">valores_ejemplo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.2</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">])</span>
+
+<span class="n">mejor_valor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">valores_ejemplo</span><span class="p">)</span>
+<span class="n">indice_mejor_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">valores_ejemplo</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor valor:&quot;</span><span class="p">,</span> <span class="n">mejor_valor</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Índice de la mejor acción:&quot;</span><span class="p">,</span> <span class="n">indice_mejor_accion</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor valor: 6.8
+Índice de la mejor acción: 1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-1-gestion-de-activos-reemplazo-de-un-generador">
+<h1>Ejercicio 1 — Gestión de activos: reemplazo de un generador<a class="headerlink" href="#ejercicio-1-gestion-de-activos-reemplazo-de-un-generador" title="Link to this heading">#</a></h1>
+<p>Energía Andes S.A.S. observa el estado de un generador y decide entre <strong>Mantener</strong> y <strong>Reemplazar</strong>.</p>
+<p>Estados:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal S=
+\{\text{Nuevo},\text{Bueno},\text{Regular},\text{Malo}\}.
+\]</div>
+<p>Acciones:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal A=
+\{\text{Mantener},\text{Reemplazar}\}.
+\]</div>
+<p>Matrices de transición:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{(M)}
+=
+\begin{pmatrix}
+0.85&amp;0.15&amp;0&amp;0\\
+0&amp;0.80&amp;0.20&amp;0\\
+0&amp;0&amp;0.70&amp;0.30\\
+0&amp;0&amp;0&amp;1
+\end{pmatrix},
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{(R)}
+=
+\begin{pmatrix}
+1&amp;0&amp;0&amp;0\\
+0.85&amp;0.15&amp;0&amp;0\\
+0.85&amp;0.15&amp;0&amp;0\\
+0.85&amp;0.15&amp;0&amp;0
+\end{pmatrix}.
+\end{split}\]</div>
+<p>La primera fila de <span class="math notranslate nohighlight">\(P^{(R)}\)</span> es una transición ficticia válida. Reemplazar desde Nuevo se hace infactible mediante una recompensa muy negativa.</p>
+<p>Retornos:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Estado</p></th>
+<th class="head text-right"><p>Mantener</p></th>
+<th class="head text-right"><p>Reemplazar</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Nuevo</p></td>
+<td class="text-right"><p>100</p></td>
+<td class="text-right"><p>-10000</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Bueno</p></td>
+<td class="text-right"><p>80</p></td>
+<td class="text-right"><p>-20</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Regular</p></td>
+<td class="text-right"><p>50</p></td>
+<td class="text-right"><p>-20</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Malo</p></td>
+<td class="text-right"><p>20</p></td>
+<td class="text-right"><p>-20</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Factor de descuento: <span class="math notranslate nohighlight">\(\gamma=0.90\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="s2">&quot;Nuevo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bueno&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Regular&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Malo&quot;</span>
+<span class="p">])</span>
+
+<span class="n">acciones_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="s2">&quot;Mantener&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Reemplazar&quot;</span>
+<span class="p">])</span>
+
+<span class="n">gamma_generador</span> <span class="o">=</span> <span class="mf">0.90</span>
+
+<span class="n">P_mantener</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">P_reemplazar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">matrices_generador</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">P_mantener</span><span class="p">,</span>
+    <span class="n">P_reemplazar</span>
+<span class="p">]</span>
+
+<span class="n">retornos_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">10000.0</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">80.0</span><span class="p">,</span>    <span class="o">-</span><span class="mf">20.0</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">50.0</span><span class="p">,</span>    <span class="o">-</span><span class="mf">20.0</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">20.0</span><span class="p">,</span>    <span class="o">-</span><span class="mf">20.0</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">numero_estados_generador</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">estados_generador</span><span class="p">)</span>
+<span class="n">numero_acciones_generador</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">acciones_generador</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice_accion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Acción:&quot;</span><span class="p">,</span> <span class="n">acciones_generador</span><span class="p">[</span><span class="n">indice_accion</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+        <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">indice_accion</span><span class="p">][</span>
+            <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;  Estado&quot;</span><span class="p">,</span>
+            <span class="n">estados_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+            <span class="s2">&quot;- suma de la fila:&quot;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Acción: Mantener
+  Estado Nuevo - suma de la fila: 1.0
+  Estado Bueno - suma de la fila: 1.0
+  Estado Regular - suma de la fila: 1.0
+  Estado Malo - suma de la fila: 1.0
+Acción: Reemplazar
+  Estado Nuevo - suma de la fila: 1.0
+  Estado Bueno - suma de la fila: 1.0
+  Estado Regular - suma de la fila: 1.0
+  Estado Malo - suma de la fila: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<section id="una-actualizacion-de-bellman">
+<h2>1.1 Una actualización de Bellman<a class="headerlink" href="#una-actualizacion-de-bellman" title="Link to this heading">#</a></h2>
+<p>Comenzamos con:</p>
+<div class="math notranslate nohighlight">
+\[
+V^{(0)}=[0,0,0,0].
+\]</div>
+<p>Para cada estado calculamos un valor por acción. Como <span class="math notranslate nohighlight">\(V^{(0)}=0\)</span>, en la primera actualización la parte de continuación vale cero. El código se escribe completo antes de pasar al ciclo general.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">valor_inicial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+
+<span class="n">valores_primera_iteracion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_acciones_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+        <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+            <span class="n">probabilidad</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">estado_siguiente</span>
+            <span class="p">]</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">continuacion</span>
+                <span class="o">+</span> <span class="n">probabilidad</span>
+                <span class="o">*</span> <span class="n">valor_inicial</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">valores_primera_iteracion</span><span class="p">[</span>
+            <span class="n">estado_actual</span><span class="p">,</span>
+            <span class="n">accion_actual</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">retornos_generador</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span>
+            <span class="o">+</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">continuacion</span>
+        <span class="p">)</span>
+
+<span class="n">valor_primera_iteracion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+<span class="n">politica_primera_iteracion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estados_generador</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">valor_primera_iteracion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">valores_primera_iteracion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+    <span class="n">politica_primera_iteracion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+        <span class="n">valores_primera_iteracion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores por acción en la primera iteración:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">valores_primera_iteracion</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">V^(1):&quot;</span><span class="p">,</span> <span class="n">valor_primera_iteracion</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Acciones elegidas en la primera iteración:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">indice_accion</span> <span class="o">=</span> <span class="n">politica_primera_iteracion</span><span class="p">[</span>
+        <span class="n">estado_actual</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+        <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span>
+        <span class="n">acciones_generador</span><span class="p">[</span><span class="n">indice_accion</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valores por acción en la primera iteración:
+[[   100. -10000.]
+ [    80.    -20.]
+ [    50.    -20.]
+ [    20.    -20.]]
+
+V^(1): [100.  80.  50.  20.]
+
+Acciones elegidas en la primera iteración:
+Nuevo -&gt; Mantener
+Bueno -&gt; Mantener
+Regular -&gt; Mantener
+Malo -&gt; Mantener
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h2>1.2 Iteración de Valor<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>El contador se incrementa cada vez que se aplica el operador de Bellman. Después de converger, recalculamos los valores por acción usando el valor final antes de extraer la política.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon_generador</span> <span class="o">=</span> <span class="mf">0.00000001</span>
+
+<span class="n">umbral_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">epsilon_generador</span>
+    <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gamma_generador</span><span class="p">)</span>
+    <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">valor_vi_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+<span class="n">historial_cambios_generador</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">numero_iteraciones_vi_generador</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+    <span class="n">numero_iteraciones_vi_generador</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">numero_iteraciones_vi_generador</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">valores_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_acciones_generador</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">numero_estados_generador</span>
+            <span class="p">):</span>
+
+                <span class="n">probabilidad</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">][</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">estado_siguiente</span><span class="p">]</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">continuacion</span>
+                    <span class="o">+</span> <span class="n">probabilidad</span>
+                    <span class="o">*</span> <span class="n">valor_vi_generador</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">valores_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">retornos_generador</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">continuacion</span>
+            <span class="p">)</span>
+
+    <span class="n">valor_nuevo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="n">valor_nuevo</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+            <span class="n">valores_por_accion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="p">)</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_nuevo</span> <span class="o">-</span> <span class="n">valor_vi_generador</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">historial_cambios_generador</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cambio_maximo</span><span class="p">)</span>
+
+    <span class="n">valor_vi_generador</span> <span class="o">=</span> <span class="n">valor_nuevo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">umbral_generador</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">tiempo_vi_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="c1"># Recalcular los valores por acción usando V final</span>
+<span class="n">valores_finales_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_acciones_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+        <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+            <span class="n">probabilidad</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">estado_siguiente</span>
+            <span class="p">]</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">continuacion</span>
+                <span class="o">+</span> <span class="n">probabilidad</span>
+                <span class="o">*</span> <span class="n">valor_vi_generador</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">valores_finales_por_accion</span><span class="p">[</span>
+            <span class="n">estado_actual</span><span class="p">,</span>
+            <span class="n">accion_actual</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">retornos_generador</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span>
+            <span class="o">+</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">continuacion</span>
+        <span class="p">)</span>
+
+<span class="n">politica_vi_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estados_generador</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">politica_vi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+        <span class="n">valores_finales_por_accion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;VI convergió en&quot;</span><span class="p">,</span>
+    <span class="n">numero_iteraciones_vi_generador</span><span class="p">,</span>
+    <span class="s2">&quot;actualizaciones de Bellman.&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tiempo observado:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_vi_generador</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;ms&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Valor óptimo aproximado:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+        <span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_vi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Política obtenida con VI:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">indice_accion</span> <span class="o">=</span> <span class="n">politica_vi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+        <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span>
+        <span class="n">acciones_generador</span><span class="p">[</span><span class="n">indice_accion</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>VI convergió en 245 actualizaciones de Bellman.
+Tiempo observado: 9.263 ms
+
+Valor óptimo aproximado:
+Nuevo : 864.6747
+Bueno : 764.4337
+Regular : 744.6747
+Malo : 744.6747
+
+Política obtenida con VI:
+Nuevo -&gt; Mantener
+Bueno -&gt; Mantener
+Regular -&gt; Reemplazar
+Malo -&gt; Reemplazar
+</pre></div>
+</div>
+</div>
+</div>
+<section id="visualizacion-proporcionada">
+<h3>Visualización proporcionada<a class="headerlink" href="#visualizacion-proporcionada" title="Link to this heading">#</a></h3>
+<p>Esta celda se entrega completa. El código de Matplotlib <strong>no hace parte de los contenidos de programación evaluados</strong>. Concéntrese en interpretar cómo disminuye el cambio máximo y cuándo cruza el umbral de parada.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">historial_cambios_generador</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+    <span class="n">umbral_generador</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Umbral de parada&quot;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteración&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cambio máximo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convergencia de Iteración de Valor&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/76460b83151b001f8ebe7660461974544023cd41dda174b0159c856f1783d244.png" src="../../_images/76460b83151b001f8ebe7660461974544023cd41dda174b0159c856f1783d244.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h2>1.3 Iteración de Política<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">np.linalg.solve(A,b)</span></code> resuelve el sistema lineal <span class="math notranslate nohighlight">\(Ax=b\)</span>. No estudiaremos internamente el método numérico; el objetivo es construir correctamente <span class="math notranslate nohighlight">\(P^\pi\)</span> y <span class="math notranslate nohighlight">\(r^\pi\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">politica_pi_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estados_generador</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="n">numero_evaluaciones_generador</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+    <span class="n">matriz_politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_estados_generador</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">retorno_politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="n">accion_elegida</span> <span class="o">=</span> <span class="n">politica_pi_generador</span><span class="p">[</span>
+            <span class="n">estado_actual</span>
+        <span class="p">]</span>
+
+        <span class="n">matriz_politica</span><span class="p">[</span>
+            <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span>
+            <span class="n">accion_elegida</span>
+        <span class="p">][</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="n">retorno_politica</span><span class="p">[</span>
+            <span class="n">estado_actual</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="n">retornos_generador</span><span class="p">[</span>
+            <span class="n">estado_actual</span><span class="p">,</span>
+            <span class="n">accion_elegida</span>
+        <span class="p">]</span>
+
+    <span class="n">identidad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+
+    <span class="n">valor_pi_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="n">identidad</span>
+        <span class="o">-</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">matriz_politica</span><span class="p">,</span>
+        <span class="n">retorno_politica</span>
+    <span class="p">)</span>
+
+    <span class="n">numero_evaluaciones_generador</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">numero_evaluaciones_generador</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">valores_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_acciones_generador</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">numero_estados_generador</span>
+            <span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">continuacion</span>
+                    <span class="o">+</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">*</span> <span class="n">valor_pi_generador</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">valores_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">retornos_generador</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">continuacion</span>
+            <span class="p">)</span>
+
+    <span class="n">politica_nueva</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_estados_generador</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="n">politica_nueva</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+            <span class="n">valores_por_accion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="p">)</span>
+
+    <span class="n">politica_estable</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">politica_nueva</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+            <span class="o">!=</span> <span class="n">politica_pi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="n">politica_estable</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">politica_pi_generador</span> <span class="o">=</span> <span class="n">politica_nueva</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">politica_estable</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">tiempo_pi_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;PI convergió en&quot;</span><span class="p">,</span>
+    <span class="n">numero_evaluaciones_generador</span><span class="p">,</span>
+    <span class="s2">&quot;evaluaciones de política.&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tiempo observado:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_pi_generador</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;ms&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PI convergió en 3 evaluaciones de política.
+Tiempo observado: 0.67 ms
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>1.4 Programación Lineal<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>Primero construimos una restricción de Bellman por cada par estado–acción. El solver <code class="docutils literal notranslate"><span class="pre">linprog</span></code> se utiliza como herramienta numérica proporcionada: se evalúa la formulación del LP, no el funcionamiento interno del solver HiGHS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_restricciones_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">numero_estados_generador</span>
+    <span class="o">*</span> <span class="n">numero_acciones_generador</span>
+<span class="p">)</span>
+
+<span class="n">A_ub_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span>
+        <span class="n">numero_restricciones_generador</span><span class="p">,</span>
+        <span class="n">numero_estados_generador</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">b_ub_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_restricciones_generador</span>
+<span class="p">)</span>
+
+<span class="n">fila_restriccion</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+        <span class="n">A_ub_generador</span><span class="p">[</span>
+            <span class="n">fila_restriccion</span><span class="p">,</span>
+            <span class="n">estado_actual</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+
+        <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+            <span class="n">numero_estados_generador</span>
+        <span class="p">):</span>
+
+            <span class="n">A_ub_generador</span><span class="p">[</span>
+                <span class="n">fila_restriccion</span><span class="p">,</span>
+                <span class="n">estado_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">A_ub_generador</span><span class="p">[</span>
+                    <span class="n">fila_restriccion</span><span class="p">,</span>
+                    <span class="n">estado_siguiente</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma_generador</span>
+                <span class="o">*</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">estado_siguiente</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">b_ub_generador</span><span class="p">[</span><span class="n">fila_restriccion</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="o">-</span><span class="n">retornos_generador</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">fila_restriccion</span> <span class="o">=</span> <span class="n">fila_restriccion</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">objetivo_lp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">)</span>
+
+<span class="n">limites_lp</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">]</span> <span class="o">*</span> <span class="n">numero_estados_generador</span>
+
+<span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="n">resultado_lp_generador</span> <span class="o">=</span> <span class="n">linprog</span><span class="p">(</span>
+    <span class="n">objetivo_lp</span><span class="p">,</span>
+    <span class="n">A_ub</span><span class="o">=</span><span class="n">A_ub_generador</span><span class="p">,</span>
+    <span class="n">b_ub</span><span class="o">=</span><span class="n">b_ub_generador</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">limites_lp</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;highs&quot;</span>
+<span class="p">)</span>
+
+<span class="n">tiempo_lp_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="k">if</span> <span class="n">resultado_lp_generador</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+    <span class="n">valor_lp_generador</span> <span class="o">=</span> <span class="n">resultado_lp_generador</span><span class="o">.</span><span class="n">x</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">&quot;El solver LP no encontró una solución óptima.&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">valores_lp_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">,</span> <span class="n">numero_acciones_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_generador</span><span class="p">):</span>
+
+        <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">continuacion</span>
+                <span class="o">+</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">estado_siguiente</span>
+                <span class="p">]</span>
+                <span class="o">*</span> <span class="n">valor_lp_generador</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">valores_lp_por_accion</span><span class="p">[</span>
+            <span class="n">estado_actual</span><span class="p">,</span>
+            <span class="n">accion_actual</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">retornos_generador</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span>
+            <span class="o">+</span> <span class="n">gamma_generador</span> <span class="o">*</span> <span class="n">continuacion</span>
+        <span class="p">)</span>
+
+<span class="n">politica_lp_generador</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estados_generador</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">politica_lp_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+        <span class="n">valores_lp_por_accion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estado del solver:&quot;</span><span class="p">,</span> <span class="n">resultado_lp_generador</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tiempo observado:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_lp_generador</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;ms&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estado del solver: Optimization terminated successfully. (HiGHS Status 7: Optimal)
+Tiempo observado: 4.026 ms
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparacion-de-los-tres-metodos">
+<h2>1.5 Comparación de los tres métodos<a class="headerlink" href="#comparacion-de-los-tres-metodos" title="Link to this heading">#</a></h2>
+<p>Los tiempos medidos son <strong>ilustrativos</strong> y pueden cambiar entre ejecuciones. Para problemas tan pequeños no permiten concluir qué algoritmo será siempre más rápido.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparación de valores y políticas&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_generador</span><span class="p">):</span>
+
+    <span class="n">accion_vi</span> <span class="o">=</span> <span class="n">acciones_generador</span><span class="p">[</span>
+        <span class="n">politica_vi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="n">accion_pi</span> <span class="o">=</span> <span class="n">acciones_generador</span><span class="p">[</span>
+        <span class="n">politica_pi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="n">accion_lp</span> <span class="o">=</span> <span class="n">acciones_generador</span><span class="p">[</span>
+        <span class="n">politica_lp_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estado:&quot;</span><span class="p">,</span> <span class="n">estados_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  V por VI:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_vi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  V por PI:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_pi_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  V por LP:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_lp_generador</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Política VI:&quot;</span><span class="p">,</span> <span class="n">accion_vi</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Política PI:&quot;</span><span class="p">,</span> <span class="n">accion_pi</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Política LP:&quot;</span><span class="p">,</span> <span class="n">accion_lp</span><span class="p">)</span>
+
+<span class="n">diferencia_vi_pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_vi_generador</span> <span class="o">-</span> <span class="n">valor_pi_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">diferencia_vi_lp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_vi_generador</span> <span class="o">-</span> <span class="n">valor_lp_generador</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Diferencia máxima VI-PI:&quot;</span><span class="p">,</span> <span class="n">diferencia_vi_pi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Diferencia máxima VI-LP:&quot;</span><span class="p">,</span> <span class="n">diferencia_vi_lp</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Actualizaciones de Bellman en VI:&quot;</span><span class="p">,</span>
+      <span class="n">numero_iteraciones_vi_generador</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Evaluaciones de política en PI:&quot;</span><span class="p">,</span>
+      <span class="n">numero_evaluaciones_generador</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restricciones del LP:&quot;</span><span class="p">,</span>
+      <span class="n">numero_restricciones_generador</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación de valores y políticas
+
+Estado: Nuevo
+  V por VI: 864.6747
+  V por PI: 864.6747
+  V por LP: 864.6747
+  Política VI: Mantener
+  Política PI: Mantener
+  Política LP: Mantener
+
+Estado: Bueno
+  V por VI: 764.4337
+  V por PI: 764.4337
+  V por LP: 764.4337
+  Política VI: Mantener
+  Política PI: Mantener
+  Política LP: Mantener
+
+Estado: Regular
+  V por VI: 744.6747
+  V por PI: 744.6747
+  V por LP: 744.6747
+  Política VI: Reemplazar
+  Política PI: Reemplazar
+  Política LP: Reemplazar
+
+Estado: Malo
+  V por VI: 744.6747
+  V por PI: 744.6747
+  V por LP: 744.6747
+  Política VI: Reemplazar
+  Política PI: Reemplazar
+  Política LP: Reemplazar
+
+Diferencia máxima VI-PI: 4.942876330460422e-09
+Diferencia máxima VI-LP: 4.943785825162195e-09
+
+Actualizaciones de Bellman en VI: 245
+Evaluaciones de política en PI: 3
+Restricciones del LP: 8
+</pre></div>
+</div>
+</div>
+</div>
+<section id="verificacion-proporcionada-con-jmarkov">
+<h3>Verificación proporcionada con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#verificacion-proporcionada-con-jmarkov" title="Link to this heading">#</a></h3>
+<p>Los diccionarios de esta celda responden a la interfaz de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>. <strong>No se evalúa que el estudiante reproduzca esta sintaxis de memoria.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jmarkov.mdp.dtmdp</span><span class="w"> </span><span class="kn">import</span> <span class="n">dtmdp</span>
+
+<span class="n">matrices_jmarkov_generador</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">matrices_jmarkov_generador</span><span class="p">[</span>
+    <span class="s2">&quot;Mantener&quot;</span>
+<span class="p">]</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">matrices_jmarkov_generador</span><span class="p">[</span>
+    <span class="s2">&quot;Reemplazar&quot;</span>
+<span class="p">]</span> <span class="o">=</span> <span class="n">matrices_generador</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">mdp_jmarkov_generador</span> <span class="o">=</span> <span class="n">dtmdp</span><span class="p">(</span>
+    <span class="n">estados_generador</span><span class="p">,</span>
+    <span class="n">acciones_generador</span><span class="p">,</span>
+    <span class="n">matrices_jmarkov_generador</span><span class="p">,</span>
+    <span class="n">retornos_generador</span><span class="p">,</span>
+    <span class="n">gamma_generador</span>
+<span class="p">)</span>
+
+<span class="n">valor_jmarkov_generador</span><span class="p">,</span> <span class="n">politica_jmarkov_generador</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">mdp_jmarkov_generador</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="n">minimize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;policy_iteration&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valor calculado por jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">valor_jmarkov_generador</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Política calculada por jmarkov:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">politica_jmarkov_generador</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor calculado por jmarkov:
+[864.67469872 764.43373487 744.67469873 744.67469873]
+Política calculada por jmarkov:
+{np.str_(&#39;Nuevo&#39;): np.str_(&#39;Mantener&#39;), np.str_(&#39;Bueno&#39;): np.str_(&#39;Mantener&#39;), np.str_(&#39;Regular&#39;): np.str_(&#39;Reemplazar&#39;), np.str_(&#39;Malo&#39;): np.str_(&#39;Reemplazar&#39;)}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="funciones-reutilizables">
+<h1>Funciones reutilizables<a class="headerlink" href="#funciones-reutilizables" title="Link to this heading">#</a></h1>
+<p>Ya desarrollamos VI, PI y LP paso a paso. Ahora los empaquetamos en funciones sencillas para reutilizarlos. Las funciones conservan los mismos ciclos y la misma lógica del ejercicio anterior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">value_iteration</span><span class="p">(</span>
+    <span class="n">matrices_por_accion</span><span class="p">,</span>
+    <span class="n">retornos</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="p">,</span>
+    <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.00000001</span>
+<span class="p">):</span>
+
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">numero_acciones</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">valor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+
+    <span class="n">umbral</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">epsilon</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gamma</span><span class="p">)</span>
+        <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">historial_cambios</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">numero_iteraciones</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+        <span class="n">numero_iteraciones</span> <span class="o">=</span> <span class="n">numero_iteraciones</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">valores_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_acciones</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+                <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+                    <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">continuacion</span>
+                        <span class="o">+</span> <span class="n">matrices_por_accion</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                            <span class="n">estado_actual</span><span class="p">,</span>
+                            <span class="n">estado_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">*</span> <span class="n">valor</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+                <span class="n">valores_por_accion</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">retornos</span><span class="p">[</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">accion_actual</span>
+                    <span class="p">]</span>
+                    <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">continuacion</span>
+                <span class="p">)</span>
+
+        <span class="n">valor_nuevo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="n">valor_nuevo</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+                <span class="n">valores_por_accion</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="p">)</span>
+
+        <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_nuevo</span> <span class="o">-</span> <span class="n">valor</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">historial_cambios</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cambio_maximo</span><span class="p">)</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">valor_nuevo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">umbral</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="c1"># Política greedy respecto del valor final</span>
+    <span class="n">valores_finales_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_acciones</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">continuacion</span>
+                    <span class="o">+</span> <span class="n">matrices_por_accion</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">*</span> <span class="n">valor</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">valores_finales_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">retornos</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">continuacion</span>
+            <span class="p">)</span>
+
+    <span class="n">politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_estados</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="n">politica</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+            <span class="n">valores_finales_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">valor</span><span class="p">,</span>
+        <span class="n">politica</span><span class="p">,</span>
+        <span class="n">numero_iteraciones</span><span class="p">,</span>
+        <span class="n">historial_cambios</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">policy_iteration</span><span class="p">(</span>
+    <span class="n">matrices_por_accion</span><span class="p">,</span>
+    <span class="n">retornos</span><span class="p">,</span>
+    <span class="n">gamma</span>
+<span class="p">):</span>
+
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">numero_acciones</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_estados</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+    <span class="p">)</span>
+
+    <span class="n">numero_evaluaciones</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+        <span class="n">matriz_politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_estados</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">retorno_politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">numero_estados</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="n">accion_elegida</span> <span class="o">=</span> <span class="n">politica</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+
+            <span class="n">matriz_politica</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">matrices_por_accion</span><span class="p">[</span>
+                <span class="n">accion_elegida</span>
+            <span class="p">][</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+
+            <span class="n">retorno_politica</span><span class="p">[</span>
+                <span class="n">estado_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">retornos</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_elegida</span>
+            <span class="p">]</span>
+
+        <span class="n">identidad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">identidad</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">matriz_politica</span><span class="p">,</span>
+            <span class="n">retorno_politica</span>
+        <span class="p">)</span>
+
+        <span class="n">numero_evaluaciones</span> <span class="o">=</span> <span class="n">numero_evaluaciones</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">valores_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_acciones</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+                <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+                    <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">continuacion</span>
+                        <span class="o">+</span> <span class="n">matrices_por_accion</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                            <span class="n">estado_actual</span><span class="p">,</span>
+                            <span class="n">estado_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">*</span> <span class="n">valor</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+                <span class="n">valores_por_accion</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">retornos</span><span class="p">[</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">accion_actual</span>
+                    <span class="p">]</span>
+                    <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">continuacion</span>
+                <span class="p">)</span>
+
+        <span class="n">politica_nueva</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">numero_estados</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="n">politica_nueva</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+                <span class="n">valores_por_accion</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="n">politica_estable</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">politica_nueva</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+                <span class="o">!=</span> <span class="n">politica</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="n">politica_estable</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">politica</span> <span class="o">=</span> <span class="n">politica_nueva</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">politica_estable</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">valor</span><span class="p">,</span> <span class="n">politica</span><span class="p">,</span> <span class="n">numero_evaluaciones</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mdp_linprog</span><span class="p">(</span>
+    <span class="n">matrices_por_accion</span><span class="p">,</span>
+    <span class="n">retornos</span><span class="p">,</span>
+    <span class="n">gamma</span>
+<span class="p">):</span>
+
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">numero_acciones</span> <span class="o">=</span> <span class="n">retornos</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">numero_restricciones</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">numero_estados</span> <span class="o">*</span> <span class="n">numero_acciones</span>
+    <span class="p">)</span>
+
+    <span class="n">A_ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_restricciones</span><span class="p">,</span> <span class="n">numero_estados</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">b_ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_restricciones</span><span class="p">)</span>
+
+    <span class="n">fila_restriccion</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+            <span class="n">A_ub</span><span class="p">[</span>
+                <span class="n">fila_restriccion</span><span class="p">,</span>
+                <span class="n">estado_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+                <span class="n">A_ub</span><span class="p">[</span>
+                    <span class="n">fila_restriccion</span><span class="p">,</span>
+                    <span class="n">estado_siguiente</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">A_ub</span><span class="p">[</span>
+                        <span class="n">fila_restriccion</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">+</span> <span class="n">gamma</span>
+                    <span class="o">*</span> <span class="n">matrices_por_accion</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">b_ub</span><span class="p">[</span><span class="n">fila_restriccion</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="o">-</span><span class="n">retornos</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="n">fila_restriccion</span> <span class="o">=</span> <span class="n">fila_restriccion</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">objetivo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+
+    <span class="n">limites</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">*</span> <span class="n">numero_estados</span>
+
+    <span class="n">resultado</span> <span class="o">=</span> <span class="n">linprog</span><span class="p">(</span>
+        <span class="n">objetivo</span><span class="p">,</span>
+        <span class="n">A_ub</span><span class="o">=</span><span class="n">A_ub</span><span class="p">,</span>
+        <span class="n">b_ub</span><span class="o">=</span><span class="n">b_ub</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="n">limites</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;highs&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">resultado</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;El solver LP no encontró una solución óptima.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">valor</span> <span class="o">=</span> <span class="n">resultado</span><span class="o">.</span><span class="n">x</span>
+
+    <span class="n">valores_por_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_acciones</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">continuacion</span>
+                    <span class="o">+</span> <span class="n">matrices_por_accion</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">][</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">*</span> <span class="n">valor</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">valores_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span>
+                <span class="n">accion_actual</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">retornos</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_actual</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">continuacion</span>
+            <span class="p">)</span>
+
+    <span class="n">politica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_estados</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="n">politica</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+            <span class="n">valores_por_accion</span><span class="p">[</span>
+                <span class="n">estado_actual</span><span class="p">,</span> <span class="p">:</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">valor</span><span class="p">,</span> <span class="n">politica</span><span class="p">,</span> <span class="n">resultado</span><span class="o">.</span><span class="n">message</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mostrar_comparacion</span><span class="p">(</span>
+    <span class="n">nombre</span><span class="p">,</span>
+    <span class="n">estados</span><span class="p">,</span>
+    <span class="n">acciones</span><span class="p">,</span>
+    <span class="n">resultado_vi</span><span class="p">,</span>
+    <span class="n">resultado_pi</span><span class="p">,</span>
+    <span class="n">resultado_lp</span>
+<span class="p">):</span>
+
+    <span class="n">valor_vi</span> <span class="o">=</span> <span class="n">resultado_vi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">politica_vi</span> <span class="o">=</span> <span class="n">resultado_vi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">iteraciones_vi</span> <span class="o">=</span> <span class="n">resultado_vi</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">valor_pi</span> <span class="o">=</span> <span class="n">resultado_pi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">politica_pi</span> <span class="o">=</span> <span class="n">resultado_pi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">evaluaciones_pi</span> <span class="o">=</span> <span class="n">resultado_pi</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">valor_lp</span> <span class="o">=</span> <span class="n">resultado_lp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">politica_lp</span> <span class="o">=</span> <span class="n">resultado_lp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">estado_lp</span> <span class="o">=</span> <span class="n">resultado_lp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Comparación:&quot;</span><span class="p">,</span> <span class="n">nombre</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados</span><span class="p">)):</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estado:&quot;</span><span class="p">,</span> <span class="n">estados</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;  VI:&quot;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_vi</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+            <span class="n">acciones</span><span class="p">[</span><span class="n">politica_vi</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]]</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;  PI:&quot;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_pi</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+            <span class="n">acciones</span><span class="p">[</span><span class="n">politica_pi</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]]</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;  LP:&quot;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valor_lp</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]),</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+            <span class="n">acciones</span><span class="p">[</span><span class="n">politica_lp</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]]</span>
+        <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Iteraciones VI:&quot;</span><span class="p">,</span> <span class="n">iteraciones_vi</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Evaluaciones PI:&quot;</span><span class="p">,</span> <span class="n">evaluaciones_pi</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estado LP:&quot;</span><span class="p">,</span> <span class="n">estado_lp</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Diferencia máxima VI-PI:&quot;</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_vi</span> <span class="o">-</span> <span class="n">valor_pi</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Diferencia máxima VI-LP:&quot;</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">valor_vi</span> <span class="o">-</span> <span class="n">valor_lp</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-2-inventario-estacionario">
+<h1>Ejercicio 2 — Inventario estacionario<a class="headerlink" href="#ejercicio-2-inventario-estacionario" title="Link to this heading">#</a></h1>
+<p>Estados:</p>
+<div class="math notranslate nohighlight">
+\[
+X_t\in\{0,1,2,3,4\}.
+\]</div>
+<p>Acciones:</p>
+<div class="math notranslate nohighlight">
+\[
+a_t\in\{0,1,2,3,4\},
+\qquad X_t+a_t\leq4.
+\]</div>
+<p>Demanda:</p>
+<div class="math notranslate nohighlight">
+\[
+P(D=0)=0.10,\;
+P(D=1)=0.30,\;
+P(D=2)=0.40,\;
+P(D=3)=0.20.
+\]</div>
+<p>Retorno esperado:</p>
+<div class="math notranslate nohighlight">
+\[
+r(i,a)
+=
+-ca
++
+\sum_dP(D=d)
+\left[
+p\min(i+a,d)
+-h\max(0,i+a-d)
+-b\max(0,d-i-a)
+\right].
+\]</div>
+<p>Usaremos <span class="math notranslate nohighlight">\(p=50\)</span>, <span class="math notranslate nohighlight">\(c=20\)</span>, <span class="math notranslate nohighlight">\(h=5\)</span>, <span class="math notranslate nohighlight">\(b=25\)</span> y <span class="math notranslate nohighlight">\(\gamma=0.95\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">capacidad_inventario</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">precio_venta</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">costo_pedido</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">costo_almacenamiento</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">costo_escasez</span> <span class="o">=</span> <span class="mi">25</span>
+
+<span class="n">penalizacion_infactible</span> <span class="o">=</span> <span class="o">-</span><span class="mf">100000.0</span>
+
+<span class="n">valores_demanda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span>
+<span class="p">])</span>
+
+<span class="n">probabilidades_demanda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="mf">0.10</span><span class="p">,</span>
+    <span class="mf">0.30</span><span class="p">,</span>
+    <span class="mf">0.40</span><span class="p">,</span>
+    <span class="mf">0.20</span>
+<span class="p">])</span>
+
+<span class="n">estados_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;4&quot;</span>
+<span class="p">])</span>
+
+<span class="n">acciones_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="s2">&quot;Pedir 0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Pedir 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Pedir 2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Pedir 3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Pedir 4&quot;</span>
+<span class="p">])</span>
+
+<span class="n">numero_estados_inventario</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">estados_inventario</span><span class="p">)</span>
+<span class="n">numero_acciones_inventario</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">acciones_inventario</span><span class="p">)</span>
+
+<span class="n">gamma_inventario</span> <span class="o">=</span> <span class="mf">0.95</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">construir_retornos_inventario</span><span class="p">(</span>
+    <span class="n">precio</span><span class="p">,</span>
+    <span class="n">costo_compra</span><span class="p">,</span>
+    <span class="n">costo_almacenamiento</span><span class="p">,</span>
+    <span class="n">costo_escasez</span><span class="p">,</span>
+    <span class="n">valores_demanda</span><span class="p">,</span>
+    <span class="n">probabilidades_demanda</span><span class="p">,</span>
+    <span class="n">numero_estados</span><span class="p">,</span>
+    <span class="n">numero_acciones</span><span class="p">,</span>
+    <span class="n">capacidad</span><span class="p">,</span>
+    <span class="n">penalizacion</span>
+<span class="p">):</span>
+
+    <span class="n">retornos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_acciones</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">cantidad_pedida</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+            <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_actual</span>
+                <span class="o">+</span> <span class="n">cantidad_pedida</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">inventario_disponible</span> <span class="o">&gt;</span> <span class="n">capacidad</span><span class="p">:</span>
+
+                <span class="n">retornos</span><span class="p">[</span>
+                    <span class="n">inventario_actual</span><span class="p">,</span>
+                    <span class="n">cantidad_pedida</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">penalizacion</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">retorno_esperado</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="o">-</span><span class="n">costo_compra</span> <span class="o">*</span> <span class="n">cantidad_pedida</span>
+                <span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">indice_demanda</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">valores_demanda</span><span class="p">)</span>
+                <span class="p">):</span>
+
+                    <span class="n">demanda</span> <span class="o">=</span> <span class="n">valores_demanda</span><span class="p">[</span>
+                        <span class="n">indice_demanda</span>
+                    <span class="p">]</span>
+
+                    <span class="n">probabilidad</span> <span class="o">=</span> <span class="n">probabilidades_demanda</span><span class="p">[</span>
+                        <span class="n">indice_demanda</span>
+                    <span class="p">]</span>
+
+                    <span class="n">ventas</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                        <span class="n">inventario_disponible</span><span class="p">,</span>
+                        <span class="n">demanda</span>
+                    <span class="p">)</span>
+
+                    <span class="n">inventario_final</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="n">demanda</span>
+                    <span class="p">)</span>
+
+                    <span class="n">demanda_no_atendida</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">demanda</span> <span class="o">-</span> <span class="n">inventario_disponible</span>
+                    <span class="p">)</span>
+
+                    <span class="n">retorno_demanda</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">precio</span> <span class="o">*</span> <span class="n">ventas</span>
+                        <span class="o">-</span> <span class="n">costo_almacenamiento</span>
+                        <span class="o">*</span> <span class="n">inventario_final</span>
+                        <span class="o">-</span> <span class="n">costo_escasez</span>
+                        <span class="o">*</span> <span class="n">demanda_no_atendida</span>
+                    <span class="p">)</span>
+
+                    <span class="n">retorno_esperado</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">retorno_esperado</span>
+                        <span class="o">+</span> <span class="n">probabilidad</span>
+                        <span class="o">*</span> <span class="n">retorno_demanda</span>
+                    <span class="p">)</span>
+
+                <span class="n">retornos</span><span class="p">[</span>
+                    <span class="n">inventario_actual</span><span class="p">,</span>
+                    <span class="n">cantidad_pedida</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">retorno_esperado</span>
+
+    <span class="k">return</span> <span class="n">retornos</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">construir_transiciones_inventario</span><span class="p">(</span>
+    <span class="n">valores_demanda</span><span class="p">,</span>
+    <span class="n">probabilidades_demanda</span><span class="p">,</span>
+    <span class="n">numero_estados</span><span class="p">,</span>
+    <span class="n">numero_acciones</span><span class="p">,</span>
+    <span class="n">capacidad</span>
+<span class="p">):</span>
+
+    <span class="n">matrices_por_accion</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">cantidad_pedida</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones</span><span class="p">):</span>
+
+        <span class="n">matriz_accion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">numero_estados</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">):</span>
+
+            <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_actual</span>
+                <span class="o">+</span> <span class="n">cantidad_pedida</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">inventario_disponible</span> <span class="o">&gt;</span> <span class="n">capacidad</span><span class="p">:</span>
+
+                <span class="c1"># Transición ficticia para una acción penalizada</span>
+                <span class="n">matriz_accion</span><span class="p">[</span>
+                    <span class="n">inventario_actual</span><span class="p">,</span>
+                    <span class="n">inventario_actual</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">for</span> <span class="n">indice_demanda</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">valores_demanda</span><span class="p">)</span>
+                <span class="p">):</span>
+
+                    <span class="n">demanda</span> <span class="o">=</span> <span class="n">valores_demanda</span><span class="p">[</span>
+                        <span class="n">indice_demanda</span>
+                    <span class="p">]</span>
+
+                    <span class="n">probabilidad</span> <span class="o">=</span> <span class="n">probabilidades_demanda</span><span class="p">[</span>
+                        <span class="n">indice_demanda</span>
+                    <span class="p">]</span>
+
+                    <span class="n">inventario_siguiente</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                        <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="n">demanda</span>
+                    <span class="p">)</span>
+
+                    <span class="n">matriz_accion</span><span class="p">[</span>
+                        <span class="n">inventario_actual</span><span class="p">,</span>
+                        <span class="n">inventario_siguiente</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">matriz_accion</span><span class="p">[</span>
+                            <span class="n">inventario_actual</span><span class="p">,</span>
+                            <span class="n">inventario_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">+</span> <span class="n">probabilidad</span>
+                    <span class="p">)</span>
+
+        <span class="n">matrices_por_accion</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matriz_accion</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">matrices_por_accion</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retornos_inventario</span> <span class="o">=</span> <span class="n">construir_retornos_inventario</span><span class="p">(</span>
+    <span class="n">precio_venta</span><span class="p">,</span>
+    <span class="n">costo_pedido</span><span class="p">,</span>
+    <span class="n">costo_almacenamiento</span><span class="p">,</span>
+    <span class="n">costo_escasez</span><span class="p">,</span>
+    <span class="n">valores_demanda</span><span class="p">,</span>
+    <span class="n">probabilidades_demanda</span><span class="p">,</span>
+    <span class="n">numero_estados_inventario</span><span class="p">,</span>
+    <span class="n">numero_acciones_inventario</span><span class="p">,</span>
+    <span class="n">capacidad_inventario</span><span class="p">,</span>
+    <span class="n">penalizacion_infactible</span>
+<span class="p">)</span>
+
+<span class="n">matrices_inventario</span> <span class="o">=</span> <span class="n">construir_transiciones_inventario</span><span class="p">(</span>
+    <span class="n">valores_demanda</span><span class="p">,</span>
+    <span class="n">probabilidades_demanda</span><span class="p">,</span>
+    <span class="n">numero_estados_inventario</span><span class="p">,</span>
+    <span class="n">numero_acciones_inventario</span><span class="p">,</span>
+    <span class="n">capacidad_inventario</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz de retornos:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">retornos_inventario</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Verificación de las matrices de transición:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">accion_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_acciones_inventario</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Acción:&quot;</span><span class="p">,</span> <span class="n">acciones_inventario</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+        <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">matrices_inventario</span><span class="p">[</span>
+            <span class="n">accion_actual</span>
+        <span class="p">][</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;  Estado&quot;</span><span class="p">,</span>
+            <span class="n">estados_inventario</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+            <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriz de retornos:
+[[-4.25e+01  4.50e+00  2.75e+01  1.85e+01 -6.50e+00]
+ [ 2.45e+01  4.75e+01  3.85e+01  1.35e+01 -1.00e+05]
+ [ 6.75e+01  5.85e+01  3.35e+01 -1.00e+05 -1.00e+05]
+ [ 7.85e+01  5.35e+01 -1.00e+05 -1.00e+05 -1.00e+05]
+ [ 7.35e+01 -1.00e+05 -1.00e+05 -1.00e+05 -1.00e+05]]
+
+Verificación de las matrices de transición:
+
+Acción: Pedir 0
+  Estado 0 - suma: 1.0
+  Estado 1 - suma: 1.0
+  Estado 2 - suma: 1.0
+  Estado 3 - suma: 1.0
+  Estado 4 - suma: 1.0
+
+Acción: Pedir 1
+  Estado 0 - suma: 1.0
+  Estado 1 - suma: 1.0
+  Estado 2 - suma: 1.0
+  Estado 3 - suma: 1.0
+  Estado 4 - suma: 1.0
+
+Acción: Pedir 2
+  Estado 0 - suma: 1.0
+  Estado 1 - suma: 1.0
+  Estado 2 - suma: 1.0
+  Estado 3 - suma: 1.0
+  Estado 4 - suma: 1.0
+
+Acción: Pedir 3
+  Estado 0 - suma: 1.0
+  Estado 1 - suma: 1.0
+  Estado 2 - suma: 1.0
+  Estado 3 - suma: 1.0
+  Estado 4 - suma: 1.0
+
+Acción: Pedir 4
+  Estado 0 - suma: 1.0
+  Estado 1 - suma: 1.0
+  Estado 2 - suma: 1.0
+  Estado 3 - suma: 1.0
+  Estado 4 - suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="n">resultado_vi_inventario</span> <span class="o">=</span> <span class="n">value_iteration</span><span class="p">(</span>
+    <span class="n">matrices_inventario</span><span class="p">,</span>
+    <span class="n">retornos_inventario</span><span class="p">,</span>
+    <span class="n">gamma_inventario</span>
+<span class="p">)</span>
+
+<span class="n">tiempo_vi_inventario</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="n">resultado_pi_inventario</span> <span class="o">=</span> <span class="n">policy_iteration</span><span class="p">(</span>
+    <span class="n">matrices_inventario</span><span class="p">,</span>
+    <span class="n">retornos_inventario</span><span class="p">,</span>
+    <span class="n">gamma_inventario</span>
+<span class="p">)</span>
+
+<span class="n">tiempo_pi_inventario</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="n">inicio_tiempo</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="n">resultado_lp_inventario</span> <span class="o">=</span> <span class="n">mdp_linprog</span><span class="p">(</span>
+    <span class="n">matrices_inventario</span><span class="p">,</span>
+    <span class="n">retornos_inventario</span><span class="p">,</span>
+    <span class="n">gamma_inventario</span>
+<span class="p">)</span>
+
+<span class="n">tiempo_lp_inventario</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio_tiempo</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="n">mostrar_comparacion</span><span class="p">(</span>
+    <span class="s2">&quot;Inventario estacionario&quot;</span><span class="p">,</span>
+    <span class="n">estados_inventario</span><span class="p">,</span>
+    <span class="n">acciones_inventario</span><span class="p">,</span>
+    <span class="n">resultado_vi_inventario</span><span class="p">,</span>
+    <span class="n">resultado_pi_inventario</span><span class="p">,</span>
+    <span class="n">resultado_lp_inventario</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Tiempos observados, solo como referencia:&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;VI:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_vi_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;ms&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;PI:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_pi_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;ms&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;LP:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_lp_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;ms&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación: Inventario estacionario
+
+Estado: 0
+  VI: 864.0 - Pedir 3
+  PI: 864.0 - Pedir 3
+  LP: 864.0 - Pedir 3
+
+Estado: 1
+  VI: 884.0 - Pedir 2
+  PI: 884.0 - Pedir 2
+  LP: 884.0 - Pedir 2
+
+Estado: 2
+  VI: 904.0 - Pedir 1
+  PI: 904.0 - Pedir 1
+  LP: 904.0 - Pedir 1
+
+Estado: 3
+  VI: 924.0 - Pedir 0
+  PI: 924.0 - Pedir 0
+  LP: 924.0 - Pedir 0
+
+Estado: 4
+  VI: 937.3702 - Pedir 0
+  PI: 937.3702 - Pedir 0
+  LP: 937.3702 - Pedir 0
+
+Iteraciones VI: 505
+Evaluaciones PI: 3
+Estado LP: Optimization terminated successfully. (HiGHS Status 7: Optimal)
+Diferencia máxima VI-PI: 4.960611477144994e-09
+Diferencia máxima VI-LP: 4.961407285009045e-09
+
+Tiempos observados, solo como referencia:
+VI: 31.409 ms
+PI: 0.402 ms
+LP: 1.989 ms
+</pre></div>
+</div>
+</div>
+</div>
+<section id="politica-estacionaria-s-s">
+<h2>Política estacionaria <span class="math notranslate nohighlight">\((s^*,S^*)\)</span><a class="headerlink" href="#politica-estacionaria-s-s" title="Link to this heading">#</a></h2>
+<p>No basta con observar el último estado donde se ordena. Debemos comprobar que todos los estados en los que se hace un pedido llegan al mismo nivel objetivo <span class="math notranslate nohighlight">\(S^*\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">politica_inventario</span> <span class="o">=</span> <span class="n">resultado_vi_inventario</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">punto_reorden</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">nivel_objetivo</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">estructura_sS</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Política óptima:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+    <span class="n">cantidad_pedida</span> <span class="o">=</span> <span class="n">politica_inventario</span><span class="p">[</span>
+        <span class="n">inventario_actual</span>
+    <span class="p">]</span>
+
+    <span class="n">inventario_despues_pedido</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">inventario_actual</span>
+        <span class="o">+</span> <span class="n">cantidad_pedida</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Inventario&quot;</span><span class="p">,</span>
+        <span class="n">inventario_actual</span><span class="p">,</span>
+        <span class="s2">&quot;-&gt; pedir&quot;</span><span class="p">,</span>
+        <span class="n">cantidad_pedida</span><span class="p">,</span>
+        <span class="s2">&quot;-&gt; nivel después del pedido:&quot;</span><span class="p">,</span>
+        <span class="n">inventario_despues_pedido</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cantidad_pedida</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="n">punto_reorden</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+
+        <span class="k">if</span> <span class="n">nivel_objetivo</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">nivel_objetivo</span> <span class="o">=</span> <span class="n">inventario_despues_pedido</span>
+
+        <span class="k">elif</span> <span class="n">inventario_despues_pedido</span> <span class="o">!=</span> <span class="n">nivel_objetivo</span><span class="p">:</span>
+
+            <span class="n">estructura_sS</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">¿La política tiene estructura (s*, S*)?&quot;</span><span class="p">,</span>
+      <span class="n">estructura_sS</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">estructura_sS</span> <span class="ow">and</span> <span class="n">punto_reorden</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;s* =&quot;</span><span class="p">,</span> <span class="n">punto_reorden</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S* =&quot;</span><span class="p">,</span> <span class="n">nivel_objetivo</span><span class="p">)</span>
+
+<span class="k">elif</span> <span class="n">punto_reorden</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La política nunca ordena.&quot;</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Los estados donde se ordena no llegan&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;a un único nivel objetivo.&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Política óptima:
+Inventario 0 -&gt; pedir 3 -&gt; nivel después del pedido: 3
+Inventario 1 -&gt; pedir 2 -&gt; nivel después del pedido: 3
+Inventario 2 -&gt; pedir 1 -&gt; nivel después del pedido: 3
+Inventario 3 -&gt; pedir 0 -&gt; nivel después del pedido: 3
+Inventario 4 -&gt; pedir 0 -&gt; nivel después del pedido: 4
+
+¿La política tiene estructura (s*, S*)? True
+s* = 2
+S* = 3
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id4">
+<h3>Visualización proporcionada<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>Esta gráfica solo apoya la interpretación de la convergencia de VI. No es necesario dominar la sintaxis de Matplotlib.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">historial_inventario</span> <span class="o">=</span> <span class="n">resultado_vi_inventario</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">historial_inventario</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteración&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cambio máximo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convergencia de VI en inventarios&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b45e54465ad424ef6b0051dbb93329986607dd15bd9bf2ac9ecdf2667027eb69.png" src="../../_images/b45e54465ad424ef6b0051dbb93329986607dd15bd9bf2ac9ecdf2667027eb69.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="sensibilidad-al-costo-de-escasez">
+<h2>Sensibilidad al costo de escasez<a class="headerlink" href="#sensibilidad-al-costo-de-escasez" title="Link to this heading">#</a></h2>
+<p>Cambiar un parámetro puede modificar el valor óptimo sin modificar la acción que alcanza el máximo. Por eso compararemos tanto la política como <span class="math notranslate nohighlight">\(V^*\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">costo_escasez_alternativo</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="n">retornos_inventario_alternativo</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">construir_retornos_inventario</span><span class="p">(</span>
+        <span class="n">precio_venta</span><span class="p">,</span>
+        <span class="n">costo_pedido</span><span class="p">,</span>
+        <span class="n">costo_almacenamiento</span><span class="p">,</span>
+        <span class="n">costo_escasez_alternativo</span><span class="p">,</span>
+        <span class="n">valores_demanda</span><span class="p">,</span>
+        <span class="n">probabilidades_demanda</span><span class="p">,</span>
+        <span class="n">numero_estados_inventario</span><span class="p">,</span>
+        <span class="n">numero_acciones_inventario</span><span class="p">,</span>
+        <span class="n">capacidad_inventario</span><span class="p">,</span>
+        <span class="n">penalizacion_infactible</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">resultado_vi_alternativo</span> <span class="o">=</span> <span class="n">value_iteration</span><span class="p">(</span>
+    <span class="n">matrices_inventario</span><span class="p">,</span>
+    <span class="n">retornos_inventario_alternativo</span><span class="p">,</span>
+    <span class="n">gamma_inventario</span>
+<span class="p">)</span>
+
+<span class="n">valor_original</span> <span class="o">=</span> <span class="n">resultado_vi_inventario</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">politica_original</span> <span class="o">=</span> <span class="n">resultado_vi_inventario</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">valor_alternativo</span> <span class="o">=</span> <span class="n">resultado_vi_alternativo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">politica_alternativa</span> <span class="o">=</span> <span class="n">resultado_vi_alternativo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Inventario:&quot;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  Pedido con b=25:&quot;</span><span class="p">,</span>
+        <span class="n">politica_original</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  Pedido con b=40:&quot;</span><span class="p">,</span>
+        <span class="n">politica_alternativa</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;  Cambio en V*:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">(</span>
+                <span class="n">valor_alternativo</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">valor_original</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="mi">4</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Inventario: 0
+  Pedido con b=25: 3
+  Pedido con b=40: 3
+  Cambio en V*: -0.0
+
+Inventario: 1
+  Pedido con b=25: 2
+  Pedido con b=40: 2
+  Cambio en V*: -0.0
+
+Inventario: 2
+  Pedido con b=25: 1
+  Pedido con b=40: 1
+  Cambio en V*: -0.0
+
+Inventario: 3
+  Pedido con b=25: 0
+  Pedido con b=40: 0
+  Cambio en V*: -0.0
+
+Inventario: 4
+  Pedido con b=25: 0
+  Pedido con b=40: 0
+  Cambio en V*: -0.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-abierto-gestion-de-flota-de-vehiculos">
+<h1>Ejercicio abierto — Gestión de flota de vehículos<a class="headerlink" href="#ejercicio-abierto-gestion-de-flota-de-vehiculos" title="Link to this heading">#</a></h1>
+<p>Estados:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal S=
+\{\text{Óptimo},\text{Funcional},\text{Desgastado},\text{Crítico}\}.
+\]</div>
+<p>Acciones:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal A=
+\{\text{Mantener},\text{Reacondicionar}\}.
+\]</div>
+<p>Transición al mantener:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{(M)}
+=
+\begin{pmatrix}
+0.80&amp;0.20&amp;0&amp;0\\
+0&amp;0.75&amp;0.25&amp;0\\
+0&amp;0&amp;0.65&amp;0.35\\
+0&amp;0&amp;0&amp;1
+\end{pmatrix}.
+\end{split}\]</div>
+<p>Transición al reacondicionar:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{(R)}
+=
+\begin{pmatrix}
+1&amp;0&amp;0&amp;0\\
+0.80&amp;0.20&amp;0&amp;0\\
+0.80&amp;0.20&amp;0&amp;0\\
+0.80&amp;0.20&amp;0&amp;0
+\end{pmatrix}.
+\end{split}\]</div>
+<p>La primera fila es ficticia y válida; la acción Reacondicionar desde Óptimo se penaliza con una recompensa de <span class="math notranslate nohighlight">\(-10000\)</span>.</p>
+<p>Retornos:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Estado</p></th>
+<th class="head text-right"><p>Mantener</p></th>
+<th class="head text-right"><p>Reacondicionar</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Óptimo</p></td>
+<td class="text-right"><p>200</p></td>
+<td class="text-right"><p>-10000</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Funcional</p></td>
+<td class="text-right"><p>160</p></td>
+<td class="text-right"><p>-80</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Desgastado</p></td>
+<td class="text-right"><p>100</p></td>
+<td class="text-right"><p>-80</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Crítico</p></td>
+<td class="text-right"><p>40</p></td>
+<td class="text-right"><p>-80</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Use <span class="math notranslate nohighlight">\(\gamma=0.92\)</span>.</p>
+<section id="actividades">
+<h2>Actividades<a class="headerlink" href="#actividades" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Construya <code class="docutils literal notranslate"><span class="pre">P</span></code> como una lista de dos matrices y <code class="docutils literal notranslate"><span class="pre">R</span></code> como una matriz bidimensional.</p></li>
+<li><p>Resuelva con <code class="docutils literal notranslate"><span class="pre">value_iteration</span></code>, <code class="docutils literal notranslate"><span class="pre">policy_iteration</span></code> y <code class="docutils literal notranslate"><span class="pre">mdp_linprog</span></code>.</p></li>
+<li><p>Compare los resultados con <code class="docutils literal notranslate"><span class="pre">mostrar_comparacion</span></code>.</p></li>
+<li><p>Identifique desde qué estado conviene reacondicionar.</p></li>
+<li><p>Grafique el historial de VI como visualización proporcionada.</p></li>
+<li><p>Repita VI con <span class="math notranslate nohighlight">\(\gamma=0.75\)</span> y compare el número de iteraciones.</p></li>
+<li><p>Calcule el número de restricciones del LP:
+<div class="math notranslate nohighlight">
+\[|\mathcal S||\mathcal A|.\]</div>
+</p></li>
+<li><p>Para 20 estados y 2 acciones, determine el número de restricciones del LP. Explique por qué <strong>no puede determinarse el número de iteraciones de VI únicamente a partir del número de estados</strong>.</p></li>
+<li><p>Verifique con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p></li>
+</ol>
+</section>
+<section id="uso-critico-de-ia">
+<h2>Uso crítico de IA<a class="headerlink" href="#uso-critico-de-ia" title="Link to this heading">#</a></h2>
+<p>Antes de aceptar el código generado, compruebe:</p>
+<div class="math notranslate nohighlight">
+\[
+R[\text{Funcional},\text{Reacondicionar}]
+=
+200-280
+=
+-80.
+\]</div>
+<p>También verifique que:</p>
+<ul class="simple">
+<li><p>todas las filas de las matrices de transición sumen 1;</p></li>
+<li><p>la primera fila de Reacondicionar sea <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>;</p></li>
+<li><p>el código reutilice las funciones ya definidas;</p></li>
+<li><p>la IA no afirme que el número de iteraciones de VI puede obtenerse solo a partir de <span class="math notranslate nohighlight">\(|\mathcal S|\)</span>.</p></li>
+</ul>
+<section id="prompt-sugerido">
+<h3>Prompt sugerido<a class="headerlink" href="#prompt-sugerido" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Estoy resolviendo un MDP de horizonte infinito en Python.
+
+Ya tengo definidas las funciones:
+- value_iteration
+- policy_iteration
+- mdp_linprog
+- mostrar_comparacion
+
+Ayúdame a construir los arreglos del ejercicio de flota y a reutilizar
+esas funciones. Usa solamente ciclos for, condicionales, funciones sencillas
+y arreglos de NumPy.
+
+No uses enumerate, zip, comprensiones de listas, comprensiones de diccionarios,
+np.column_stack ni axis=1.
+
+Separa el cálculo de las gráficas. La gráfica de convergencia se entrega como
+visualización auxiliar y no hace parte del código central.
+
+Comprueba que R[Funcional, Reacondicionar] sea -80 y que todas las filas de
+las matrices de transición sumen 1.
+
+Para el caso de 20 estados y 2 acciones, calcula el número de restricciones
+del LP y explica por qué el número de iteraciones de VI no puede deducirse
+únicamente del número de estados.
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desarrolle aquí el ejercicio abierto.</span>
+<span class="c1"># Comience construyendo los estados, las acciones,</span>
+<span class="c1"># las dos matrices de transición y la matriz de retornos.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><small>Universidad de los Andes · Departamento de Ingeniería Industrial · Modelos de Decisión en el Tiempo</small></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Semana_7_MDP_y_Backward_Induction_v4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Semana 7 — MDP y Backward Induction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Semana_9_Horizonte_Rodante_v4_final.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamentos-teoricos">Fundamentos teóricos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ecuacion-de-bellman-de-optimalidad">Ecuación de Bellman de optimalidad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-valor">Iteración de Valor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteracion-de-politica">Iteración de Política</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programacion-lineal">Programación Lineal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparacion-del-entorno">Preparación del entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramienta-np-argmax">Herramienta: <code class="docutils literal notranslate"><span class="pre">np.argmax</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-gestion-de-activos-reemplazo-de-un-generador">Ejercicio 1 — Gestión de activos: reemplazo de un generador</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#una-actualizacion-de-bellman">1.1 Una actualización de Bellman</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2 Iteración de Valor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.3 Iteración de Política</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.4 Programación Lineal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-los-tres-metodos">1.5 Comparación de los tres métodos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-proporcionada-con-jmarkov">Verificación proporcionada con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-reutilizables">Funciones reutilizables</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-estacionario">Ejercicio 2 — Inventario estacionario</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#politica-estacionaria-s-s">Política estacionaria <span class="math notranslate nohighlight">\((s^*,S^*)\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensibilidad-al-costo-de-escasez">Sensibilidad al costo de escasez</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-gestion-de-flota-de-vehiculos">Ejercicio abierto — Gestión de flota de vehículos</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actividades">Actividades</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-critico-de-ia">Uso crítico de IA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido">Prompt sugerido</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos de Decisión en el Tiempo | Uniandes
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

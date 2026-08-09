@@ -1,0 +1,2286 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semana 12 — Evaluación Monte Carlo y TD(0) &#8212; Libro Modelos de Decisión en el Tiempo - IIND 3518</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0361f5db" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Semana_12_MC_y_TD0_v4_final';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Semana 13 — SARSA y Q-learning: control TD sin modelo" href="Semana_13_SARSA_Q_learning_v4_final.html" />
+    <link rel="prev" title="Semana 10 — Rollout y benchmarking" href="Semana_10_Rollout_y_Benchmarking_v4_final.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>
+    <script>document.write(`<img src="../../_static/uniandes.png" class="logo__image only-dark" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bienvenidos al libro del curso Modelos de Decisión en el Tiempo
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html">Complementaria 0 — Fundamentos de Python</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_1_Cadenas_de_Markov_en_Python_v3.html">Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_2_Transitorio_y_Estado_Estable_v3.html">Semana 2 — Análisis transitorio y estado estable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html">Semana 3 — Tiempos de Primera Pasada y Ocupación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_4_Cadenas_Absorbentes_v3.html">Semana 4 — Cadenas absorbentes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_7_MDP_y_Backward_Induction_v4.html">Semana 7 — MDP y Backward Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_8_Horizonte_Infinito_VI_PI_LP_v3.html">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_9_Horizonte_Rodante_v4_final.html">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_10_Rollout_y_Benchmarking_v4_final.html">Semana 10 — Rollout y benchmarking</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semana 12 — Evaluación Monte Carlo y TD(0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_13_SARSA_Q_learning_v4_final.html">Semana 13 — SARSA y Q-learning: control TD sin modelo</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_14_Double_Q_y_Shaping_v4_final.html">Semana 14 — Double Q-learning y diseño de recompensas</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Semana_12_MC_y_TD0_v4_final.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semana 12 — Evaluación Monte Carlo y TD(0)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convencion-para-los-problemas-de-horizonte-finito">Convención para los problemas de horizonte finito</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-de-la-sesion">Herramientas de la sesión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regimenes-de-mercado-y-evaluacion-monte-carlo">Ejercicio 1 — Regímenes de mercado y evaluación Monte Carlo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-del-entorno">Un paso del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-episodio-desde-un-estado-inicial-fijo">Un episodio desde un estado inicial fijo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-para-repetir-el-experimento">Funciones para repetir el experimento</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-exacta-de-una-politica-fija">Evaluación exacta de una política fija</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">🎨 Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-criterio-de-kelly-con-odds-de-liga-betplay">Ejercicio 2 — Criterio de Kelly con odds de Liga BetPlay</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-de-la-estrategia-kelly">Un paso de la estrategia Kelly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trayectorias-ilustrativas">Trayectorias ilustrativas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-de-v-0-s">Evaluación de <span class="math notranslate nohighlight">\(V_0(s)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalos-y-probabilidad-de-ruina-desde-10-millones">Intervalos y probabilidad de ruina desde 10 millones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">🎨 Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-market-making-simplificado-en-ecopetrol">Ejercicio 3 — Market making simplificado en Ecopetrol</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-corregido-del-entorno">Un paso corregido del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-mc-desde-cada-inventario-inicial">Evaluación MC desde cada inventario inicial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dos-actualizaciones-td-0">Dos actualizaciones TD(0)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#riesgo-de-inventario-final">Riesgo de inventario final</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizaciones-proporcionadas">🎨 Visualizaciones proporcionadas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-ejecucion-optima-de-ordenes">Ejercicio abierto — Ejecución óptima de órdenes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tareas">Tareas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-manual">Verificación manual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-para-solicitar-apoyo-de-una-ia">Guía para solicitar apoyo de una IA</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semana-12-evaluacion-monte-carlo-y-td-0">
+<h1>Semana 12 — Evaluación Monte Carlo y TD(0)<a class="headerlink" href="#semana-12-evaluacion-monte-carlo-y-td-0" title="Link to this heading">#</a></h1>
+<p><strong>Modelos de Decisión en el Tiempo — Módulo 3: Aprendizaje por Refuerzo Tabular</strong></p>
+<p>En esta sesión construiremos entornos financieros sencillos y estudiaremos dos formas de evaluar una política a partir de simulaciones:</p>
+<ul class="simple">
+<li><p><strong>Monte Carlo (MC):</strong> espera hasta completar una trayectoria y utiliza el retorno total observado.</p></li>
+<li><p><strong>TD(0):</strong> actualiza el valor después de cada transición, sin esperar hasta el final.</p></li>
+</ul>
+<p>La programación sigue la progresión de las semanas anteriores: variables, arreglos, ciclos, condicionales y funciones sencillas. No utilizaremos clases, <code class="docutils literal notranslate"><span class="pre">zip</span></code>, <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, comprensiones de listas o diccionarios, ni funciones anónimas.</p>
+<section id="convencion-para-los-problemas-de-horizonte-finito">
+<h2>Convención para los problemas de horizonte finito<a class="headerlink" href="#convencion-para-los-problemas-de-horizonte-finito" title="Link to this heading">#</a></h2>
+<p>En un problema finito, el valor depende del tiempo restante. Para no añadir el tiempo al estado, estimaremos únicamente el valor <strong>al comienzo del horizonte</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+V_0^\pi(s)
+=
+\mathbb E_\pi\left[\sum_{t=0}^{T-1}\gamma^t R_{t+1}\mid S_0=s\right].
+\]</div>
+<p>Para estimar <span class="math notranslate nohighlight">\(V_0^\pi(s)\)</span>, iniciamos episodios separados directamente en cada estado <span class="math notranslate nohighlight">\(s\)</span> y usamos el retorno completo desde <span class="math notranslate nohighlight">\(t=0\)</span>. Así no mezclamos visitas al mismo estado ocurridas en momentos con diferente cantidad de períodos restantes.</p>
+</section>
+<section id="herramientas-de-la-sesion">
+<h2>Herramientas de la sesión<a class="headerlink" href="#herramientas-de-la-sesion" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Herramienta</p></th>
+<th class="head text-left"><p>Actualización</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>MC incremental</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\hat V(s) \leftarrow \hat V(s)+\frac{1}{N(s)}[G-\hat V(s)]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>TD(0)</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\hat V(s) \leftarrow \hat V(s)+\alpha[r+\gamma\hat V(s')-\hat V(s)]\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Evaluación exacta finita</p></td>
+<td class="text-left"><p>Recursión hacia atrás para una política fija</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>En los ejercicios finitos de mercado y apuestas, MC estima <span class="math notranslate nohighlight">\(V_0(s)\)</span> iniciando desde cada estado. En el market maker utilizaremos una tarea continua descontada, donde una sola función estacionaria <span class="math notranslate nohighlight">\(V(s)\)</span> sí es apropiada.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-1-regimenes-de-mercado-y-evaluacion-monte-carlo">
+<h2>Ejercicio 1 — Regímenes de mercado y evaluación Monte Carlo<a class="headerlink" href="#ejercicio-1-regimenes-de-mercado-y-evaluacion-monte-carlo" title="Link to this heading">#</a></h2>
+<p><strong>Valorem Capital S.A.S.</strong> modela el mercado accionario colombiano con tres regímenes: Alcista, Lateral y Bajista. Se comparan tres políticas fijas: Largo, Mixto y Defensivo.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Componente</p></th>
+<th class="head text-left"><p>Definición</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Estado</p></td>
+<td class="text-left"><p>Régimen del mercado: Alcista, Lateral o Bajista</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Acción</p></td>
+<td class="text-left"><p>Largo, Mixto o Defensivo</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Recompensa</p></td>
+<td class="text-left"><p>Retorno mensual aleatorio en porcentaje</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Horizonte</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(T=24\)</span> meses</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Descuento</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\gamma=0.95\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La evaluación exacta no es iteración de valor: no estamos buscando una acción óptima. Evaluaremos cada política fija mediante una recursión de programación dinámica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">mu_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="mf">3.2</span><span class="p">,</span>  <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">4.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">sigma_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">4.1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">nombres_estado_mercado</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Alcista&#39;</span><span class="p">,</span> <span class="s1">&#39;Lateral&#39;</span><span class="p">,</span> <span class="s1">&#39;Bajista&#39;</span>
+<span class="p">]</span>
+
+<span class="n">nombres_politica_mercado</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Largo&#39;</span><span class="p">,</span> <span class="s1">&#39;Mixto&#39;</span><span class="p">,</span> <span class="s1">&#39;Defensivo&#39;</span>
+<span class="p">]</span>
+
+<span class="n">numero_estados_mercado</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">numero_politicas_mercado</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">gamma_mercado</span> <span class="o">=</span> <span class="mf">0.95</span>
+<span class="n">horizonte_mercado</span> <span class="o">=</span> <span class="mi">24</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="un-paso-del-entorno">
+<h3>Un paso del entorno<a class="headerlink" href="#un-paso-del-entorno" title="Link to this heading">#</a></h3>
+<p>Partimos del régimen Alcista y aplicamos la política Largo. El retorno depende del estado y de la política; la transición del régimen depende únicamente del estado actual.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">estado_actual</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">accion_actual</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">retorno</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+    <span class="n">mu_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_actual</span><span class="p">],</span>
+    <span class="n">sigma_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_actual</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">estado_siguiente</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+    <span class="n">numero_estados_mercado</span><span class="p">,</span>
+    <span class="n">p</span><span class="o">=</span><span class="n">P_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estado actual:&#39;</span><span class="p">,</span> <span class="n">nombres_estado_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Política:&#39;</span><span class="p">,</span> <span class="n">nombres_politica_mercado</span><span class="p">[</span><span class="n">accion_actual</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Retorno mensual:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">retorno</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estado siguiente:&#39;</span><span class="p">,</span> <span class="n">nombres_estado_mercado</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estado actual: Alcista
+Política: Largo
+Retorno mensual: 5.24 %
+Estado siguiente: Lateral
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="un-episodio-desde-un-estado-inicial-fijo">
+<h3>Un episodio desde un estado inicial fijo<a class="headerlink" href="#un-episodio-desde-un-estado-inicial-fijo" title="Link to this heading">#</a></h3>
+<p>Para estimar <span class="math notranslate nohighlight">\(V_0(	ext{Alcista})\)</span>, el episodio comienza en Alcista y acumulamos el retorno completo de los 24 meses. No usamos visitas posteriores a Alcista para estimar el mismo valor, porque ocurren con menos meses restantes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">estado_actual</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">accion_fija</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">estados_episodio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">horizonte_mercado</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="n">recompensas_episodio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">horizonte_mercado</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">horizonte_mercado</span><span class="p">):</span>
+
+    <span class="n">estados_episodio</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span> <span class="o">=</span> <span class="n">estado_actual</span>
+
+    <span class="n">recompensa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+        <span class="n">mu_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_fija</span><span class="p">],</span>
+        <span class="n">sigma_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_fija</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">recompensas_episodio</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span> <span class="o">=</span> <span class="n">recompensa</span>
+
+    <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">numero_estados_mercado</span><span class="p">,</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">P_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+<span class="n">retorno_total</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="n">horizonte_mercado</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="o">-</span><span class="mi">1</span>
+<span class="p">):</span>
+    <span class="n">retorno_total</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">recompensas_episodio</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">gamma_mercado</span> <span class="o">*</span> <span class="n">retorno_total</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Primeros cinco estados:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">periodo</span><span class="p">,</span>
+        <span class="n">nombres_estado_mercado</span><span class="p">[</span>
+            <span class="n">estados_episodio</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span>
+        <span class="p">],</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">recompensas_episodio</span><span class="p">[</span><span class="n">periodo</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Retorno descontado del episodio:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">retorno_total</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Primeros cinco estados:
+0 Alcista -1.25
+1 Alcista 7.29
+2 Lateral -0.94
+3 Bajista 4.09
+4 Bajista -17.12
+Retorno descontado del episodio: -5.82 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="funciones-para-repetir-el-experimento">
+<h3>Funciones para repetir el experimento<a class="headerlink" href="#funciones-para-repetir-el-experimento" title="Link to this heading">#</a></h3>
+<p>La política se representa mediante un índice fijo: 0 para Largo, 1 para Mixto y 2 para Defensivo. No es necesario pasar funciones como argumentos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">paso_mercado</span><span class="p">(</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_actual</span><span class="p">):</span>
+
+    <span class="n">recompensa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+        <span class="n">mu_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_actual</span><span class="p">],</span>
+        <span class="n">sigma_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">accion_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">estado_siguiente</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">numero_estados_mercado</span><span class="p">,</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">P_mercado</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">recompensa</span><span class="p">,</span> <span class="n">estado_siguiente</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">estimar_v0_mercado</span><span class="p">(</span>
+    <span class="n">accion_fija</span><span class="p">,</span>
+    <span class="n">numero_episodios</span><span class="p">,</span>
+    <span class="n">semilla</span>
+<span class="p">):</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">semilla</span><span class="p">)</span>
+
+    <span class="n">valores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_mercado</span><span class="p">)</span>
+    <span class="n">historial_alcista</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_episodios</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">numero_estados_mercado</span>
+    <span class="p">):</span>
+
+        <span class="n">promedio</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">episodio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_episodios</span><span class="p">):</span>
+
+            <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">estado_inicial</span>
+            <span class="n">recompensas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="n">horizonte_mercado</span>
+            <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">horizonte_mercado</span>
+            <span class="p">):</span>
+
+                <span class="n">recompensa</span><span class="p">,</span> <span class="n">estado_siguiente</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">paso_mercado</span><span class="p">(</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">accion_fija</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="n">recompensas</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span> <span class="o">=</span> <span class="n">recompensa</span>
+                <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">estado_siguiente</span>
+
+            <span class="n">retorno_total</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">horizonte_mercado</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span>
+            <span class="p">):</span>
+                <span class="n">retorno_total</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">recompensas</span><span class="p">[</span><span class="n">periodo</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="n">gamma_mercado</span> <span class="o">*</span> <span class="n">retorno_total</span>
+                <span class="p">)</span>
+
+            <span class="n">promedio</span> <span class="o">=</span> <span class="n">promedio</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="n">retorno_total</span> <span class="o">-</span> <span class="n">promedio</span>
+            <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">episodio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">estado_inicial</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">historial_alcista</span><span class="p">[</span><span class="n">episodio</span><span class="p">]</span> <span class="o">=</span> <span class="n">promedio</span>
+
+        <span class="n">valores</span><span class="p">[</span><span class="n">estado_inicial</span><span class="p">]</span> <span class="o">=</span> <span class="n">promedio</span>
+
+    <span class="k">return</span> <span class="n">valores</span><span class="p">,</span> <span class="n">historial_alcista</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_episodios_mercado</span> <span class="o">=</span> <span class="mi">800</span>
+
+<span class="n">valores_mc_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_politicas_mercado</span><span class="p">,</span>
+     <span class="n">numero_estados_mercado</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">historiales_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_politicas_mercado</span><span class="p">,</span>
+     <span class="n">numero_episodios_mercado</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">politica</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="n">numero_politicas_mercado</span>
+<span class="p">):</span>
+
+    <span class="n">valores</span><span class="p">,</span> <span class="n">historial</span> <span class="o">=</span> <span class="n">estimar_v0_mercado</span><span class="p">(</span>
+        <span class="n">accion_fija</span><span class="o">=</span><span class="n">politica</span><span class="p">,</span>
+        <span class="n">numero_episodios</span><span class="o">=</span><span class="n">numero_episodios_mercado</span><span class="p">,</span>
+        <span class="n">semilla</span><span class="o">=</span><span class="mi">42</span>
+    <span class="p">)</span>
+
+    <span class="n">valores_mc_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">valores</span>
+    <span class="n">historiales_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">historial</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Política:&#39;</span><span class="p">,</span> <span class="n">nombres_politica_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_mercado</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">nombres_estado_mercado</span><span class="p">[</span><span class="n">estado</span><span class="p">],</span>
+            <span class="nb">round</span><span class="p">(</span><span class="n">valores</span><span class="p">[</span><span class="n">estado</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;%&#39;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Política: Largo
+Alcista 4.63 %
+Lateral -1.42 %
+Bajista -7.12 %
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Política: Mixto
+Alcista 7.44 %
+Lateral 4.2 %
+Bajista 1.61 %
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Política: Defensivo
+Alcista 7.12 %
+Lateral 7.1 %
+Bajista 7.09 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluacion-exacta-de-una-politica-fija">
+<h3>Evaluación exacta de una política fija<a class="headerlink" href="#evaluacion-exacta-de-una-politica-fija" title="Link to this heading">#</a></h3>
+<p>Para una política constante, calculamos hacia atrás:</p>
+<div class="math notranslate nohighlight">
+\[
+V_t(s)=\mu(s,a)+\gamma\sum_{s'}P(s'\mid s)V_{t+1}(s'),
+\qquad V_T(s)=0.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluar_politica_mercado_exacta</span><span class="p">(</span>
+    <span class="n">accion_fija</span>
+<span class="p">):</span>
+
+    <span class="n">valor_siguiente</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_estados_mercado</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">horizonte_mercado</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="o">-</span><span class="mi">1</span>
+    <span class="p">):</span>
+
+        <span class="n">valor_actual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">numero_estados_mercado</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+            <span class="n">numero_estados_mercado</span>
+        <span class="p">):</span>
+
+            <span class="n">continuacion</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">numero_estados_mercado</span>
+            <span class="p">):</span>
+
+                <span class="n">continuacion</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">continuacion</span>
+                    <span class="o">+</span> <span class="n">P_mercado</span><span class="p">[</span>
+                        <span class="n">estado_actual</span><span class="p">,</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                    <span class="o">*</span> <span class="n">valor_siguiente</span><span class="p">[</span>
+                        <span class="n">estado_siguiente</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="n">valor_actual</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">mu_mercado</span><span class="p">[</span>
+                    <span class="n">estado_actual</span><span class="p">,</span>
+                    <span class="n">accion_fija</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="n">gamma_mercado</span> <span class="o">*</span> <span class="n">continuacion</span>
+            <span class="p">)</span>
+
+        <span class="n">valor_siguiente</span> <span class="o">=</span> <span class="n">valor_actual</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">valor_siguiente</span>
+
+
+<span class="n">valores_exactos_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_politicas_mercado</span><span class="p">,</span>
+     <span class="n">numero_estados_mercado</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">politica</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="n">numero_politicas_mercado</span>
+<span class="p">):</span>
+
+    <span class="n">valores_exactos_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">evaluar_politica_mercado_exacta</span><span class="p">(</span>
+            <span class="n">politica</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Comparación MC y evaluación exacta:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">politica</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="n">numero_politicas_mercado</span>
+<span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Política:&#39;</span><span class="p">,</span> <span class="n">nombres_politica_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_mercado</span><span class="p">):</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
+            <span class="n">valores_mc_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">,</span> <span class="n">estado</span><span class="p">]</span>
+            <span class="o">-</span> <span class="n">valores_exactos_mercado</span><span class="p">[</span>
+                <span class="n">politica</span><span class="p">,</span> <span class="n">estado</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">nombres_estado_mercado</span><span class="p">[</span><span class="n">estado</span><span class="p">],</span>
+            <span class="s1">&#39;MC =&#39;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span>
+                <span class="n">valores_mc_mercado</span><span class="p">[</span>
+                    <span class="n">politica</span><span class="p">,</span> <span class="n">estado</span>
+                <span class="p">],</span>
+                <span class="mi">2</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;Exacto =&#39;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span>
+                <span class="n">valores_exactos_mercado</span><span class="p">[</span>
+                    <span class="n">politica</span><span class="p">,</span> <span class="n">estado</span>
+                <span class="p">],</span>
+                <span class="mi">2</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;Error absoluto =&#39;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparación MC y evaluación exacta:
+
+Política: Largo
+Alcista MC = 4.63 Exacto = 3.65 Error absoluto = 0.97
+Lateral MC = -1.42 Exacto = -1.48 Error absoluto = 0.06
+Bajista MC = -7.12 Exacto = -7.46 Error absoluto = 0.34
+
+Política: Mixto
+Alcista MC = 7.44 Exacto = 6.9 Error absoluto = 0.54
+Lateral MC = 4.2 Exacto = 4.16 Error absoluto = 0.04
+Bajista MC = 1.61 Exacto = 1.41 Error absoluto = 0.2
+
+Política: Defensivo
+Alcista MC = 7.12 Exacto = 7.08 Error absoluto = 0.04
+Lateral MC = 7.1 Exacto = 7.08 Error absoluto = 0.02
+Bajista MC = 7.09 Exacto = 7.08 Error absoluto = 0.01
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizacion-proporcionada">
+<h3>🎨 Visualización proporcionada<a class="headerlink" href="#visualizacion-proporcionada" title="Link to this heading">#</a></h3>
+<p>La siguiente celda se entrega completa. No se evalúa la sintaxis de Matplotlib. El objetivo es interpretar cómo se estabiliza la estimación de <span class="math notranslate nohighlight">\(V_0(	ext{Alcista})\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">politica</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="n">numero_politicas_mercado</span>
+<span class="p">):</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">historiales_mercado</span><span class="p">[</span><span class="n">politica</span><span class="p">,</span> <span class="p">:],</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">nombres_politica_mercado</span><span class="p">[</span>
+            <span class="n">politica</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Episodio&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimación de V0(Alcista)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Evolución de las estimaciones Monte Carlo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/630607d1bc35d48807c2c0a54efec8ff300180fe1372a535c821c2c24f8fb905.png" src="../../_images/630607d1bc35d48807c2c0a54efec8ff300180fe1372a535c821c2c24f8fb905.png" />
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-2-criterio-de-kelly-con-odds-de-liga-betplay">
+<h2>Ejercicio 2 — Criterio de Kelly con odds de Liga BetPlay<a class="headerlink" href="#ejercicio-2-criterio-de-kelly-con-odds-de-liga-betplay" title="Link to this heading">#</a></h2>
+<p><strong>QuiniElite S.A.S.</strong> estima una probabilidad de acierto de 58% y una cuota promedio de 2.10.</p>
+<div class="math notranslate nohighlight">
+\[
+f^*=\frac{pb-q}{b}
+=\frac{0.58(1.10)-0.42}{1.10}
+\approx 0.1982.
+\]</div>
+<p>Por tanto, Kelly completo apuesta aproximadamente <strong>19.8%</strong> del capital y Medio Kelly aproximadamente <strong>9.9%</strong>.</p>
+<p>En este ejercicio el capital evoluciona de forma continua. Para reportar <span class="math notranslate nohighlight">\(V_0(s)\)</span> utilizaremos como capitales iniciales los valores enteros entre 0 y 20 millones de COP. Se considera ruina cuando el capital cae por debajo de 1 millón de COP. Esto evita los estados artificialmente inmóviles creados por redondear el capital después de cada apuesta.</p>
+<blockquote>
+<div><p>Kelly maximiza el crecimiento logarítmico esperado en su modelo clásico. Aquí también reportaremos capital esperado y probabilidad de ruina; esas métricas no son idénticas al criterio que origina la regla de Kelly. Además, el techo de 20 millones modifica el problema clásico, por lo que Kelly se interpreta aquí como una política heurística.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probabilidad_ganar</span> <span class="o">=</span> <span class="mf">0.58</span>
+<span class="n">cuota</span> <span class="o">=</span> <span class="mf">2.10</span>
+<span class="n">ganancia_neta</span> <span class="o">=</span> <span class="n">cuota</span> <span class="o">-</span> <span class="mf">1.0</span>
+
+<span class="n">fraccion_kelly</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">probabilidad_ganar</span> <span class="o">*</span> <span class="n">ganancia_neta</span>
+    <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">probabilidad_ganar</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">/</span> <span class="n">ganancia_neta</span>
+
+<span class="n">fraccion_medio_kelly</span> <span class="o">=</span> <span class="n">fraccion_kelly</span> <span class="o">/</span> <span class="mf">2.0</span>
+<span class="n">fraccion_fija</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">fracciones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="n">fraccion_kelly</span><span class="p">,</span>
+    <span class="n">fraccion_medio_kelly</span><span class="p">,</span>
+    <span class="n">fraccion_fija</span>
+<span class="p">])</span>
+
+<span class="n">nombres_estrategia</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Kelly completo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Medio Kelly&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Fija 5%&#39;</span>
+<span class="p">]</span>
+
+<span class="n">capital_maximo</span> <span class="o">=</span> <span class="mf">20.0</span>
+<span class="n">umbral_ruina</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">horizonte_kelly</span> <span class="o">=</span> <span class="mi">38</span>
+<span class="n">numero_estrategias</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Kelly completo:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraccion_kelly</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Medio Kelly:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraccion_medio_kelly</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Apuesta fija:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraccion_fija</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kelly completo: 19.82 %
+Medio Kelly: 9.91 %
+Apuesta fija: 5.0 %
+</pre></div>
+</div>
+</div>
+</div>
+<section id="un-paso-de-la-estrategia-kelly">
+<h3>Un paso de la estrategia Kelly<a class="headerlink" href="#un-paso-de-la-estrategia-kelly" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">capital_actual</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">fraccion</span> <span class="o">=</span> <span class="n">fraccion_kelly</span>
+<span class="n">apuesta</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">*</span> <span class="n">fraccion</span>
+
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_ganar</span><span class="p">:</span>
+    <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">apuesta</span> <span class="o">*</span> <span class="n">ganancia_neta</span>
+    <span class="p">)</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="s1">&#39;Gana&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="n">apuesta</span>
+    <span class="n">resultado</span> <span class="o">=</span> <span class="s1">&#39;Pierde&#39;</span>
+
+<span class="k">if</span> <span class="n">capital_nuevo</span> <span class="o">&gt;</span> <span class="n">capital_maximo</span><span class="p">:</span>
+    <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_maximo</span>
+
+<span class="k">if</span> <span class="n">capital_nuevo</span> <span class="o">&lt;</span> <span class="n">umbral_ruina</span><span class="p">:</span>
+    <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="n">recompensa</span> <span class="o">=</span> <span class="n">capital_nuevo</span> <span class="o">-</span> <span class="n">capital_actual</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Capital inicial:&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span> <span class="s1">&#39;M COP&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fracción apostada:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraccion</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Apuesta:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">apuesta</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;M COP&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resultado:&#39;</span><span class="p">,</span> <span class="n">resultado</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Capital nuevo:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">capital_nuevo</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;M COP&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Recompensa:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">recompensa</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;M COP&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Capital inicial: 10.0 M COP
+Fracción apostada: 0.1982
+Apuesta: 1.98 M COP
+Resultado: Gana
+Capital nuevo: 12.18 M COP
+Recompensa: 2.18 M COP
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">paso_apuesta</span><span class="p">(</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">fraccion</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">capital_actual</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">True</span>
+
+    <span class="n">apuesta</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">*</span> <span class="n">fraccion</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_ganar</span><span class="p">:</span>
+        <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="n">apuesta</span> <span class="o">*</span> <span class="n">ganancia_neta</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="n">apuesta</span>
+
+    <span class="k">if</span> <span class="n">capital_nuevo</span> <span class="o">&gt;</span> <span class="n">capital_maximo</span><span class="p">:</span>
+        <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="n">capital_maximo</span>
+
+    <span class="k">if</span> <span class="n">capital_nuevo</span> <span class="o">&lt;</span> <span class="n">umbral_ruina</span><span class="p">:</span>
+        <span class="n">capital_nuevo</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">recompensa</span> <span class="o">=</span> <span class="n">capital_nuevo</span> <span class="o">-</span> <span class="n">capital_actual</span>
+    <span class="n">termino</span> <span class="o">=</span> <span class="n">capital_nuevo</span> <span class="o">==</span> <span class="mf">0.0</span>
+
+    <span class="k">return</span> <span class="n">capital_nuevo</span><span class="p">,</span> <span class="n">recompensa</span><span class="p">,</span> <span class="n">termino</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="trayectorias-ilustrativas">
+<h3>Trayectorias ilustrativas<a class="headerlink" href="#trayectorias-ilustrativas" title="Link to this heading">#</a></h3>
+<p>Estas gráficas son proporcionadas. Se evalúa la interpretación de la variabilidad y del riesgo, no la sintaxis de Matplotlib.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">estrategia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estrategias</span><span class="p">):</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">trayectoria</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span>
+            <span class="mi">1000</span> <span class="o">*</span> <span class="n">estrategia</span> <span class="o">+</span> <span class="n">trayectoria</span>
+        <span class="p">)</span>
+
+        <span class="n">capital_actual</span> <span class="o">=</span> <span class="mf">10.0</span>
+        <span class="n">capitales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">horizonte_kelly</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">capitales</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">capital_actual</span>
+
+        <span class="k">for</span> <span class="n">jornada</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">horizonte_kelly</span><span class="p">):</span>
+
+            <span class="n">capital_actual</span><span class="p">,</span> <span class="n">recompensa</span><span class="p">,</span> <span class="n">termino</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">paso_apuesta</span><span class="p">(</span>
+                    <span class="n">capital_actual</span><span class="p">,</span>
+                    <span class="n">fracciones</span><span class="p">[</span><span class="n">estrategia</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="n">capitales</span><span class="p">[</span><span class="n">jornada</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">capital_actual</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">termino</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">jornada_restante</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                    <span class="n">jornada</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">horizonte_kelly</span>
+                <span class="p">):</span>
+                    <span class="n">capitales</span><span class="p">[</span>
+                        <span class="n">jornada_restante</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">break</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">capitales</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Jornada&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Capital (M COP)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">nombres_estrategia</span><span class="p">[</span><span class="n">estrategia</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/90c2eaf92de86a4e6dc23394827d0d906e142826ec883df75e93acb5e9d6e63b.png" src="../../_images/90c2eaf92de86a4e6dc23394827d0d906e142826ec883df75e93acb5e9d6e63b.png" />
+<img alt="../../_images/a6e68d6dacae37be645367ae89c7302aeb568870361c2f03108e3d665342efd8.png" src="../../_images/a6e68d6dacae37be645367ae89c7302aeb568870361c2f03108e3d665342efd8.png" />
+<img alt="../../_images/db153dbaa3c3b61df853c678d11765365f0c6f41878e1e2524329bb1d1b071e6.png" src="../../_images/db153dbaa3c3b61df853c678d11765365f0c6f41878e1e2524329bb1d1b071e6.png" />
+</div>
+</div>
+</section>
+<section id="evaluacion-de-v-0-s">
+<h3>Evaluación de <span class="math notranslate nohighlight">\(V_0(s)\)</span><a class="headerlink" href="#evaluacion-de-v-0-s" title="Link to this heading">#</a></h3>
+<p>Cada estimación comienza directamente en el capital inicial <span class="math notranslate nohighlight">\(s\)</span>. El retorno acumulado es simplemente el cambio total del capital, porque <span class="math notranslate nohighlight">\(\gamma=1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+G_0=W_T-W_0.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluar_kelly_desde_capital</span><span class="p">(</span>
+    <span class="n">fraccion</span><span class="p">,</span>
+    <span class="n">capital_inicial</span><span class="p">,</span>
+    <span class="n">numero_episodios</span><span class="p">,</span>
+    <span class="n">semilla</span>
+<span class="p">):</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">semilla</span><span class="p">)</span>
+
+    <span class="n">retornos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_episodios</span><span class="p">)</span>
+    <span class="n">capitales_finales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_episodios</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">episodio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_episodios</span><span class="p">):</span>
+
+        <span class="n">capital_actual</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">capital_inicial</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">jornada</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">horizonte_kelly</span><span class="p">):</span>
+
+            <span class="n">capital_actual</span><span class="p">,</span> <span class="n">recompensa</span><span class="p">,</span> <span class="n">termino</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">paso_apuesta</span><span class="p">(</span>
+                    <span class="n">capital_actual</span><span class="p">,</span>
+                    <span class="n">fraccion</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">termino</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">retornos</span><span class="p">[</span><span class="n">episodio</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">capital_actual</span> <span class="o">-</span> <span class="n">capital_inicial</span>
+        <span class="p">)</span>
+
+        <span class="n">capitales_finales</span><span class="p">[</span><span class="n">episodio</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">capital_actual</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">retornos</span><span class="p">,</span> <span class="n">capitales_finales</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_episodios_kelly</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">capitales_iniciales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capital</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">21</span><span class="p">):</span>
+    <span class="n">capitales_iniciales</span><span class="p">[</span><span class="n">capital</span><span class="p">]</span> <span class="o">=</span> <span class="n">capital</span>
+
+<span class="n">valores_kelly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_estrategias</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capital_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">21</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">estrategia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">numero_estrategias</span>
+    <span class="p">):</span>
+
+        <span class="n">retornos</span><span class="p">,</span> <span class="n">capitales_finales</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">evaluar_kelly_desde_capital</span><span class="p">(</span>
+                <span class="n">fracciones</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span>
+                <span class="n">capital_inicial</span><span class="p">,</span>
+                <span class="n">numero_episodios_kelly</span><span class="p">,</span>
+                <span class="n">semilla</span><span class="o">=</span><span class="mi">5000</span> <span class="o">+</span> <span class="n">capital_inicial</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">valores_kelly</span><span class="p">[</span>
+            <span class="n">estrategia</span><span class="p">,</span>
+            <span class="n">capital_inicial</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">retornos</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor estimado desde 10 M COP:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estrategia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estrategias</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">nombres_estrategia</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">valores_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="s1">&#39;M COP&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor estimado desde 10 M COP:
+Kelly completo 1.668 M COP
+Medio Kelly 4.651 M COP
+Fija 5% 4.267 M COP
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="intervalos-y-probabilidad-de-ruina-desde-10-millones">
+<h3>Intervalos y probabilidad de ruina desde 10 millones<a class="headerlink" href="#intervalos-y-probabilidad-de-ruina-desde-10-millones" title="Link to this heading">#</a></h3>
+<p>Usaremos una semilla común para que los experimentos sean reproducibles. Los intervalos que siguen describen cada estrategia por separado; no son intervalos emparejados.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_episodios_comparacion</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">medias_kelly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estrategias</span><span class="p">)</span>
+<span class="n">errores_95_kelly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estrategias</span>
+<span class="p">)</span>
+<span class="n">probabilidades_ruina</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="n">numero_estrategias</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estrategia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estrategias</span><span class="p">):</span>
+
+    <span class="n">retornos</span><span class="p">,</span> <span class="n">capitales_finales</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">evaluar_kelly_desde_capital</span><span class="p">(</span>
+            <span class="n">fracciones</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span>
+            <span class="n">capital_inicial</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+            <span class="n">numero_episodios</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">numero_episodios_comparacion</span>
+            <span class="p">),</span>
+            <span class="n">semilla</span><span class="o">=</span><span class="mi">777</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">medias_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">retornos</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">desviacion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span>
+        <span class="n">retornos</span><span class="p">,</span>
+        <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">errores_95_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">1.96</span>
+        <span class="o">*</span> <span class="n">desviacion</span>
+        <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="n">numero_episodios_comparacion</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">ruinas</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">episodio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">numero_episodios_comparacion</span>
+    <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">capitales_finales</span><span class="p">[</span><span class="n">episodio</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">ruinas</span> <span class="o">=</span> <span class="n">ruinas</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">probabilidades_ruina</span><span class="p">[</span><span class="n">estrategia</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ruinas</span>
+        <span class="o">/</span> <span class="n">numero_episodios_comparacion</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nombres_estrategia</span><span class="p">[</span><span class="n">estrategia</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cambio medio:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">medias_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Margen IC 95%:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">errores_95_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probabilidad de ruina:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">probabilidades_ruina</span><span class="p">[</span><span class="n">estrategia</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kelly completo
+Cambio medio: 2.142
+Margen IC 95%: 0.257
+Probabilidad de ruina: 1.7 %
+
+Medio Kelly
+Cambio medio: 4.832
+Margen IC 95%: 0.193
+Probabilidad de ruina: 0.0 %
+
+Fija 5%
+Cambio medio: 4.471
+Margen IC 95%: 0.159
+Probabilidad de ruina: 0.0 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>🎨 Visualización proporcionada<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>La siguiente gráfica muestra <span class="math notranslate nohighlight">\(V_0(s)\)</span> para diferentes capitales iniciales. No se evalúa la sintaxis gráfica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estrategia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estrategias</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">capitales_iniciales</span><span class="p">,</span>
+        <span class="n">valores_kelly</span><span class="p">[</span><span class="n">estrategia</span><span class="p">,</span> <span class="p">:],</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">nombres_estrategia</span><span class="p">[</span><span class="n">estrategia</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Capital inicial (M COP)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cambio esperado del capital (M COP)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Evaluación Monte Carlo desde cada capital inicial&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/65227640a0d1e7b00720f8871b7e8d407cd695949a39c814b22676031d88a9c2.png" src="../../_images/65227640a0d1e7b00720f8871b7e8d407cd695949a39c814b22676031d88a9c2.png" />
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-3-market-making-simplificado-en-ecopetrol">
+<h2>Ejercicio 3 — Market making simplificado en Ecopetrol<a class="headerlink" href="#ejercicio-3-market-making-simplificado-en-ecopetrol" title="Link to this heading">#</a></h2>
+<p>El market maker coloca órdenes bid y ask. Modelaremos una <strong>tarea continua descontada</strong>: la dinámica no termina después de un número fijo de pasos. Para estimar valores mediante MC usaremos retornos truncados a 300 pasos; para TD(0) entrenaremos sobre una trayectoria continua.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Componente</p></th>
+<th class="head text-left"><p>Definición</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Estado</p></td>
+<td class="text-left"><p>Inventario <span class="math notranslate nohighlight">\(s\in\{-5,\ldots,5\}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Política</p></td>
+<td class="text-left"><p>Spread fijo 1, 3 o 5 ticks</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Fills</p></td>
+<td class="text-left"><p>Probabilidad <span class="math notranslate nohighlight">\(0.6/	ext{spread}\)</span> por lado</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Precio</p></td>
+<td class="text-left"><p>Cambio -1, 0 o +1</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Descuento</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\gamma=0.99\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Correcciones del entorno:</p>
+<ol class="arabic simple">
+<li><p>En inventario <span class="math notranslate nohighlight">\(+5\)</span> no se permite una compra adicional; en <span class="math notranslate nohighlight">\(-5\)</span> no se permite una venta adicional.</p></li>
+<li><p>El PnL por movimiento de precio y la penalización utilizan el inventario <strong>después</strong> de los fills.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventario_maximo</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">gamma_market_maker</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="n">horizonte_mc_market_maker</span> <span class="o">=</span> <span class="mi">300</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">indice_inventario</span><span class="p">(</span><span class="n">inventario</span><span class="p">):</span>
+    <span class="n">indice</span> <span class="o">=</span> <span class="n">inventario</span> <span class="o">+</span> <span class="n">inventario_maximo</span>
+    <span class="k">return</span> <span class="n">indice</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="un-paso-corregido-del-entorno">
+<h3>Un paso corregido del entorno<a class="headerlink" href="#un-paso-corregido-del-entorno" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">inventario_actual</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">spread</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">probabilidad_fill</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">/</span> <span class="n">spread</span>
+
+<span class="n">ganancia_spread</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+
+<span class="c1"># Fill ask: vender una unidad reduce el inventario.</span>
+<span class="k">if</span> <span class="n">inventario_nuevo</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">inventario_maximo</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_fill</span><span class="p">:</span>
+        <span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_nuevo</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">ganancia_spread</span> <span class="o">=</span> <span class="n">ganancia_spread</span> <span class="o">+</span> <span class="n">spread</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="c1"># Fill bid: comprar una unidad aumenta el inventario.</span>
+<span class="k">if</span> <span class="n">inventario_nuevo</span> <span class="o">&lt;</span> <span class="n">inventario_maximo</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_fill</span><span class="p">:</span>
+        <span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_nuevo</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">ganancia_spread</span> <span class="o">=</span> <span class="n">ganancia_spread</span> <span class="o">+</span> <span class="n">spread</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="n">cambio_precio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">pnl_inventario</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cambio_precio</span> <span class="o">*</span> <span class="n">inventario_nuevo</span>
+<span class="p">)</span>
+
+<span class="n">penalizacion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inventario_nuevo</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">25.0</span>
+<span class="p">)</span>
+
+<span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ganancia_spread</span>
+    <span class="o">+</span> <span class="n">pnl_inventario</span>
+    <span class="o">-</span> <span class="n">penalizacion</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Inventario anterior:&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Inventario posterior:&#39;</span><span class="p">,</span> <span class="n">inventario_nuevo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ganancia por spread:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ganancia_spread</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cambio de precio:&#39;</span><span class="p">,</span> <span class="n">cambio_precio</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PnL de inventario:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">pnl_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penalización:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">penalizacion</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Recompensa:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">recompensa</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">inventario_manual</span> <span class="o">=</span> <span class="n">inventario_nuevo</span>
+<span class="n">recompensa_manual</span> <span class="o">=</span> <span class="n">recompensa</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Inventario anterior: 0
+Inventario posterior: 1
+Ganancia por spread: 1.5
+Cambio de precio: 0
+PnL de inventario: 0
+Penalización: 0.02
+Recompensa: 1.48
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">paso_market_maker</span><span class="p">(</span>
+    <span class="n">inventario_actual</span><span class="p">,</span>
+    <span class="n">spread</span>
+<span class="p">):</span>
+
+    <span class="n">probabilidad_fill</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">/</span> <span class="n">spread</span>
+    <span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+    <span class="n">ganancia_spread</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">if</span> <span class="n">inventario_nuevo</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">inventario_maximo</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_fill</span><span class="p">:</span>
+            <span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_nuevo</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">ganancia_spread</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ganancia_spread</span> <span class="o">+</span> <span class="n">spread</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">inventario_nuevo</span> <span class="o">&lt;</span> <span class="n">inventario_maximo</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">probabilidad_fill</span><span class="p">:</span>
+            <span class="n">inventario_nuevo</span> <span class="o">=</span> <span class="n">inventario_nuevo</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">ganancia_spread</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ganancia_spread</span> <span class="o">+</span> <span class="n">spread</span> <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="p">)</span>
+
+    <span class="n">cambio_precio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">pnl_inventario</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">cambio_precio</span> <span class="o">*</span> <span class="n">inventario_nuevo</span>
+    <span class="p">)</span>
+
+    <span class="n">penalizacion</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inventario_nuevo</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">25.0</span>
+    <span class="p">)</span>
+
+    <span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ganancia_spread</span>
+        <span class="o">+</span> <span class="n">pnl_inventario</span>
+        <span class="o">-</span> <span class="n">penalizacion</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inventario_nuevo</span><span class="p">,</span> <span class="n">recompensa</span>
+
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inventario_prueba</span><span class="p">,</span> <span class="n">recompensa_prueba</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">paso_market_maker</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coincide inventario:&#39;</span><span class="p">,</span> <span class="n">inventario_prueba</span> <span class="o">==</span> <span class="n">inventario_manual</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coincide recompensa:&#39;</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">recompensa_prueba</span> <span class="o">-</span> <span class="n">recompensa_manual</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coincide inventario: True
+Coincide recompensa: True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluacion-mc-desde-cada-inventario-inicial">
+<h3>Evaluación MC desde cada inventario inicial<a class="headerlink" href="#evaluacion-mc-desde-cada-inventario-inicial" title="Link to this heading">#</a></h3>
+<p>Para no añadir el tiempo al estado, cada estimación de <span class="math notranslate nohighlight">\(V(s)\)</span> comienza directamente en el inventario <span class="math notranslate nohighlight">\(s\)</span> y utiliza un retorno descontado de 300 pasos. Este retorno truncado aproxima el valor de la tarea continua.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">estimar_v_market_maker_mc</span><span class="p">(</span>
+    <span class="n">spread</span><span class="p">,</span>
+    <span class="n">numero_episodios</span><span class="p">,</span>
+    <span class="n">semilla</span>
+<span class="p">):</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">semilla</span><span class="p">)</span>
+
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">2</span> <span class="o">*</span> <span class="n">inventario_maximo</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">valores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">)</span>
+    <span class="n">historial_cero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_episodios</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">inventario_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="o">-</span><span class="n">inventario_maximo</span><span class="p">,</span>
+        <span class="n">inventario_maximo</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">):</span>
+
+        <span class="n">promedio</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">episodio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_episodios</span><span class="p">):</span>
+
+            <span class="n">inventario_actual</span> <span class="o">=</span> <span class="n">inventario_inicial</span>
+            <span class="n">recompensas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="n">horizonte_mc_market_maker</span>
+            <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">paso</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">horizonte_mc_market_maker</span>
+            <span class="p">):</span>
+
+                <span class="n">inventario_actual</span><span class="p">,</span> <span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">paso_market_maker</span><span class="p">(</span>
+                        <span class="n">inventario_actual</span><span class="p">,</span>
+                        <span class="n">spread</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="n">recompensas</span><span class="p">[</span><span class="n">paso</span><span class="p">]</span> <span class="o">=</span> <span class="n">recompensa</span>
+
+            <span class="n">retorno_total</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="k">for</span> <span class="n">paso</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">horizonte_mc_market_maker</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span>
+            <span class="p">):</span>
+                <span class="n">retorno_total</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">recompensas</span><span class="p">[</span><span class="n">paso</span><span class="p">]</span>
+                    <span class="o">+</span> <span class="n">gamma_market_maker</span>
+                    <span class="o">*</span> <span class="n">retorno_total</span>
+                <span class="p">)</span>
+
+            <span class="n">promedio</span> <span class="o">=</span> <span class="n">promedio</span> <span class="o">+</span> <span class="p">(</span>
+                <span class="n">retorno_total</span> <span class="o">-</span> <span class="n">promedio</span>
+            <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">episodio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">inventario_inicial</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">historial_cero</span><span class="p">[</span><span class="n">episodio</span><span class="p">]</span> <span class="o">=</span> <span class="n">promedio</span>
+
+        <span class="n">indice</span> <span class="o">=</span> <span class="n">indice_inventario</span><span class="p">(</span>
+            <span class="n">inventario_inicial</span>
+        <span class="p">)</span>
+        <span class="n">valores</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span> <span class="o">=</span> <span class="n">promedio</span>
+
+    <span class="k">return</span> <span class="n">valores</span><span class="p">,</span> <span class="n">historial_cero</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spreads</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">numero_spreads</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spreads</span><span class="p">)</span>
+<span class="n">numero_episodios_mm</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">numero_estados_mm</span> <span class="o">=</span> <span class="mi">11</span>
+
+<span class="n">valores_mc_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_spreads</span><span class="p">,</span> <span class="n">numero_estados_mm</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">historiales_mc_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_spreads</span><span class="p">,</span> <span class="n">numero_episodios_mm</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice_spread</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_spreads</span><span class="p">):</span>
+
+    <span class="n">valores</span><span class="p">,</span> <span class="n">historial</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">estimar_v_market_maker_mc</span><span class="p">(</span>
+            <span class="n">spreads</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">],</span>
+            <span class="n">numero_episodios_mm</span><span class="p">,</span>
+            <span class="n">semilla</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">valores_mc_mm</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">valores</span>
+    <span class="n">historiales_mc_mm</span><span class="p">[</span>
+        <span class="n">indice_spread</span><span class="p">,</span> <span class="p">:</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">historial</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Spread&#39;</span><span class="p">,</span>
+        <span class="n">spreads</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">],</span>
+        <span class="s1">&#39;V(0) =&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span>
+            <span class="n">valores</span><span class="p">[</span><span class="n">indice_inventario</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span>
+            <span class="mi">3</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread 1 V(0) = 39.235
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread 3 V(0) = 40.496
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread 5 V(0) = 42.719
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dos-actualizaciones-td-0">
+<h3>Dos actualizaciones TD(0)<a class="headerlink" href="#dos-actualizaciones-td-0" title="Link to this heading">#</a></h3>
+<p>TD(0) actualiza después de cada transición. Como modelamos una tarea continua, siempre utilizamos el término de continuación <span class="math notranslate nohighlight">\(\gamma V(s')\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_td</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">valor_td_demo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_mm</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">inventario_actual</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">paso</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+
+    <span class="n">inventario_siguiente</span><span class="p">,</span> <span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">paso_market_maker</span><span class="p">(</span>
+            <span class="n">inventario_actual</span><span class="p">,</span>
+            <span class="n">spread</span><span class="o">=</span><span class="mi">3</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">indice_actual</span> <span class="o">=</span> <span class="n">indice_inventario</span><span class="p">(</span>
+        <span class="n">inventario_actual</span>
+    <span class="p">)</span>
+
+    <span class="n">indice_siguiente</span> <span class="o">=</span> <span class="n">indice_inventario</span><span class="p">(</span>
+        <span class="n">inventario_siguiente</span>
+    <span class="p">)</span>
+
+    <span class="n">objetivo</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">recompensa</span>
+        <span class="o">+</span> <span class="n">gamma_market_maker</span>
+        <span class="o">*</span> <span class="n">valor_td_demo</span><span class="p">[</span><span class="n">indice_siguiente</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">error_td</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">objetivo</span>
+        <span class="o">-</span> <span class="n">valor_td_demo</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">valor_td_demo</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">valor_td_demo</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">alpha_td</span> <span class="o">*</span> <span class="n">error_td</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Paso:&#39;</span><span class="p">,</span> <span class="n">paso</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Inventario:&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Inventario siguiente:&#39;</span><span class="p">,</span> <span class="n">inventario_siguiente</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Recompensa:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">recompensa</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Objetivo TD:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">objetivo</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor actualizado:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">valor_td_demo</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="n">inventario_actual</span> <span class="o">=</span> <span class="n">inventario_siguiente</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Paso: 0
+Inventario: 0
+Inventario siguiente: 1
+Recompensa: 1.48
+Objetivo TD: 1.48
+Valor actualizado: 0.0148
+
+Paso: 1
+Inventario: 1
+Inventario siguiente: 1
+Recompensa: -0.02
+Objetivo TD: -0.02
+Valor actualizado: -0.0002
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">entrenar_td0_market_maker</span><span class="p">(</span>
+    <span class="n">spread</span><span class="p">,</span>
+    <span class="n">numero_pasos</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">,</span>
+    <span class="n">semilla</span><span class="p">,</span>
+    <span class="n">frecuencia_registro</span>
+<span class="p">):</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">semilla</span><span class="p">)</span>
+
+    <span class="n">valores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_mm</span><span class="p">)</span>
+    <span class="n">numero_registros</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">numero_pasos</span> <span class="o">//</span> <span class="n">frecuencia_registro</span>
+    <span class="p">)</span>
+    <span class="n">historial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_registros</span><span class="p">)</span>
+
+    <span class="n">inventario_actual</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">indice_registro</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">paso</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_pasos</span><span class="p">):</span>
+
+        <span class="n">inventario_siguiente</span><span class="p">,</span> <span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">paso_market_maker</span><span class="p">(</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="n">spread</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">indice_actual</span> <span class="o">=</span> <span class="n">indice_inventario</span><span class="p">(</span>
+            <span class="n">inventario_actual</span>
+        <span class="p">)</span>
+
+        <span class="n">indice_siguiente</span> <span class="o">=</span> <span class="n">indice_inventario</span><span class="p">(</span>
+            <span class="n">inventario_siguiente</span>
+        <span class="p">)</span>
+
+        <span class="n">objetivo</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">recompensa</span>
+            <span class="o">+</span> <span class="n">gamma_market_maker</span>
+            <span class="o">*</span> <span class="n">valores</span><span class="p">[</span><span class="n">indice_siguiente</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">valores</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">valores</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span>
+            <span class="o">+</span> <span class="n">alpha</span>
+            <span class="o">*</span> <span class="p">(</span>
+                <span class="n">objetivo</span>
+                <span class="o">-</span> <span class="n">valores</span><span class="p">[</span><span class="n">indice_actual</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">inventario_actual</span> <span class="o">=</span> <span class="n">inventario_siguiente</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">paso</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">frecuencia_registro</span>
+            <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">historial</span><span class="p">[</span><span class="n">indice_registro</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">valores</span><span class="p">[</span><span class="n">indice_inventario</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
+            <span class="p">)</span>
+            <span class="n">indice_registro</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">indice_registro</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">valores</span><span class="p">,</span> <span class="n">historial</span>
+
+
+<span class="n">valores_td_mm</span><span class="p">,</span> <span class="n">historial_td_mm</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">entrenar_td0_market_maker</span><span class="p">(</span>
+        <span class="n">spread</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">numero_pasos</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">semilla</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+        <span class="n">frecuencia_registro</span><span class="o">=</span><span class="mi">1000</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MC aproximado V(0):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">valores_mc_mm</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">indice_inventario</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TD(0) V(0):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">valores_td_mm</span><span class="p">[</span><span class="n">indice_inventario</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MC aproximado V(0): 40.496
+TD(0) V(0): 40.621
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="riesgo-de-inventario-final">
+<h3>Riesgo de inventario final<a class="headerlink" href="#riesgo-de-inventario-final" title="Link to this heading">#</a></h3>
+<p>Simularemos una sola vez los inventarios finales y reutilizaremos el mismo arreglo para las métricas y la gráfica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simular_inventarios_finales</span><span class="p">(</span>
+    <span class="n">spread</span><span class="p">,</span>
+    <span class="n">numero_simulaciones</span><span class="p">,</span>
+    <span class="n">numero_pasos</span><span class="p">,</span>
+    <span class="n">semilla</span>
+<span class="p">):</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">semilla</span><span class="p">)</span>
+
+    <span class="n">inventarios_finales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="n">numero_simulaciones</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">simulacion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">numero_simulaciones</span>
+    <span class="p">):</span>
+
+        <span class="n">inventario_actual</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">paso</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_pasos</span><span class="p">):</span>
+            <span class="n">inventario_actual</span><span class="p">,</span> <span class="n">recompensa</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">paso_market_maker</span><span class="p">(</span>
+                    <span class="n">inventario_actual</span><span class="p">,</span>
+                    <span class="n">spread</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">inventarios_finales</span><span class="p">[</span><span class="n">simulacion</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">inventario_actual</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inventarios_finales</span>
+
+
+<span class="n">numero_simulaciones_riesgo</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">inventarios_finales_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numero_spreads</span><span class="p">,</span>
+     <span class="n">numero_simulaciones_riesgo</span><span class="p">),</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice_spread</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_spreads</span><span class="p">):</span>
+
+    <span class="n">inventarios</span> <span class="o">=</span> <span class="n">simular_inventarios_finales</span><span class="p">(</span>
+        <span class="n">spreads</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">],</span>
+        <span class="n">numero_simulaciones_riesgo</span><span class="p">,</span>
+        <span class="n">numero_pasos</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">semilla</span><span class="o">=</span><span class="mi">900</span>
+    <span class="p">)</span>
+
+    <span class="n">inventarios_finales_mm</span><span class="p">[</span>
+        <span class="n">indice_spread</span><span class="p">,</span> <span class="p">:</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">inventarios</span>
+
+    <span class="n">desviacion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span>
+        <span class="n">inventarios</span><span class="p">,</span>
+        <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">extremos</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">simulacion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="n">numero_simulaciones_riesgo</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inventarios</span><span class="p">[</span><span class="n">simulacion</span><span class="p">])</span> <span class="o">==</span> <span class="n">inventario_maximo</span><span class="p">:</span>
+            <span class="n">extremos</span> <span class="o">=</span> <span class="n">extremos</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">probabilidad_extremo</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">extremos</span>
+        <span class="o">/</span> <span class="n">numero_simulaciones_riesgo</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spread:&#39;</span><span class="p">,</span> <span class="n">spreads</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Desviación inventario final:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">desviacion</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probabilidad de inventario extremo:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">probabilidad_extremo</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread: 1
+Desviación inventario final: 3.008
+Probabilidad de inventario extremo: 14.5 %
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread: 3
+Desviación inventario final: 3.113
+Probabilidad de inventario extremo: 16.9 %
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spread: 5
+Desviación inventario final: 3.064
+Probabilidad de inventario extremo: 15.2 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizaciones-proporcionadas">
+<h3>🎨 Visualizaciones proporcionadas<a class="headerlink" href="#visualizaciones-proporcionadas" title="Link to this heading">#</a></h3>
+<p>Las siguientes gráficas se entregan completas. Se evalúa la interpretación de las estimaciones y del riesgo, no la sintaxis de Matplotlib.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventarios_posibles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_mm</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_mm</span><span class="p">):</span>
+    <span class="n">inventarios_posibles</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">indice</span> <span class="o">-</span> <span class="n">inventario_maximo</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">indice_spread</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_spreads</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">inventarios_posibles</span><span class="p">,</span>
+        <span class="n">valores_mc_mm</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">,</span> <span class="p">:],</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spread &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">spreads</span><span class="p">[</span><span class="n">indice_spread</span><span class="p">])</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Inventario inicial&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retorno descontado aproximado&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Evaluación MC desde cada inventario&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">historiales_mc_mm</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MC desde inventario 0&#39;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">historial_td_mm</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TD(0), registro cada 100 pasos&#39;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Registro&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimación de V(0)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Evolución de las estimaciones MC y TD(0)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d739ff7a4bfe9cf114520deb29801d03f32cd6c37075b3324b23b85a871a6a1a.png" src="../../_images/d739ff7a4bfe9cf114520deb29801d03f32cd6c37075b3324b23b85a871a6a1a.png" />
+<img alt="../../_images/ced1d6b76e24bc1ff2d31618fc2ff20a3d11b63b94cea07fd4cc423521a238b2.png" src="../../_images/ced1d6b76e24bc1ff2d31618fc2ff20a3d11b63b94cea07fd4cc423521a238b2.png" />
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-abierto-ejecucion-optima-de-ordenes">
+<h2>Ejercicio abierto — Ejecución óptima de órdenes<a class="headerlink" href="#ejercicio-abierto-ejecucion-optima-de-ordenes" title="Link to this heading">#</a></h2>
+<p><strong>Bancolombia Capital</strong> necesita vender una orden durante 12 intervalos. Para mantener la convención de esta semana, el período se controla externamente en el ciclo del episodio y no se añade al estado tabular.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Componente</p></th>
+<th class="head text-left"><p>Definición</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Estado</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\((q,p)\)</span>: bloques pendientes y nivel de precio</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Período</p></td>
+<td class="text-left"><p>Variable externa <span class="math notranslate nohighlight">\(0,1,\ldots,11\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Acción</p></td>
+<td class="text-left"><p>Bloques a vender ahora: 0, 1, 2 o 3, sin exceder <span class="math notranslate nohighlight">\(q\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Precio de ejecución</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(p_{ejec}=p-0.001a\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Recompensa</p></td>
+<td class="text-left"><p>Ingreso de la venta actual: <span class="math notranslate nohighlight">\(a\,p_{ejec}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Precio siguiente</p></td>
+<td class="text-left"><p>Cambio -1, 0 o +1, recortado entre 98 y 102</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Liquidación final</p></td>
+<td class="text-left"><p>Los bloques restantes se venden a <span class="math notranslate nohighlight">\(p-2\)</span>; este es un ingreso positivo, no una penalización negativa igual a todo el valor vendido</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="tareas">
+<h3>Tareas<a class="headerlink" href="#tareas" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Implemente <code class="docutils literal notranslate"><span class="pre">paso_ejecucion(q,</span> <span class="pre">p,</span> <span class="pre">a)</span></code> sin clases.</p></li>
+<li><p>Defina TWAP, front-loaded y back-loaded. La acción debe ser entera, no mayor que 3 y no mayor que <span class="math notranslate nohighlight">\(q\)</span>.</p></li>
+<li><p>Evalúe mediante MC el ingreso esperado desde cada estado inicial <span class="math notranslate nohighlight">\((q,p)\)</span> al comienzo del día.</p></li>
+<li><p>Compare las políticas con escenarios comunes e intervalos emparejados de las diferencias.</p></li>
+<li><p>Explique por qué TD(0) con una sola tabla <span class="math notranslate nohighlight">\(V(q,p)\)</span> sería solo una aproximación en este problema finito. Una implementación exacta requeriría distinguir el tiempo restante, lo cual no haremos en este ejercicio.</p></li>
+</ol>
+</section>
+<section id="verificacion-manual">
+<h3>Verificación manual<a class="headerlink" href="#verificacion-manual" title="Link to this heading">#</a></h3>
+<p>Estado inicial: <span class="math notranslate nohighlight">\(q=5\)</span>, <span class="math notranslate nohighlight">\(p=100\)</span>. Se venden dos bloques.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bloques_pendientes</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">precio</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">cantidad_vendida</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">precio_ejecucion</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">precio</span> <span class="o">-</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">cantidad_vendida</span>
+<span class="p">)</span>
+
+<span class="n">ingreso</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cantidad_vendida</span> <span class="o">*</span> <span class="n">precio_ejecucion</span>
+<span class="p">)</span>
+
+<span class="n">bloques_restantes</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">bloques_pendientes</span> <span class="o">-</span> <span class="n">cantidad_vendida</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Precio de ejecución:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">precio_ejecucion</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ingreso:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ingreso</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bloques restantes:&#39;</span><span class="p">,</span> <span class="n">bloques_restantes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precio de ejecución: 99.998
+Ingreso: 199.996
+Bloques restantes: 3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="guia-para-solicitar-apoyo-de-una-ia">
+<h3>Guía para solicitar apoyo de una IA<a class="headerlink" href="#guia-para-solicitar-apoyo-de-una-ia" title="Link to this heading">#</a></h3>
+<p>Pida una solución con las siguientes restricciones:</p>
+<ul class="simple">
+<li><p>sin clases;</p></li>
+<li><p>sin <code class="docutils literal notranslate"><span class="pre">zip</span></code> ni <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>;</p></li>
+<li><p>sin comprensiones de listas o diccionarios;</p></li>
+<li><p>sin funciones <code class="docutils literal notranslate"><span class="pre">lambda</span></code>;</p></li>
+<li><p>políticas escritas con <code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code> y <code class="docutils literal notranslate"><span class="pre">else</span></code>;</p></li>
+<li><p>TWAP debe usar una cantidad entera, por ejemplo <code class="docutils literal notranslate"><span class="pre">ceil(q</span> <span class="pre">/</span> <span class="pre">periodos_restantes)</span></code>, y luego limitarse por 3 y por <span class="math notranslate nohighlight">\(q\)</span>;</p></li>
+<li><p>el precio siguiente debe permanecer entre 98 y 102;</p></li>
+<li><p>la liquidación forzada debe sumar el ingreso <span class="math notranslate nohighlight">\(q(p-2)\)</span>;</p></li>
+<li><p>MC debe iniciar cada episodio en el estado cuya estimación <span class="math notranslate nohighlight">\(V_0(q,p)\)</span> se desea obtener;</p></li>
+<li><p>las políticas deben compararse sobre los mismos escenarios aleatorios.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Escriba aquí la solución del ejercicio abierto.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><small>Universidad de los Andes · Departamento de Ingeniería Industrial · Modelos de Decisión en el Tiempo · Semana 12</small></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Semana_10_Rollout_y_Benchmarking_v4_final.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Semana 10 — Rollout y benchmarking</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Semana_13_SARSA_Q_learning_v4_final.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Semana 13 — SARSA y Q-learning: control TD sin modelo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convencion-para-los-problemas-de-horizonte-finito">Convención para los problemas de horizonte finito</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#herramientas-de-la-sesion">Herramientas de la sesión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regimenes-de-mercado-y-evaluacion-monte-carlo">Ejercicio 1 — Regímenes de mercado y evaluación Monte Carlo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-del-entorno">Un paso del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-episodio-desde-un-estado-inicial-fijo">Un episodio desde un estado inicial fijo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-para-repetir-el-experimento">Funciones para repetir el experimento</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-exacta-de-una-politica-fija">Evaluación exacta de una política fija</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">🎨 Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-criterio-de-kelly-con-odds-de-liga-betplay">Ejercicio 2 — Criterio de Kelly con odds de Liga BetPlay</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-de-la-estrategia-kelly">Un paso de la estrategia Kelly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trayectorias-ilustrativas">Trayectorias ilustrativas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-de-v-0-s">Evaluación de <span class="math notranslate nohighlight">\(V_0(s)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intervalos-y-probabilidad-de-ruina-desde-10-millones">Intervalos y probabilidad de ruina desde 10 millones</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">🎨 Visualización proporcionada</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-market-making-simplificado-en-ecopetrol">Ejercicio 3 — Market making simplificado en Ecopetrol</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-corregido-del-entorno">Un paso corregido del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-mc-desde-cada-inventario-inicial">Evaluación MC desde cada inventario inicial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dos-actualizaciones-td-0">Dos actualizaciones TD(0)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#riesgo-de-inventario-final">Riesgo de inventario final</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizaciones-proporcionadas">🎨 Visualizaciones proporcionadas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-ejecucion-optima-de-ordenes">Ejercicio abierto — Ejecución óptima de órdenes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tareas">Tareas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-manual">Verificación manual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-para-solicitar-apoyo-de-una-ia">Guía para solicitar apoyo de una IA</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos de Decisión en el Tiempo | Uniandes
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2105 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semana 3 — Tiempos de Primera Pasada y Ocupación &#8212; Libro Modelos de Decisión en el Tiempo - IIND 3518</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0361f5db" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Semana_3_Primera_Pasada_y_Ocupacion_v3';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Semana 4 — Cadenas absorbentes" href="Semana_4_Cadenas_Absorbentes_v3.html" />
+    <link rel="prev" title="Semana 2 — Análisis transitorio y estado estable" href="Semana_2_Transitorio_y_Estado_Estable_v3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>
+    <script>document.write(`<img src="../../_static/uniandes.png" class="logo__image only-dark" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bienvenidos al libro del curso Modelos de Decisión en el Tiempo
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html">Complementaria 0 — Fundamentos de Python</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_1_Cadenas_de_Markov_en_Python_v3.html">Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_2_Transitorio_y_Estado_Estable_v3.html">Semana 2 — Análisis transitorio y estado estable</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semana 3 — Tiempos de Primera Pasada y Ocupación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_4_Cadenas_Absorbentes_v3.html">Semana 4 — Cadenas absorbentes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_7_MDP_y_Backward_Induction_v4.html">Semana 7 — MDP y Backward Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_8_Horizonte_Infinito_VI_PI_LP_v3.html">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_9_Horizonte_Rodante_v4_final.html">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_10_Rollout_y_Benchmarking_v4_final.html">Semana 10 — Rollout y benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_12_MC_y_TD0_v4_final.html">Semana 12 — Evaluación Monte Carlo y TD(0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_13_SARSA_Q_learning_v4_final.html">Semana 13 — SARSA y Q-learning: control TD sin modelo</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_14_Double_Q_y_Shaping_v4_final.html">Semana 14 — Double Q-learning y diseño de recompensas</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Semana_3_Primera_Pasada_y_Ocupacion_v3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semana 3 — Tiempos de Primera Pasada y Ocupación</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-trabajar-con-el-cuaderno">Cómo trabajar con el cuaderno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-habitat-del-aguila-calva-basico">Ejercicio 1 — Hábitat del águila calva <em>(básico)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-bajo-politica-s-s-tiempo-hasta-stockout-intermedio">Ejercicio 2 — Inventario bajo política <span class="math notranslate nohighlight">\((s,S)\)</span>: tiempo hasta <em>stockout</em> <em>(intermedio)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-fondo-de-inversion-tiempo-hasta-ruina-profundizacion-guiada">Ejercicio 3 — Fondo de inversión: tiempo hasta ruina <em>(profundización guiada)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">🎨 Visualización proporcionada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-gestion-de-inventario-de-medicamentos-criticos">Ejercicio abierto — Gestión de inventario de medicamentos críticos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoints">Checkpoints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-usar-una-ia-para-resolver-el-ejercicio">Cómo usar una IA para resolver el ejercicio</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semana-3-tiempos-de-primera-pasada-y-ocupacion">
+<h1>Semana 3 — Tiempos de Primera Pasada y Ocupación<a class="headerlink" href="#semana-3-tiempos-de-primera-pasada-y-ocupacion" title="Link to this heading">#</a></h1>
+<p>Esta sesión introduce dos herramientas para medir <strong>cuánto tarda</strong> una cadena en alcanzar un estado y <strong>cuánto tiempo pasa</strong> en cada estado.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Herramienta</p></th>
+<th class="head"><p>Definición usada en este laboratorio</p></th>
+<th class="head"><p>Idea de cálculo con NumPy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Tiempo de primera pasada al estado objetivo <span class="math notranslate nohighlight">\(j\)</span></strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\tau_j=\min\{n\geq 0:X_n=j\}\)</span> y <span class="math notranslate nohighlight">\(m_i=E[\tau_j\mid X_0=i]\)</span>. Por definición, <span class="math notranslate nohighlight">\(m_j=0\)</span>.</p></td>
+<td><p>Análisis de un paso: <span class="math notranslate nohighlight">\(m_i=1+\sum_{k\neq j}P_{ik}m_k\)</span>, para <span class="math notranslate nohighlight">\(i\neq j\)</span>, iterado hasta converger.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tiempo de ocupación en <span class="math notranslate nohighlight">\(H\)</span> períodos</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(M_{ij}(H)=E\left[\sum_{n=0}^{H-1}\mathbf{1}(X_n=j)\mid X_0=i\right]\)</span>.</p></td>
+<td><p>Sumar las distribuciones <span class="math notranslate nohighlight">\(\pi(0),\pi(1),\ldots,\pi(H-1)\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>Convención importante:</strong> si usamos un horizonte de <span class="math notranslate nohighlight">\(H=12\)</span> períodos, sumamos exactamente 12 distribuciones, desde <span class="math notranslate nohighlight">\(n=0\)</span> hasta <span class="math notranslate nohighlight">\(n=11\)</span>. Por eso los tiempos de ocupación suman 12 y los porcentajes suman 100 %.</p>
+</div></blockquote>
+<p>El estado objetivo de una primera pasada <strong>no necesita ser absorbente</strong>. El cálculo se detiene conceptualmente en la primera llegada; lo que ocurra después no afecta el tiempo de primera pasada.</p>
+<p>Dominios: conservación, inventarios y finanzas. En todos los ejercicios calculamos primero con NumPy y usamos <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> únicamente como verificación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>jmarkov
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: jmarkov in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (0.3.9)
+Requirement already satisfied: numpy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (2.4.1)
+Requirement already satisfied: scipy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (1.17.0)
+Requirement already satisfied: typing in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (3.7.4.3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">poisson</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jmarkov.dtmc</span><span class="w"> </span><span class="kn">import</span> <span class="n">dtmc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="como-trabajar-con-el-cuaderno">
+<h2>Cómo trabajar con el cuaderno<a class="headerlink" href="#como-trabajar-con-el-cuaderno" title="Link to this heading">#</a></h2>
+<p>Ejecute las celdas de arriba hacia abajo. Los bloques se clasifican así:</p>
+<ul class="simple">
+<li><p>🧠 <strong>Código central:</strong> debe poder explicar la lógica general de cada instrucción.</p></li>
+<li><p>🧩 <strong>Nueva herramienta:</strong> se introduce con una explicación antes de utilizarla.</p></li>
+<li><p>🎨 <strong>Visualización proporcionada:</strong> ejecútela e interprete el resultado; no necesita dominar todavía todos los comandos de Matplotlib.</p></li>
+</ul>
+<p>El código central evita deliberadamente formas compactas como <code class="docutils literal notranslate"><span class="pre">zip</span></code>, <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, comprensiones de listas y expresiones condicionales en una sola línea.</p>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-1-habitat-del-aguila-calva-basico">
+<h2>Ejercicio 1 — Hábitat del águila calva <em>(básico)</em><a class="headerlink" href="#ejercicio-1-habitat-del-aguila-calva-basico" title="Link to this heading">#</a></h2>
+<p>El equipo de conservación del Parque Nacional Yellowstone monitorea cada temporada el hábitat de un ejemplar del águila calva. El ave se mueve entre tres zonas: <strong>Bosque</strong>, <strong>Pradera</strong> y <strong>Laguna</strong>.</p>
+<div class="math notranslate nohighlight">
+\[
+X_n=\text{hábitat en la temporada }n,
+\qquad
+\mathcal{S}=\{0=\text{Bosque},\;1=\text{Pradera},\;2=\text{Laguna}\}.
+\]</div>
+<p>La matriz de transición estimada con registros históricos es:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=\begin{pmatrix}
+0.55&amp;0.30&amp;0.15\\
+0.20&amp;0.45&amp;0.35\\
+0.25&amp;0.20&amp;0.55
+\end{pmatrix}.
+\end{split}\]</div>
+<p><strong>a)</strong> Construya la matriz <span class="math notranslate nohighlight">\(P\)</span> en Python y verifique, fila por fila, que las probabilidades suman 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Código central</span>
+<span class="n">estados_aguila</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Bosque&#39;</span><span class="p">,</span> <span class="s1">&#39;Pradera&#39;</span><span class="p">,</span> <span class="s1">&#39;Laguna&#39;</span><span class="p">]</span>
+
+<span class="n">P_aguila</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_aguila</span><span class="p">)):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">nombre_estado</span> <span class="o">=</span> <span class="n">estados_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fila&#39;</span><span class="p">,</span> <span class="n">nombre_estado</span><span class="p">,</span> <span class="s1">&#39;- suma:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila Bosque - suma: 1.0
+Fila Pradera - suma: 1.0
+Fila Laguna - suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>b)</strong> ¿Cuántas temporadas tarda en promedio el águila en llegar a la <strong>Pradera</strong> por primera vez desde el <strong>Bosque</strong>? ¿Y desde la <strong>Laguna</strong>?</p>
+<p>Si <span class="math notranslate nohighlight">\(m_i\)</span> es el tiempo esperado hasta alcanzar la Pradera partiendo del estado <span class="math notranslate nohighlight">\(i\)</span>, entonces:</p>
+<div class="math notranslate nohighlight">
+\[
+m_i=1+\sum_{k\neq \text{Pradera}}P_{ik}m_k,
+\qquad i\neq \text{Pradera},
+\qquad m_{\text{Pradera}}=0.
+\]</div>
+<p>La ecuación es circular, porque los tiempos aparecen a ambos lados. La resolveremos por aproximaciones sucesivas: empezamos con <span class="math notranslate nohighlight">\(m^{(0)}=0\)</span> y repetimos la misma actualización hasta que el vector casi no cambie.</p>
+<p>La primera iteración produce un valor igual a 1 para cada estado no objetivo. En las siguientes iteraciones se incorporan trayectorias cada vez más largas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Una iteración, término a término</span>
+<span class="n">objetivo_pradera</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">numero_estados_aguila</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">estados_aguila</span><span class="p">)</span>
+
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">)</span>
+<span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+        <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">estado_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+                <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">suma</span>
+                    <span class="o">+</span> <span class="n">P_aguila</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">estado_siguiente</span><span class="p">]</span>
+                    <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Primera iteración:&#39;</span><span class="p">,</span> <span class="n">tiempos_nuevos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Primera iteración: [1. 0. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Repetimos la misma actualización hasta converger</span>
+<span class="n">maximo_iteraciones</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">tolerancia</span> <span class="o">=</span> <span class="mf">0.00000001</span>
+
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">estado_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">estado_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+                    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">suma</span>
+                        <span class="o">+</span> <span class="n">P_aguila</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">,</span> <span class="n">estado_siguiente</span><span class="p">]</span>
+                        <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">estado_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tiempos_nuevos</span> <span class="o">-</span> <span class="n">tiempos_anteriores</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">tiempos_nuevos</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">m_pradera_manual</span> <span class="o">=</span> <span class="n">tiempos_anteriores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iteraciones hasta convergencia:&#39;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tiempo esperado de primera pasada a Pradera:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">estados_aguila</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span> <span class="s1">&#39;-&gt; Pradera:&#39;</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="n">m_pradera_manual</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">&#39;temporadas&#39;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 64
+Tiempo esperado de primera pasada a Pradera:
+Bosque -&gt; Pradera: 3.6364 temporadas
+Laguna -&gt; Pradera: 4.2424 temporadas
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>c)</strong> El águila se encuentra actualmente en la <strong>Laguna</strong> (<span class="math notranslate nohighlight">\(X_0=2\)</span>). Calcule el tiempo esperado de ocupación en cada hábitat durante <strong>12 temporadas</strong>.</p>
+<p>Como contamos exactamente 12 observaciones, sumamos:</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(0)+\pi(1)+\cdots+\pi(11).
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Ocupación durante H=12 observaciones</span>
+<span class="n">H_aguila</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">distribucion_laguna</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_laguna</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ocupacion_aguila</span> <span class="o">=</span> <span class="n">distribucion_laguna</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_aguila</span><span class="p">):</span>
+    <span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_actual</span> <span class="o">@</span> <span class="n">P_aguila</span>
+    <span class="n">ocupacion_aguila</span> <span class="o">=</span> <span class="n">ocupacion_aguila</span> <span class="o">+</span> <span class="n">distribucion_actual</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Temporadas esperadas en cada hábitat:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+    <span class="n">tiempo</span> <span class="o">=</span> <span class="n">ocupacion_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">]</span>
+    <span class="n">porcentaje</span> <span class="o">=</span> <span class="n">tiempo</span> <span class="o">/</span> <span class="n">H_aguila</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">tiempo</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s1">&#39;temporadas -&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">porcentaje</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Suma de tiempos:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion_aguila</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Temporadas esperadas en cada hábitat:
+Bosque : 3.5743 temporadas - 29.8 %
+Pradera : 3.2615 temporadas - 27.2 %
+Laguna : 5.1642 temporadas - 43.0 %
+Suma de tiempos: 12.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>d)</strong> Calcule con NumPy la distribución estacionaria <span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span> y compare sus componentes con la fracción esperada de ocupación cuando el horizonte es grande.</p>
+<p>En una cadena ergódica:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{M_{ij}(H)}{H}\longrightarrow \pi_j
+\qquad \text{cuando }H\longrightarrow\infty.
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Distribución estacionaria por iteración</span>
+<span class="n">pi_anterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">tolerancia_estacionaria</span> <span class="o">=</span> <span class="mf">0.00000001</span>
+
+<span class="k">for</span> <span class="n">iteracion_pi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">):</span>
+    <span class="n">pi_nueva</span> <span class="o">=</span> <span class="n">pi_anterior</span> <span class="o">@</span> <span class="n">P_aguila</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pi_nueva</span> <span class="o">-</span> <span class="n">pi_anterior</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">pi_anterior</span> <span class="o">=</span> <span class="n">pi_nueva</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_estacionaria</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">pi_aguila_manual</span> <span class="o">=</span> <span class="n">pi_anterior</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distribución estacionaria:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">pi_aguila_manual</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># Ocupación en un horizonte largo</span>
+<span class="n">H_largo</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_laguna</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ocupacion_larga</span> <span class="o">=</span> <span class="n">distribucion_laguna</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_largo</span><span class="p">):</span>
+    <span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_actual</span> <span class="o">@</span> <span class="n">P_aguila</span>
+    <span class="n">ocupacion_larga</span> <span class="o">=</span> <span class="n">ocupacion_larga</span> <span class="o">+</span> <span class="n">distribucion_actual</span>
+
+<span class="n">fraccion_ocupacion</span> <span class="o">=</span> <span class="n">ocupacion_larga</span> <span class="o">/</span> <span class="n">H_largo</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Fracción esperada de ocupación con H =&#39;</span><span class="p">,</span> <span class="n">H_largo</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_aguila</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">fraccion_ocupacion</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución estacionaria:
+Bosque : 0.3349
+Pradera : 0.3113
+Laguna : 0.3538
+
+Fracción esperada de ocupación con H = 200
+Bosque : 0.3327
+Pradera : 0.3089
+Laguna : 0.3584
+</pre></div>
+</div>
+</div>
+</div>
+<section id="verificacion-con-jmarkov">
+<h3>Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#verificacion-con-jmarkov" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Irreducible:</strong> desde cualquier estado puede alcanzarse eventualmente cualquier otro.</p></li>
+<li><p><strong>Período 1:</strong> la cadena no está obligada a regresar siguiendo un ciclo rígido.</p></li>
+<li><p>Una cadena finita irreducible y aperiódica es ergódica.</p></li>
+</ul>
+<p>En <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>, <code class="docutils literal notranslate"><span class="pre">occupation_time(n)</span></code> suma desde <span class="math notranslate nohighlight">\(P^0\)</span> hasta <span class="math notranslate nohighlight">\(P^n\)</span>. Por eso, para contar <span class="math notranslate nohighlight">\(H\)</span> observaciones usamos <code class="docutils literal notranslate"><span class="pre">occupation_time(H</span> <span class="pre">-</span> <span class="pre">1)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificación con jmarkov</span>
+<span class="n">cadena_aguila</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_aguila</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Es ergódica:&#39;</span><span class="p">,</span> <span class="n">cadena_aguila</span><span class="o">.</span><span class="n">is_ergodic</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Período:&#39;</span><span class="p">,</span> <span class="n">cadena_aguila</span><span class="o">.</span><span class="n">period</span><span class="p">())</span>
+
+<span class="n">m_aguila_jmarkov</span> <span class="o">=</span> <span class="n">cadena_aguila</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="n">objetivo_pradera</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Primera pasada a Pradera:&#39;</span><span class="p">)</span>
+<span class="n">indice_resultado</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">estado_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_aguila</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">!=</span> <span class="n">objetivo_pradera</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">estados_aguila</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span>
+            <span class="s1">&#39;- NumPy:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_pradera_manual</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">],</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">&#39;- jmarkov:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_aguila_jmarkov</span><span class="p">[</span><span class="n">indice_resultado</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">indice_resultado</span> <span class="o">=</span> <span class="n">indice_resultado</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">ocupacion_aguila_jmarkov</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_aguila</span><span class="o">.</span><span class="n">occupation_time</span><span class="p">(</span><span class="n">H_aguila</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Ocupación con NumPy:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ocupacion_aguila</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ocupación con jmarkov:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ocupacion_aguila_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">pi_aguila_jmarkov</span> <span class="o">=</span> <span class="n">cadena_aguila</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pi con NumPy:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_aguila_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pi con jmarkov:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_aguila_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Es ergódica: True
+Período: 1
+
+Primera pasada a Pradera:
+Bosque - NumPy: 3.6364 - jmarkov: 3.6364
+Laguna - NumPy: 4.2424 - jmarkov: 4.2424
+
+Ocupación con NumPy: [3.5743 3.2615 5.1642]
+Ocupación con jmarkov: [3.5743 3.2615 5.1642]
+
+Pi con NumPy: [0.3349 0.3113 0.3538]
+Pi con jmarkov: [0.3349 0.3113 0.3538]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-2-inventario-bajo-politica-s-s-tiempo-hasta-stockout-intermedio">
+<h2>Ejercicio 2 — Inventario bajo política <span class="math notranslate nohighlight">\((s,S)\)</span>: tiempo hasta <em>stockout</em> <em>(intermedio)</em><a class="headerlink" href="#ejercicio-2-inventario-bajo-politica-s-s-tiempo-hasta-stockout-intermedio" title="Link to this heading">#</a></h2>
+<p>Una tienda aplica la política <span class="math notranslate nohighlight">\((s=2,S=6)\)</span>: si el inventario al inicio del día es 2 o menor, se repone inmediatamente hasta 6 unidades. Después ocurre la demanda diaria <span class="math notranslate nohighlight">\(D\sim\text{Poisson}(\lambda=2)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+X_n=\text{unidades al inicio del día }n,
+\qquad
+\mathcal{S}=\{0,1,2,3,4,5,6\}.
+\]</div>
+<p>Si <span class="math notranslate nohighlight">\(\widetilde{i}\)</span> es el inventario disponible después de aplicar la política:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\widetilde{i}=\begin{cases}
+6,&amp;i\leq2,\\
+i,&amp;i&gt;2,
+\end{cases}
+\end{split}\]</div>
+<p>entonces:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{ij}=\begin{cases}
+P(D=\widetilde{i}-j),&amp;j\geq1,\\
+P(D\geq\widetilde{i}),&amp;j=0.
+\end{cases}
+\end{split}\]</div>
+<p><strong>a)</strong> Construya la matriz <span class="math notranslate nohighlight">\(P\)</span> de tamaño <span class="math notranslate nohighlight">\(7	imes7\)</span> y verifique sus filas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Construcción explícita de la matriz</span>
+<span class="n">lambda_demanda</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">punto_reorden</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">nivel_reposicion</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">capacidad</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">numero_estados_inventario</span> <span class="o">=</span> <span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">P_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span>
+    <span class="n">numero_estados_inventario</span><span class="p">,</span>
+    <span class="n">numero_estados_inventario</span>
+<span class="p">))</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">inventario_actual</span> <span class="o">&lt;=</span> <span class="n">punto_reorden</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">nivel_reposicion</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+
+    <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">demanda_necesaria</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_disponible</span>
+                <span class="o">-</span> <span class="n">inventario_siguiente</span>
+            <span class="p">)</span>
+
+            <span class="n">P_inventario</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
+                <span class="n">demanda_necesaria</span><span class="p">,</span>
+                <span class="n">lambda_demanda</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">P_inventario</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="mi">0</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+                <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">lambda_demanda</span>
+            <span class="p">)</span>
+
+<span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_inventario</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fila&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">,</span> <span class="s1">&#39;- suma:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">):</span>
+        <span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Todas las filas son válidas:&#39;</span><span class="p">,</span> <span class="n">filas_validas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Matriz de transición:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">P_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila 0 - suma: 1.0
+Fila 1 - suma: 1.0
+Fila 2 - suma: 1.0
+Fila 3 - suma: 1.0
+Fila 4 - suma: 1.0
+Fila 5 - suma: 1.0
+Fila 6 - suma: 1.0
+
+Todas las filas son válidas: True
+
+Matriz de transición:
+[[0.017 0.036 0.09  0.18  0.271 0.271 0.135]
+ [0.017 0.036 0.09  0.18  0.271 0.271 0.135]
+ [0.017 0.036 0.09  0.18  0.271 0.271 0.135]
+ [0.323 0.271 0.271 0.135 0.    0.    0.   ]
+ [0.143 0.18  0.271 0.271 0.135 0.    0.   ]
+ [0.053 0.09  0.18  0.271 0.271 0.135 0.   ]
+ [0.017 0.036 0.09  0.18  0.271 0.271 0.135]]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>b)</strong> Calcule el tiempo esperado hasta el primer <em>stockout</em> desde cada estado:</p>
+<div class="math notranslate nohighlight">
+\[
+m_i=1+\sum_{k\neq0}P_{ik}m_k,
+\qquad m_0=0.
+\]</div>
+<p>¿Cuántos días se espera que pasen hasta el primer stockout si hoy hay 6 unidades?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Primera pasada hasta stockout</span>
+<span class="n">objetivo_stockout</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">maximo_iteraciones</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">tolerancia</span> <span class="o">=</span> <span class="mf">0.00000001</span>
+
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_actual</span> <span class="o">!=</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+                    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">suma</span>
+                        <span class="o">+</span> <span class="n">P_inventario</span><span class="p">[</span>
+                            <span class="n">inventario_actual</span><span class="p">,</span>
+                            <span class="n">inventario_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">inventario_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tiempos_nuevos</span> <span class="o">-</span> <span class="n">tiempos_anteriores</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">tiempos_nuevos</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">m_stockout_manual</span> <span class="o">=</span> <span class="n">tiempos_anteriores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iteraciones hasta convergencia:&#39;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tiempo esperado hasta stockout:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_inventario</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Desde&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">,</span> <span class="s1">&#39;unidades:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_manual</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;días&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 149
+Tiempo esperado hasta stockout:
+Desde 1 unidades: 9.29 días
+Desde 2 unidades: 9.29 días
+Desde 3 unidades: 6.97 días
+Desde 4 unidades: 8.18 días
+Desde 5 unidades: 8.81 días
+Desde 6 unidades: 9.29 días
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>c)</strong> Partiendo de <span class="math notranslate nohighlight">\(X_0=6\)</span>, calcule el tiempo esperado de ocupación durante <strong>30 días</strong>. Sumamos exactamente <span class="math notranslate nohighlight">\(\pi(0),\ldots,\pi(29)\)</span>.</p>
+<p>¿Cuántos días se espera que el inventario esté en stockout? ¿Cuántos días estará en zona de reorden, <span class="math notranslate nohighlight">\(X\leq2\)</span>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Ocupación durante H=30 días</span>
+<span class="n">H_inventario</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="n">distribucion_inicial_6</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">)</span>
+<span class="n">distribucion_inicial_6</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_inicial_6</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ocupacion_inventario</span> <span class="o">=</span> <span class="n">distribucion_inicial_6</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_inventario</span><span class="p">):</span>
+    <span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_actual</span> <span class="o">@</span> <span class="n">P_inventario</span>
+    <span class="n">ocupacion_inventario</span> <span class="o">=</span> <span class="n">ocupacion_inventario</span> <span class="o">+</span> <span class="n">distribucion_actual</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Días esperados en cada nivel:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+    <span class="n">tiempo</span> <span class="o">=</span> <span class="n">ocupacion_inventario</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+    <span class="n">porcentaje</span> <span class="o">=</span> <span class="n">tiempo</span> <span class="o">/</span> <span class="n">H_inventario</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Estado&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">tiempo</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;días -&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">porcentaje</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">dias_zona_reorden</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">punto_reorden</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">dias_zona_reorden</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">dias_zona_reorden</span>
+        <span class="o">+</span> <span class="n">ocupacion_inventario</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Días esperados con stockout:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion_inventario</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Días esperados en zona de reorden:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">dias_zona_reorden</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Suma de tiempos:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion_inventario</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Días esperados en cada nivel:
+Estado 0 : 3.042 días - 10.1 %
+Estado 1 : 3.374 días - 11.2 %
+Estado 2 : 4.984 días - 16.6 %
+Estado 3 : 5.841 días - 19.5 %
+Estado 4 : 5.592 días - 18.6 %
+Estado 5 : 4.299 días - 14.3 %
+Estado 6 : 2.868 días - 9.6 %
+
+Días esperados con stockout: 3.042
+Días esperados en zona de reorden: 11.4
+Suma de tiempos: 30.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>d) Validación Monte Carlo.</strong> Estime <span class="math notranslate nohighlight">\(m_{6,0}\)</span> mediante simulación.</p>
+<p>Primero simulamos una sola trayectoria. La instrucción</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">numero_estados</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>selecciona el siguiente estado usando como probabilidades la fila de la matriz correspondiente al estado actual.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Una sola trayectoria</span>
+<span class="n">rng_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">estado_actual</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">maximo_dias</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">llego_a_stockout</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">dias_hasta_stockout</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_dias</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">rng_inventario</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">numero_estados_inventario</span><span class="p">,</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">P_inventario</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">==</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+        <span class="n">dias_hasta_stockout</span> <span class="o">=</span> <span class="n">dia</span>
+        <span class="n">llego_a_stockout</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">break</span>
+
+<span class="k">if</span> <span class="n">llego_a_stockout</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La trayectoria llegó a stockout en el día&#39;</span><span class="p">,</span> <span class="n">dias_hasta_stockout</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La trayectoria no llegó a stockout dentro del límite&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La trayectoria llegó a stockout en el día 9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Repetimos el procedimiento 5000 veces</span>
+<span class="n">numero_simulaciones</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">rng_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">tiempos_simulados</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">simulacion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_simulaciones</span><span class="p">):</span>
+    <span class="n">estado_actual</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">llego_a_stockout</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_dias</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">rng_inventario</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="n">numero_estados_inventario</span><span class="p">,</span>
+            <span class="n">p</span><span class="o">=</span><span class="n">P_inventario</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">==</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+            <span class="n">tiempos_simulados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dia</span><span class="p">)</span>
+            <span class="n">llego_a_stockout</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">llego_a_stockout</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">tiempos_simulados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="n">tiempos_validos</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">tiempo</span> <span class="ow">in</span> <span class="n">tiempos_simulados</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">tiempo</span><span class="p">):</span>
+        <span class="n">tiempos_validos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tiempo</span><span class="p">)</span>
+
+<span class="n">media_simulada</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tiempos_validos</span><span class="p">)</span>
+<span class="n">media_teorica</span> <span class="o">=</span> <span class="n">m_stockout_manual</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">error_relativo</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nb">abs</span><span class="p">(</span><span class="n">media_simulada</span> <span class="o">-</span> <span class="n">media_teorica</span><span class="p">)</span>
+    <span class="o">/</span> <span class="n">media_teorica</span>
+    <span class="o">*</span> <span class="mi">100</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor teórico:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media_teorica</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;días&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor simulado:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media_simulada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;días&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trayectorias válidas:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tiempos_validos</span><span class="p">),</span> <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="n">numero_simulaciones</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error relativo:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_relativo</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor teórico: 9.29 días
+Valor simulado: 9.33 días
+Trayectorias válidas: 5000 de 5000
+Error relativo: 0.44 %
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>e)</strong> Compare la política <span class="math notranslate nohighlight">\((s=2,S=6)\)</span> con la política <span class="math notranslate nohighlight">\((s=3,S=6)\)</span>. Evalúe ambas políticas mediante el tiempo esperado hasta stockout desde <span class="math notranslate nohighlight">\(X_0=6\)</span>.</p>
+<blockquote>
+<div><p>Estamos <strong>evaluando dos políticas dadas</strong>. Todavía no estamos buscando automáticamente la política óptima.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Matriz de la política alternativa</span>
+<span class="n">punto_reorden_alternativo</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">P_inventario_alternativa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span>
+    <span class="n">numero_estados_inventario</span><span class="p">,</span>
+    <span class="n">numero_estados_inventario</span>
+<span class="p">))</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">inventario_actual</span> <span class="o">&lt;=</span> <span class="n">punto_reorden_alternativo</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">nivel_reposicion</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+
+    <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">demanda_necesaria</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_disponible</span>
+                <span class="o">-</span> <span class="n">inventario_siguiente</span>
+            <span class="p">)</span>
+
+            <span class="n">P_inventario_alternativa</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
+                <span class="n">demanda_necesaria</span><span class="p">,</span>
+                <span class="n">lambda_demanda</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">P_inventario_alternativa</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="mi">0</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+                <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">lambda_demanda</span>
+            <span class="p">)</span>
+
+<span class="c1"># Primera pasada para la política alternativa</span>
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_actual</span> <span class="o">!=</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_inventario</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_stockout</span><span class="p">:</span>
+                    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">suma</span>
+                        <span class="o">+</span> <span class="n">P_inventario_alternativa</span><span class="p">[</span>
+                            <span class="n">inventario_actual</span><span class="p">,</span>
+                            <span class="n">inventario_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">inventario_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tiempos_nuevos</span> <span class="o">-</span> <span class="n">tiempos_anteriores</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">tiempos_nuevos</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">m_stockout_alternativa</span> <span class="o">=</span> <span class="n">tiempos_anteriores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Política (s=2, S=6):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_manual</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;días&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Política (s=3, S=6):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_alternativa</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;días&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s1">&#39;Diferencia:&#39;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_alternativa</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">m_stockout_manual</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s1">&#39;días&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Política (s=2, S=6): 9.29 días
+Política (s=3, S=6): 18.79 días
+Diferencia: 9.5 días
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h3>Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificación de las dos políticas</span>
+<span class="n">cadena_inventario</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_inventario</span><span class="p">)</span>
+<span class="n">cadena_inventario_alternativa</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_inventario_alternativa</span><span class="p">)</span>
+
+<span class="n">m_inventario_jmarkov</span> <span class="o">=</span> <span class="n">cadena_inventario</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">m_alternativa_jmarkov</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_inventario_alternativa</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Primera pasada con (s=2, S=6):&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_inventario</span><span class="p">):</span>
+    <span class="n">indice_jmarkov</span> <span class="o">=</span> <span class="n">inventario_actual</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Estado&#39;</span><span class="p">,</span> <span class="n">inventario_actual</span><span class="p">,</span>
+        <span class="s1">&#39;- NumPy:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_manual</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;- jmarkov:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_inventario_jmarkov</span><span class="p">[</span><span class="n">indice_jmarkov</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Desde X0=6 con política alternativa:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NumPy:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_stockout_alternativa</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;jmarkov:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_alternativa_jmarkov</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">ocupacion_inventario_jmarkov</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_inventario</span><span class="o">.</span><span class="n">occupation_time</span><span class="p">(</span><span class="n">H_inventario</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">6</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Ocupación con NumPy:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ocupacion_inventario</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ocupación con jmarkov:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ocupacion_inventario_jmarkov</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Primera pasada con (s=2, S=6):
+Estado 1 - NumPy: 9.29 - jmarkov: 9.29
+Estado 2 - NumPy: 9.29 - jmarkov: 9.29
+Estado 3 - NumPy: 6.97 - jmarkov: 6.97
+Estado 4 - NumPy: 8.18 - jmarkov: 8.18
+Estado 5 - NumPy: 8.81 - jmarkov: 8.81
+Estado 6 - NumPy: 9.29 - jmarkov: 9.29
+
+Desde X0=6 con política alternativa:
+NumPy: 18.79
+jmarkov: 18.79
+
+Ocupación con NumPy: [3.042 3.374 4.984 5.841 5.592 4.299 2.868]
+Ocupación con jmarkov: [3.042 3.374 4.984 5.841 5.592 4.299 2.868]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-3-fondo-de-inversion-tiempo-hasta-ruina-profundizacion-guiada">
+<h2>Ejercicio 3 — Fondo de inversión: tiempo hasta ruina <em>(profundización guiada)</em><a class="headerlink" href="#ejercicio-3-fondo-de-inversion-tiempo-hasta-ruina-profundizacion-guiada" title="Link to this heading">#</a></h2>
+<p>Un fondo de capital privado monitorea su nivel de capital cada mes. El capital se mide en unidades de <strong>USD 1 millón</strong> y puede tomar valores entre 0 y 8. Cuando llega a 0, el fondo entra en estado de ruina y solicita una inyección de capital.</p>
+<div class="math notranslate nohighlight">
+\[
+X_n=\text{nivel de capital al final del mes }n,
+\qquad
+\mathcal{S}=\{0,1,\ldots,8\}.
+\]</div>
+<p>Las probabilidades son:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P_{i\to j}=\begin{cases}
+0.70,&amp;j=1,\;i=0,\\
+0.30,&amp;j=0,\;i=0,\\
+0.45,&amp;j=i+1,\;1\leq i\leq7,\\
+0.20,&amp;j=i,\;1\leq i\leq7,\\
+0.35,&amp;j=i-1,\;1\leq i\leq7,\\
+0.55,&amp;j=7,\;i=8,\\
+0.45,&amp;j=8,\;i=8,\\
+0,&amp;\text{en otro caso.}
+\end{cases}
+\end{split}\]</div>
+<p><strong>a)</strong> Construya la matriz <span class="math notranslate nohighlight">\(P\)</span> de tamaño <span class="math notranslate nohighlight">\(9	imes9\)</span> y verifique sus filas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Construcción de la matriz del fondo</span>
+<span class="n">numero_estados_fondo</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">P_fondo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numero_estados_fondo</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">))</span>
+
+<span class="c1"># Estado 0: inyección de capital o permanencia en ruina</span>
+<span class="n">P_fondo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.30</span>
+<span class="n">P_fondo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.70</span>
+
+<span class="c1"># Estados interiores 1,...,7</span>
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="n">P_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.35</span>
+    <span class="n">P_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.20</span>
+    <span class="n">P_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.45</span>
+
+<span class="c1"># Estado superior 8</span>
+<span class="n">P_fondo</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.55</span>
+<span class="n">P_fondo</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.45</span>
+
+<span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fila&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span> <span class="s1">&#39;- suma:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">):</span>
+        <span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Todas las filas son válidas:&#39;</span><span class="p">,</span> <span class="n">filas_validas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila 0 - suma: 1.0
+Fila 1 - suma: 1.0
+Fila 2 - suma: 1.0
+Fila 3 - suma: 1.0
+Fila 4 - suma: 1.0
+Fila 5 - suma: 1.0
+Fila 6 - suma: 1.0
+Fila 7 - suma: 1.0
+Fila 8 - suma: 1.0
+
+Todas las filas son válidas: True
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>b)</strong> Calcule el tiempo esperado hasta ruina desde cada nivel de capital. ¿Cuántos meses tarda, en promedio, un fondo que comienza en el nivel 5?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Tiempo de primera pasada hasta ruina</span>
+<span class="n">objetivo_ruina</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">maximo_iteraciones_fondo</span> <span class="o">=</span> <span class="mi">20000</span>
+<span class="n">tolerancia_fondo</span> <span class="o">=</span> <span class="mf">0.000001</span>
+
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones_fondo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">capital_actual</span> <span class="o">!=</span> <span class="n">objetivo_ruina</span><span class="p">:</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">capital_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">capital_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_ruina</span><span class="p">:</span>
+                    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">suma</span>
+                        <span class="o">+</span> <span class="n">P_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_siguiente</span><span class="p">]</span>
+                        <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">capital_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tiempos_nuevos</span> <span class="o">-</span> <span class="n">tiempos_anteriores</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">tiempos_nuevos</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_fondo</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">m_ruina_manual</span> <span class="o">=</span> <span class="n">tiempos_anteriores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iteraciones hasta convergencia:&#39;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tiempo esperado hasta ruina:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Capital&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">m_ruina_manual</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;meses&#39;</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Desde capital 5:&#39;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">m_ruina_manual</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;meses, equivalentes a&#39;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">m_ruina_manual</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;años&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 2380
+Tiempo esperado hasta ruina:
+Capital 1 : 58.64 meses
+Capital 2 : 102.02 meses
+Capital 3 : 133.54 meses
+Capital 4 : 155.84 meses
+Capital 5 : 170.96 meses
+Capital 6 : 180.49 meses
+Capital 7 : 185.69 meses
+Capital 8 : 187.51 meses
+
+Desde capital 5: 170.96 meses, equivalentes a 14.2 años
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>c)</strong> Partiendo de <span class="math notranslate nohighlight">\(X_0=5\)</span>, calcule el tiempo de ocupación durante <strong>60 meses</strong>, es decir, sumando <span class="math notranslate nohighlight">\(\pi(0),\ldots,\pi(59)\)</span>. ¿Cuántos meses se espera que el fondo permanezca en ruina? ¿Cuántos meses estará en la zona alta, <span class="math notranslate nohighlight">\(X\geq6\)</span>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Ocupación durante H=60 meses</span>
+<span class="n">H_fondo</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="n">distribucion_inicial_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">)</span>
+<span class="n">distribucion_inicial_5</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_inicial_5</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ocupacion_fondo</span> <span class="o">=</span> <span class="n">distribucion_inicial_5</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">mes</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_fondo</span><span class="p">):</span>
+    <span class="n">distribucion_actual</span> <span class="o">=</span> <span class="n">distribucion_actual</span> <span class="o">@</span> <span class="n">P_fondo</span>
+    <span class="n">ocupacion_fondo</span> <span class="o">=</span> <span class="n">ocupacion_fondo</span> <span class="o">+</span> <span class="n">distribucion_actual</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Meses esperados en cada nivel de capital:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">tiempo</span> <span class="o">=</span> <span class="n">ocupacion_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span>
+    <span class="n">porcentaje</span> <span class="o">=</span> <span class="n">tiempo</span> <span class="o">/</span> <span class="n">H_fondo</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Capital&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">tiempo</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">&#39;meses -&#39;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">porcentaje</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">meses_zona_alta</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">meses_zona_alta</span> <span class="o">=</span> <span class="n">meses_zona_alta</span> <span class="o">+</span> <span class="n">ocupacion_fondo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Meses esperados en ruina:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion_fondo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Meses esperados en zona alta:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">meses_zona_alta</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Suma de tiempos:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ocupacion_fondo</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Meses esperados en cada nivel de capital:
+Capital 0 : 1.18 meses - 2.0 %
+Capital 1 : 2.429 meses - 4.0 %
+Capital 2 : 3.326 meses - 5.5 %
+Capital 3 : 4.653 meses - 7.8 %
+Capital 4 : 6.584 meses - 11.0 %
+Capital 5 : 9.356 meses - 15.6 %
+Capital 6 : 10.434 meses - 17.4 %
+Capital 7 : 12.297 meses - 20.5 %
+Capital 8 : 9.741 meses - 16.2 %
+
+Meses esperados en ruina: 1.18
+Meses esperados en zona alta: 32.472
+Suma de tiempos: 60.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>d) Validación Monte Carlo.</strong> En el ejercicio anterior escribimos la simulación completa. Ahora encapsulamos el mismo procedimiento en una función, porque lo reutilizaremos con distintas matrices.</p>
+<p>La función sigue siendo un algoritmo sencillo:</p>
+<ol class="arabic simple">
+<li><p>recibe el estado inicial;</p></li>
+<li><p>simula un período usando una fila de <span class="math notranslate nohighlight">\(P\)</span>;</p></li>
+<li><p>se detiene cuando alcanza el objetivo;</p></li>
+<li><p>devuelve el número de períodos transcurridos.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧩 Función reutilizable para una trayectoria</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">simular_primera_pasada</span><span class="p">(</span>
+    <span class="n">P</span><span class="p">,</span>
+    <span class="n">estado_inicial</span><span class="p">,</span>
+    <span class="n">estado_objetivo</span><span class="p">,</span>
+    <span class="n">maximo_periodos</span><span class="p">,</span>
+    <span class="n">generador</span>
+<span class="p">):</span>
+    <span class="n">numero_estados</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">estado_inicial</span>
+
+    <span class="k">for</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_periodos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">estado_actual</span> <span class="o">=</span> <span class="n">generador</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="n">numero_estados</span><span class="p">,</span>
+            <span class="n">p</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">estado_actual</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">estado_actual</span> <span class="o">==</span> <span class="n">estado_objetivo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">periodo</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Repetimos la función con un ciclo ordinario</span>
+<span class="n">numero_simulaciones_fondo</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">maximo_meses</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">rng_fondo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">tiempos_ruina_simulados</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">simulacion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_simulaciones_fondo</span><span class="p">):</span>
+    <span class="n">tiempo</span> <span class="o">=</span> <span class="n">simular_primera_pasada</span><span class="p">(</span>
+        <span class="n">P_fondo</span><span class="p">,</span>
+        <span class="n">estado_inicial</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">estado_objetivo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">maximo_periodos</span><span class="o">=</span><span class="n">maximo_meses</span><span class="p">,</span>
+        <span class="n">generador</span><span class="o">=</span><span class="n">rng_fondo</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_ruina_simulados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tiempo</span><span class="p">)</span>
+
+<span class="n">tiempos_ruina_validos</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">tiempo</span> <span class="ow">in</span> <span class="n">tiempos_ruina_simulados</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">tiempo</span><span class="p">):</span>
+        <span class="n">tiempos_ruina_validos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tiempo</span><span class="p">)</span>
+
+<span class="n">media_ruina_simulada</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tiempos_ruina_validos</span><span class="p">)</span>
+<span class="n">media_ruina_teorica</span> <span class="o">=</span> <span class="n">m_ruina_manual</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">error_relativo_ruina</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nb">abs</span><span class="p">(</span><span class="n">media_ruina_simulada</span> <span class="o">-</span> <span class="n">media_ruina_teorica</span><span class="p">)</span>
+    <span class="o">/</span> <span class="n">media_ruina_teorica</span>
+    <span class="o">*</span> <span class="mi">100</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor teórico:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media_ruina_teorica</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;meses&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor simulado:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media_ruina_simulada</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;meses&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s1">&#39;Trayectorias válidas:&#39;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">tiempos_ruina_validos</span><span class="p">),</span>
+    <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="n">numero_simulaciones_fondo</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error relativo:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_relativo_ruina</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valor teórico: 170.96 meses
+Valor simulado: 169.57 meses
+Trayectorias válidas: 5000 de 5000
+Error relativo: 0.81 %
+</pre></div>
+</div>
+</div>
+</div>
+<section id="visualizacion-proporcionada">
+<h3>🎨 Visualización proporcionada<a class="headerlink" href="#visualizacion-proporcionada" title="Link to this heading">#</a></h3>
+<p>La siguiente celda no hace parte de los contenidos de programación evaluados. No es necesario comprender todos los comandos de Matplotlib. Concéntrese en interpretar:</p>
+<ul class="simple">
+<li><p>la dispersión de los tiempos simulados;</p></li>
+<li><p>la diferencia entre una trayectoria particular y el valor esperado;</p></li>
+<li><p>la cercanía entre la media simulada y la media teórica.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🎨 Visualización proporcionada</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tiempos_ruina_validos</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+    <span class="n">media_ruina_teorica</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media teórica&#39;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+    <span class="n">media_ruina_simulada</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Media simulada&#39;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Meses hasta ruina&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Densidad&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Tiempo hasta ruina desde capital inicial 5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/92b71b090b9def0ca61570151b8748b69938f5d7929ddc3e2f4996430480f197.png" src="../../_images/92b71b090b9def0ca61570151b8748b69938f5d7929ddc3e2f4996430480f197.png" />
+</div>
+</div>
+<p><strong>e)</strong> El fondo modifica su estrategia: la probabilidad de ganancia aumenta de <span class="math notranslate nohighlight">\(0.45\)</span> a <span class="math notranslate nohighlight">\(0.52\)</span> y la probabilidad de pérdida disminuye de <span class="math notranslate nohighlight">\(0.35\)</span> a <span class="math notranslate nohighlight">\(0.28\)</span>. Reconstruya la cadena y compare los tiempos esperados hasta ruina.</p>
+<p>La nueva cadena se mueve con menor frecuencia hacia la ruina. Por eso la iteración puede necesitar más pasos para converger.</p>
+<blockquote>
+<div><p>De nuevo, estamos evaluando dos estrategias definidas; no estamos resolviendo todavía un problema de optimización de políticas.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Nueva estrategia de inversión</span>
+<span class="n">probabilidad_ganancia_nueva</span> <span class="o">=</span> <span class="mf">0.52</span>
+<span class="n">probabilidad_perdida_nueva</span> <span class="o">=</span> <span class="mf">0.28</span>
+<span class="n">probabilidad_sin_cambio_nueva</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">1</span>
+    <span class="o">-</span> <span class="n">probabilidad_ganancia_nueva</span>
+    <span class="o">-</span> <span class="n">probabilidad_perdida_nueva</span>
+<span class="p">)</span>
+
+<span class="n">P_fondo_nuevo</span> <span class="o">=</span> <span class="n">P_fondo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="n">P_fondo_nuevo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">probabilidad_perdida_nueva</span>
+    <span class="p">)</span>
+    <span class="n">P_fondo_nuevo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">probabilidad_sin_cambio_nueva</span>
+    <span class="p">)</span>
+    <span class="n">P_fondo_nuevo</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">,</span> <span class="n">capital_actual</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">probabilidad_ganancia_nueva</span>
+    <span class="p">)</span>
+
+<span class="c1"># Primera pasada con la nueva estrategia</span>
+<span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">)</span>
+<span class="n">maximo_iteraciones_nuevo</span> <span class="o">=</span> <span class="mi">200000</span>
+<span class="n">tolerancia_nueva</span> <span class="o">=</span> <span class="mf">0.000001</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">maximo_iteraciones_nuevo</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">tiempos_nuevos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">capital_actual</span> <span class="o">!=</span> <span class="n">objetivo_ruina</span><span class="p">:</span>
+            <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="k">for</span> <span class="n">capital_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_fondo</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">capital_siguiente</span> <span class="o">!=</span> <span class="n">objetivo_ruina</span><span class="p">:</span>
+                    <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">suma</span>
+                        <span class="o">+</span> <span class="n">P_fondo_nuevo</span><span class="p">[</span>
+                            <span class="n">capital_actual</span><span class="p">,</span>
+                            <span class="n">capital_siguiente</span>
+                        <span class="p">]</span>
+                        <span class="o">*</span> <span class="n">tiempos_anteriores</span><span class="p">[</span><span class="n">capital_siguiente</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">tiempos_nuevos</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tiempos_nuevos</span> <span class="o">-</span> <span class="n">tiempos_anteriores</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">tiempos_anteriores</span> <span class="o">=</span> <span class="n">tiempos_nuevos</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_nueva</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">m_ruina_nuevo_manual</span> <span class="o">=</span> <span class="n">tiempos_anteriores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Iteraciones hasta convergencia:&#39;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Comparación de tiempos hasta ruina:&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">tiempo_original</span> <span class="o">=</span> <span class="n">m_ruina_manual</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span>
+    <span class="n">tiempo_nuevo</span> <span class="o">=</span> <span class="n">m_ruina_nuevo_manual</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">]</span>
+    <span class="n">diferencia</span> <span class="o">=</span> <span class="n">tiempo_nuevo</span> <span class="o">-</span> <span class="n">tiempo_original</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Capital&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span>
+        <span class="s1">&#39;- original:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_original</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;- nueva:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_nuevo</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;- diferencia:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">diferencia</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones hasta convergencia: 12894
+Comparación de tiempos hasta ruina:
+Capital 1 - original: 58.6 - nueva: 451.8 - diferencia: 393.2
+Capital 2 - original: 102.0 - nueva: 693.2 - diferencia: 591.2
+Capital 3 - original: 133.5 - nueva: 821.3 - diferencia: 687.7
+Capital 4 - original: 155.8 - nueva: 888.3 - diferencia: 732.4
+Capital 5 - original: 171.0 - nueva: 922.5 - diferencia: 751.5
+Capital 6 - original: 180.5 - nueva: 938.9 - diferencia: 758.4
+Capital 7 - original: 185.7 - nueva: 945.9 - diferencia: 760.2
+Capital 8 - original: 187.5 - nueva: 947.7 - diferencia: 760.2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificación de las dos estrategias</span>
+<span class="n">cadena_fondo</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_fondo</span><span class="p">)</span>
+<span class="n">cadena_fondo_nuevo</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span><span class="n">P_fondo_nuevo</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cadena original ergódica:&#39;</span><span class="p">,</span> <span class="n">cadena_fondo</span><span class="o">.</span><span class="n">is_ergodic</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cadena nueva ergódica:&#39;</span><span class="p">,</span> <span class="n">cadena_fondo_nuevo</span><span class="o">.</span><span class="n">is_ergodic</span><span class="p">())</span>
+
+<span class="n">m_fondo_jmarkov</span> <span class="o">=</span> <span class="n">cadena_fondo</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">m_fondo_nuevo_jmarkov</span> <span class="o">=</span> <span class="n">cadena_fondo_nuevo</span><span class="o">.</span><span class="n">first_passage_time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estrategia original:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">indice_jmarkov</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Capital&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span>
+        <span class="s1">&#39;- NumPy:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_ruina_manual</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;- jmarkov:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_fondo_jmarkov</span><span class="p">[</span><span class="n">indice_jmarkov</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estrategia nueva:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">capital_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_fondo</span><span class="p">):</span>
+    <span class="n">indice_jmarkov</span> <span class="o">=</span> <span class="n">capital_actual</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;Capital&#39;</span><span class="p">,</span> <span class="n">capital_actual</span><span class="p">,</span>
+        <span class="s1">&#39;- NumPy:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_ruina_nuevo_manual</span><span class="p">[</span><span class="n">capital_actual</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;- jmarkov:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_fondo_nuevo_jmarkov</span><span class="p">[</span><span class="n">indice_jmarkov</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cadena original ergódica: True
+Cadena nueva ergódica: True
+
+Estrategia original:
+Capital 1 - NumPy: 58.64 - jmarkov: 58.64
+Capital 2 - NumPy: 102.02 - jmarkov: 102.02
+Capital 3 - NumPy: 133.54 - jmarkov: 133.54
+Capital 4 - NumPy: 155.84 - jmarkov: 155.84
+Capital 5 - NumPy: 170.96 - jmarkov: 170.96
+Capital 6 - NumPy: 180.49 - jmarkov: 180.49
+Capital 7 - NumPy: 185.69 - jmarkov: 185.69
+Capital 8 - NumPy: 187.51 - jmarkov: 187.51
+
+Estrategia nueva:
+Capital 1 - NumPy: 451.8 - jmarkov: 451.8
+Capital 2 - NumPy: 693.2 - jmarkov: 693.2
+Capital 3 - NumPy: 821.3 - jmarkov: 821.3
+Capital 4 - NumPy: 888.3 - jmarkov: 888.3
+Capital 5 - NumPy: 922.5 - jmarkov: 922.5
+Capital 6 - NumPy: 938.9 - jmarkov: 938.9
+Capital 7 - NumPy: 945.9 - jmarkov: 945.9
+Capital 8 - NumPy: 947.7 - jmarkov: 947.7
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-abierto-gestion-de-inventario-de-medicamentos-criticos">
+<h2>Ejercicio abierto — Gestión de inventario de medicamentos críticos<a class="headerlink" href="#ejercicio-abierto-gestion-de-inventario-de-medicamentos-criticos" title="Link to this heading">#</a></h2>
+<p>Un hospital gestiona un medicamento crítico con capacidad máxima de 10 unidades. La demanda diaria sigue una distribución Poisson con tasa <span class="math notranslate nohighlight">\(\lambda=2\)</span>. La política es <span class="math notranslate nohighlight">\((s=3,S=10)\)</span>: si el inventario al inicio del día es 3 o menor, se repone hasta 10 antes de atender la demanda.</p>
+<div class="math notranslate nohighlight">
+\[
+X_n=\text{unidades al inicio del día }n,
+\qquad
+\mathcal{S}=\{0,1,\ldots,10\}.
+\]</div>
+<section id="checkpoints">
+<h3>Checkpoints<a class="headerlink" href="#checkpoints" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Modelo:</strong> derive las reglas y construya <span class="math notranslate nohighlight">\(P\)</span>.</p></li>
+<li><p><strong>Primera pasada:</strong> calcule el tiempo esperado hasta stockout desde cada estado.</p></li>
+<li><p><strong>Ocupación:</strong> durante <span class="math notranslate nohighlight">\(H=60\)</span> días, sume <span class="math notranslate nohighlight">\(\pi(0),\ldots,\pi(59)\)</span> y calcule los días esperados en zona crítica, <span class="math notranslate nohighlight">\(X\leq3\)</span>.</p></li>
+<li><p><strong>Monte Carlo:</strong> valide <span class="math notranslate nohighlight">\(m_{10,0}\)</span> con 3000 trayectorias.</p></li>
+<li><p><strong>Verificación:</strong> compare con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> usando <code class="docutils literal notranslate"><span class="pre">occupation_time(59)</span></code>.</p></li>
+</ol>
+<p>Antes de aceptar código generado por una IA, compruebe al menos una transición y una iteración que dependan realmente de la matriz.</p>
+</section>
+<section id="como-usar-una-ia-para-resolver-el-ejercicio">
+<h3>Cómo usar una IA para resolver el ejercicio<a class="headerlink" href="#como-usar-una-ia-para-resolver-el-ejercicio" title="Link to this heading">#</a></h3>
+<p><strong>Paso 1.</strong> Escriba primero las reglas de transición.</p>
+<p><strong>Paso 2.</strong> Ejecute la celda de referencia y conserve sus valores.</p>
+<p><strong>Paso 3.</strong> Pida a la IA código legible, sin <code class="docutils literal notranslate"><span class="pre">zip</span></code>, <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, comprensiones de listas ni expresiones condicionales en una sola línea.</p>
+<p><strong>Paso 4.</strong> Compare la respuesta con las referencias antes de ejecutar las 3000 simulaciones.</p>
+<p><strong>Prompt sugerido:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Estoy modelando el inventario de un medicamento como una CMTD:
+
+X_n = unidades al inicio del día n
+S = {0,1,...,10}
+P[i,j] = P(X_(n+1)=j | X_n=i)
+
+Política (s=3,S=10): si i &lt;= 3, se repone hasta 10 antes de atender la demanda.
+Demanda D ~ Poisson(lambda=2), sin backorder.
+
+Reglas:
+- inventario_disponible = 10 si i &lt;= 3; en otro caso, inventario_disponible = i.
+- P[i,j] = P(D = inventario_disponible-j) para j &gt;= 1.
+- P[i,0] = P(D &gt;= inventario_disponible).
+
+Ayúdame en este orden:
+1. Construir P con NumPy y scipy.stats.poisson y verificar cada fila.
+2. Calcular el tiempo hasta stockout mediante la iteración
+   m_i = 1 + suma_{k != 0} P[i,k] m_k, sin jmarkov.
+3. Calcular ocupación durante H=60 observaciones sumando pi(0),...,pi(59).
+4. Validar m_(10,0) con 3000 simulaciones y seed=42.
+5. Verificar al final con jmarkov, usando occupation_time(59).
+
+Escribe ciclos y condicionales explícitos. No uses zip, enumerate,
+comprensiones de listas ni expresiones condicionales en una sola línea.
+Marca cualquier código de Matplotlib como visualización proporcionada.
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 🧠 Referencias manuales antes de usar la IA</span>
+<span class="n">lambda_hospital</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">punto_reorden_hospital</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">nivel_reposicion_hospital</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">capacidad_hospital</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">numero_estados_hospital</span> <span class="o">=</span> <span class="n">capacidad_hospital</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">P_hospital</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span>
+    <span class="n">numero_estados_hospital</span><span class="p">,</span>
+    <span class="n">numero_estados_hospital</span>
+<span class="p">))</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">inventario_actual</span> <span class="o">&lt;=</span> <span class="n">punto_reorden_hospital</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">nivel_reposicion_hospital</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">inventario_actual</span>
+
+    <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">demanda_necesaria</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_disponible</span>
+                <span class="o">-</span> <span class="n">inventario_siguiente</span>
+            <span class="p">)</span>
+
+            <span class="n">P_hospital</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
+                <span class="n">demanda_necesaria</span><span class="p">,</span>
+                <span class="n">lambda_hospital</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">P_hospital</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="mi">0</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+                <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">lambda_hospital</span>
+            <span class="p">)</span>
+
+<span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="n">P_hospital</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">):</span>
+        <span class="n">filas_validas</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Todas las filas son válidas:&#39;</span><span class="p">,</span> <span class="n">filas_validas</span><span class="p">)</span>
+
+<span class="c1"># Referencia 1: probabilidad de stockout en un paso desde X=4</span>
+<span class="n">referencia_stockout_desde_4</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lambda_hospital</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">P_hospital[4,0]:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">P_hospital</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Referencia P(D &gt;= 4):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">referencia_stockout_desde_4</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Referencia 2: desde X=2 se repone primero hasta 10</span>
+<span class="n">referencia_stockout_desde_2</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">lambda_hospital</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">P_hospital[2,0]:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">P_hospital</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Referencia P(D &gt;= 10):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">referencia_stockout_desde_2</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Referencia 3: segunda iteración del tiempo de primera pasada</span>
+<span class="n">m_iteracion_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">)</span>
+<span class="n">m_iteracion_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">)</span>
+<span class="n">m_iteracion_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numero_estados_hospital</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_hospital</span><span class="p">):</span>
+    <span class="n">m_iteracion_1</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="k">for</span> <span class="n">inventario_actual</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_hospital</span><span class="p">):</span>
+    <span class="n">suma</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_estados_hospital</span><span class="p">):</span>
+        <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">suma</span>
+            <span class="o">+</span> <span class="n">P_hospital</span><span class="p">[</span>
+                <span class="n">inventario_actual</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span>
+            <span class="o">*</span> <span class="n">m_iteracion_1</span><span class="p">[</span><span class="n">inventario_siguiente</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">m_iteracion_2</span><span class="p">[</span><span class="n">inventario_actual</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Segunda iteración, estado 4:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_iteracion_2</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Segunda iteración, estado 10:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">m_iteracion_2</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Todas las filas son válidas: True
+
+P_hospital[4,0]: 0.142877
+Referencia P(D &gt;= 4): 0.142877
+
+P_hospital[2,0]: 4.6e-05
+Referencia P(D &gt;= 10): 4.6e-05
+
+Segunda iteración, estado 4: 1.857123
+Segunda iteración, estado 10: 1.999954
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pegue y adapte aquí el código generado por la IA.</span>
+<span class="c1"># Antes de aceptarlo, compare al menos:</span>
+<span class="c1"># 1. P[4,0]</span>
+<span class="c1"># 2. P[2,0]</span>
+<span class="c1"># 3. la segunda iteración de m para los estados 4 y 10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><small>Universidad de los Andes · Departamento de Ingeniería Industrial · Modelos de Decisión en el Tiempo</small></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Semana_2_Transitorio_y_Estado_Estable_v3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Semana 2 — Análisis transitorio y estado estable</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Semana_4_Cadenas_Absorbentes_v3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Semana 4 — Cadenas absorbentes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-trabajar-con-el-cuaderno">Cómo trabajar con el cuaderno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-habitat-del-aguila-calva-basico">Ejercicio 1 — Hábitat del águila calva <em>(básico)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-bajo-politica-s-s-tiempo-hasta-stockout-intermedio">Ejercicio 2 — Inventario bajo política <span class="math notranslate nohighlight">\((s,S)\)</span>: tiempo hasta <em>stockout</em> <em>(intermedio)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3-fondo-de-inversion-tiempo-hasta-ruina-profundizacion-guiada">Ejercicio 3 — Fondo de inversión: tiempo hasta ruina <em>(profundización guiada)</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-proporcionada">🎨 Visualización proporcionada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-gestion-de-inventario-de-medicamentos-criticos">Ejercicio abierto — Gestión de inventario de medicamentos críticos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoints">Checkpoints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-usar-una-ia-para-resolver-el-ejercicio">Cómo usar una IA para resolver el ejercicio</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos de Decisión en el Tiempo | Uniandes
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

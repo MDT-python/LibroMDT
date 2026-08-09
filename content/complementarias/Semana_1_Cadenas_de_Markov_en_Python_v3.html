@@ -1,0 +1,1838 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Semana 1 — Repaso de probabilidad y cadenas de Markov en Python &#8212; Libro Modelos de Decisión en el Tiempo - IIND 3518</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0361f5db" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area|tex2jax_ignore|mathjax_ignore"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/complementarias/Semana_1_Cadenas_de_Markov_en_Python_v3';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Semana 2 — Análisis transitorio y estado estable" href="Semana_2_Transitorio_y_Estado_Estable_v3.html" />
+    <link rel="prev" title="Complementaria 0 — Fundamentos de Python" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/uniandes.png" class="logo__image only-light" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>
+    <script>document.write(`<img src="../../_static/uniandes.png" class="logo__image only-dark" alt="Libro Modelos de Decisión en el Tiempo - IIND 3518 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bienvenidos al libro del curso Modelos de Decisión en el Tiempo
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Complementarias</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html">Complementaria 0 — Fundamentos de Python</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_2_Transitorio_y_Estado_Estable_v3.html">Semana 2 — Análisis transitorio y estado estable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_3_Primera_Pasada_y_Ocupacion_v3.html">Semana 3 — Tiempos de Primera Pasada y Ocupación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_4_Cadenas_Absorbentes_v3.html">Semana 4 — Cadenas absorbentes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_7_MDP_y_Backward_Induction_v4.html">Semana 7 — MDP y Backward Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_8_Horizonte_Infinito_VI_PI_LP_v3.html">Semana 8 — MDP de horizonte infinito: VI, PI y LP</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_9_Horizonte_Rodante_v4_final.html">Semana 9 — Horizonte Rodante (RH): inventarios con demanda estacional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_10_Rollout_y_Benchmarking_v4_final.html">Semana 10 — Rollout y benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_12_MC_y_TD0_v4_final.html">Semana 12 — Evaluación Monte Carlo y TD(0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Semana_13_SARSA_Q_learning_v4_final.html">Semana 13 — SARSA y Q-learning: control TD sin modelo</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Semana_14_Double_Q_y_Shaping_v4_final.html">Semana 14 — Double Q-learning y diseño de recompensas</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/complementarias/Semana_1_Cadenas_de_Markov_en_Python_v3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semana 1 — Repaso de probabilidad y cadenas de Markov en Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-se-espera-de-ti">Qué se espera de ti</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#antes-de-comenzar">Antes de comenzar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-jmarkov">Instalación de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importaciones">Importaciones</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-1-repaso-de-distribuciones-de-probabilidad">Parte 1 — Repaso de distribuciones de probabilidad</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-clave-de-scipy-stats">Funciones clave de <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-1-linea-de-produccion-distribucion-binomial">Problema 1 — Línea de producción: distribución binomial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-2-centro-de-soporte-tecnico-distribucion-poisson">Problema 2 — Centro de soporte técnico: distribución Poisson</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-3-vida-util-de-una-bomba-distribucion-exponencial">Problema 3 — Vida útil de una bomba: distribución exponencial</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-cadenas-de-markov-a-tiempo-discreto">Parte 2 — Cadenas de Markov a tiempo discreto</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-operador">El operador <code class="docutils literal notranslate"><span class="pre">@</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-del-curso">Notación del curso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regimen-del-mercado-accionario">Ejercicio 1 — Régimen del mercado accionario</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-termino-a-termino">Un paso, término a término</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aproximacion-numerica-de-la-distribucion-estacionaria">Aproximación numérica de la distribución estacionaria</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-con-politica-s-s">Ejercicio 2 — Inventario con política <span class="math notranslate nohighlight">\((s,S)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antes-de-programar-toda-la-matriz-construyamos-una-fila">Antes de programar toda la matriz: construyamos una fila</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalizacion-a-todos-los-estados">Generalización a todos los estados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-degradacion-de-un-activo-industrial">Ejercicio abierto — Degradación de un activo industrial</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-responsable-de-ia">Uso responsable de IA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido">Prompt sugerido</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-manual">Verificación manual</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lista-de-comprobacion-final">Lista de comprobación final</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="semana-1-repaso-de-probabilidad-y-cadenas-de-markov-en-python">
+<h1>Semana 1 — Repaso de probabilidad y cadenas de Markov en Python<a class="headerlink" href="#semana-1-repaso-de-probabilidad-y-cadenas-de-markov-en-python" title="Link to this heading">#</a></h1>
+<p>En este laboratorio usaremos Python para repasar algunas distribuciones de probabilidad y estudiar cadenas de Markov a tiempo discreto.</p>
+<p>La sesión tiene dos partes:</p>
+<ul class="simple">
+<li><p><strong>Parte 1 — Repaso de distribuciones:</strong> binomial, Poisson y exponencial con <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>.</p></li>
+<li><p><strong>Parte 2 — Cadenas de Markov:</strong> representación matricial con NumPy y verificación de resultados con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p></li>
+</ul>
+<section id="que-se-espera-de-ti">
+<h2>Qué se espera de ti<a class="headerlink" href="#que-se-espera-de-ti" title="Link to this heading">#</a></h2>
+<p>El curso supone que ya conoces variables, condicionales y ciclos básicos de Python. <strong>No se supone que ya domines NumPy, SciPy, Matplotlib o <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></strong>: las instrucciones nuevas se introducirán paso a paso.</p>
+<p>A lo largo del cuaderno encontrarás tres tipos de celdas:</p>
+<ul class="simple">
+<li><p><strong>Código central:</strong> debes seguir la lógica y relacionarla con las ecuaciones.</p></li>
+<li><p><strong>Código proporcionado:</strong> debes ejecutarlo e interpretar el resultado; no es necesario dominar todos sus detalles todavía.</p></li>
+<li><p><strong>Preguntas de interpretación:</strong> son tan importantes como obtener el resultado numérico.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="antes-de-comenzar">
+<h2>Antes de comenzar<a class="headerlink" href="#antes-de-comenzar" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Ejecuta las celdas <strong>de arriba hacia abajo</strong>.</p></li>
+<li><p>Si obtienes resultados extraños, reinicia el kernel y selecciona <strong>Run All / Ejecutar todo</strong>.</p></li>
+<li><p>La instalación de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> solo debe hacerse una vez por entorno. Si ya está instalado, aparecerá un mensaje indicando que el requisito está satisfecho.</p></li>
+<li><p>Un error de Python no significa que el modelo esté mal. Lee la última línea del mensaje: normalmente allí aparece la causa más útil.</p></li>
+</ol>
+<blockquote>
+<div><p><strong>Importante:</strong> Jupyter conserva en memoria las variables creadas en celdas anteriores. Por eso, ejecutar las celdas en desorden puede producir errores o resultados inconsistentes.</p>
+</div></blockquote>
+<section id="instalacion-de-jmarkov">
+<h3>Instalación de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#instalacion-de-jmarkov" title="Link to this heading">#</a></h3>
+<p>Ejecuta la siguiente celda antes de importar la librería.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>jmarkov
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: jmarkov in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (0.3.9)
+Requirement already satisfied: numpy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (2.4.1)
+Requirement already satisfied: scipy in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (1.17.0)
+Requirement already satisfied: typing in /opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages (from jmarkov) (3.7.4.3)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importaciones">
+<h3>Importaciones<a class="headerlink" href="#importaciones" title="Link to this heading">#</a></h3>
+<p>Estas líneas cargan las herramientas que usaremos. No es necesario memorizar los nombres hoy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">binom</span><span class="p">,</span> <span class="n">poisson</span><span class="p">,</span> <span class="n">expon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jmarkov.dtmc</span><span class="w"> </span><span class="kn">import</span> <span class="n">dtmc</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="parte-1-repaso-de-distribuciones-de-probabilidad">
+<h2>Parte 1 — Repaso de distribuciones de probabilidad<a class="headerlink" href="#parte-1-repaso-de-distribuciones-de-probabilidad" title="Link to this heading">#</a></h2>
+<section id="funciones-clave-de-scipy-stats">
+<h3>Funciones clave de <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code><a class="headerlink" href="#funciones-clave-de-scipy-stats" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Función</p></th>
+<th class="head text-left"><p>Devuelve</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">binom.pmf(k,</span> <span class="pre">n,</span> <span class="pre">p)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X=k)\)</span> para una binomial</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">binom.cdf(k,</span> <span class="pre">n,</span> <span class="pre">p)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X\leq k)\)</span> para una binomial</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">binom.sf(k,</span> <span class="pre">n,</span> <span class="pre">p)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X&gt;k)\)</span> para una binomial</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">poisson.pmf(k,</span> <span class="pre">mu)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X=k)\)</span> para una Poisson</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">poisson.cdf(k,</span> <span class="pre">mu)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X\leq k)\)</span> para una Poisson</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">poisson.sf(k,</span> <span class="pre">mu)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(X&gt;k)\)</span> para una Poisson</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">expon.cdf(t,</span> <span class="pre">scale)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(T\leq t)\)</span> para una exponencial</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">expon.sf(t,</span> <span class="pre">scale)</span></code></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(P(T&gt;t)\)</span> para una exponencial</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">expon.ppf(q,</span> <span class="pre">scale)</span></code></p></td>
+<td class="text-left"><p>Cuantil <span class="math notranslate nohighlight">\(t\)</span> tal que <span class="math notranslate nohighlight">\(P(T\leq t)=q\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>En <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code>, la distribución exponencial recibe <code class="docutils literal notranslate"><span class="pre">scale</span></code>, que corresponde a la media <span class="math notranslate nohighlight">\(\mu=1/\lambda\)</span>, no a la tasa <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+</div></blockquote>
+</section>
+<section id="problema-1-linea-de-produccion-distribucion-binomial">
+<h3>Problema 1 — Línea de producción: distribución binomial<a class="headerlink" href="#problema-1-linea-de-produccion-distribucion-binomial" title="Link to this heading">#</a></h3>
+<p>Una línea produce <strong>15 componentes por turno</strong>. Cada componente es defectuoso con probabilidad <span class="math notranslate nohighlight">\(p=0.12\)</span>, independientemente de los demás.</p>
+<p>Sea <span class="math notranslate nohighlight">\(X\)</span> el número de componentes defectuosos:</p>
+<div class="math notranslate nohighlight">
+\[X\sim\operatorname{Bin}(15,0.12).\]</div>
+<p>Calcula:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(P(X=2)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X\leq3)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X\geq1)\)</span>.</p></li>
+<li><p>La media y la desviación estándar.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numero_componentes</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">probabilidad_defecto</span> <span class="o">=</span> <span class="mf">0.12</span>
+
+<span class="c1"># 1. Probabilidad de exactamente 2 defectuosos</span>
+<span class="n">prob_exactamente_2</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">numero_componentes</span><span class="p">,</span> <span class="n">probabilidad_defecto</span><span class="p">)</span>
+
+<span class="c1"># 2. Probabilidad de a lo más 3 defectuosos</span>
+<span class="n">prob_a_lo_mas_3</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">numero_componentes</span><span class="p">,</span> <span class="n">probabilidad_defecto</span><span class="p">)</span>
+
+<span class="c1"># 3. Probabilidad de al menos 1 defectuoso</span>
+<span class="c1"># Primero calculamos P(X = 0) y usamos el complemento.</span>
+<span class="n">prob_al_menos_1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numero_componentes</span><span class="p">,</span> <span class="n">probabilidad_defecto</span><span class="p">)</span>
+
+<span class="c1"># 4. Media y desviación estándar</span>
+<span class="n">media_defectuosos</span> <span class="o">=</span> <span class="n">numero_componentes</span> <span class="o">*</span> <span class="n">probabilidad_defecto</span>
+<span class="n">desviacion_defectuosos</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">numero_componentes</span>
+    <span class="o">*</span> <span class="n">probabilidad_defecto</span>
+    <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">probabilidad_defecto</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X = 2):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_exactamente_2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X &lt;= 3):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_a_lo_mas_3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X &gt;= 1):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_al_menos_1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Media:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">media_defectuosos</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Desviación estándar:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">desviacion_defectuosos</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P(X = 2): 0.287
+P(X &lt;= 3): 0.9041
+P(X &gt;= 1): 0.853
+Media: 1.8
+Desviación estándar: 1.2586
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><h3 class="rubric" id="visualizacion-proporcionada">🎨 Visualización proporcionada</h3>
+<p>La siguiente celda <strong>no hace parte de los contenidos de programación evaluados en esta sesión</strong>. Ejecútala y observa la gráfica. No es necesario comprender todos los comandos de Matplotlib en este momento.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<span class="n">valores_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numero_componentes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">probabilidades_binomiales</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
+    <span class="n">valores_k</span><span class="p">,</span>
+    <span class="n">numero_componentes</span><span class="p">,</span>
+    <span class="n">probabilidad_defecto</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">valores_k</span><span class="p">,</span> <span class="n">probabilidades_binomiales</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">media_defectuosos</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Media&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes defectuosos&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probabilidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución binomial&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7c895eeec4d507b149fe361c4d1dadaf50a6545bf2734f5dffac8db09dff086a.png" src="../../_images/7c895eeec4d507b149fe361c4d1dadaf50a6545bf2734f5dffac8db09dff086a.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="problema-2-centro-de-soporte-tecnico-distribucion-poisson">
+<h3>Problema 2 — Centro de soporte técnico: distribución Poisson<a class="headerlink" href="#problema-2-centro-de-soporte-tecnico-distribucion-poisson" title="Link to this heading">#</a></h3>
+<p>Las solicitudes llegan a razón de <span class="math notranslate nohighlight">\(\lambda=4\)</span> por hora.</p>
+<p>Sea <span class="math notranslate nohighlight">\(X\)</span> el número de solicitudes recibidas en una hora:</p>
+<div class="math notranslate nohighlight">
+\[X\sim\operatorname{Poisson}(4).\]</div>
+<p>Calcula:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(P(X=6)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X&lt;3)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X&gt;5)\)</span>.</p></li>
+<li><p>La media y la varianza.</p></li>
+<li><p>En media hora, el número esperado de solicitudes y la probabilidad de no recibir ninguna.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_solicitudes</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">prob_exactamente_6</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">tasa_solicitudes</span><span class="p">)</span>
+<span class="n">prob_menos_de_3</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tasa_solicitudes</span><span class="p">)</span>
+
+<span class="c1"># P(X &gt; 5) puede calcularse con la función de supervivencia sf.</span>
+<span class="n">prob_mas_de_5</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">tasa_solicitudes</span><span class="p">)</span>
+
+<span class="n">media_solicitudes</span> <span class="o">=</span> <span class="n">tasa_solicitudes</span>
+<span class="n">varianza_solicitudes</span> <span class="o">=</span> <span class="n">tasa_solicitudes</span>
+
+<span class="n">tasa_media_hora</span> <span class="o">=</span> <span class="n">tasa_solicitudes</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">prob_cero_media_hora</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tasa_media_hora</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X = 6):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_exactamente_6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X &lt; 3):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_menos_de_3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X &gt; 5):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_mas_de_5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Media:&quot;</span><span class="p">,</span> <span class="n">media_solicitudes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Varianza:&quot;</span><span class="p">,</span> <span class="n">varianza_solicitudes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solicitudes esperadas en media hora:&quot;</span><span class="p">,</span> <span class="n">tasa_media_hora</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(X = 0 en media hora):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_cero_media_hora</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P(X = 6): 0.1042
+P(X &lt; 3): 0.2381
+P(X &gt; 5): 0.2149
+Media: 4
+Varianza: 4
+Solicitudes esperadas en media hora: 2.0
+P(X = 0 en media hora): 0.1353
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><h3 class="rubric" id="id1">🎨 Visualización proporcionada</h3>
+<p>Ejecuta la celda e interpreta la forma de la distribución. Los comandos empleados para construir la gráfica no se evaluarán en esta sesión.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<span class="n">valores_k_poisson</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">probabilidades_poisson</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">valores_k_poisson</span><span class="p">,</span> <span class="n">tasa_solicitudes</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">valores_k_poisson</span><span class="p">,</span> <span class="n">probabilidades_poisson</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">tasa_solicitudes</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Media&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de solicitudes&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probabilidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución Poisson&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a253a9b6eb082ef37315c71098715d5fb03b41595d154f2df796d5b292c8c9f1.png" src="../../_images/a253a9b6eb082ef37315c71098715d5fb03b41595d154f2df796d5b292c8c9f1.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="problema-3-vida-util-de-una-bomba-distribucion-exponencial">
+<h3>Problema 3 — Vida útil de una bomba: distribución exponencial<a class="headerlink" href="#problema-3-vida-util-de-una-bomba-distribucion-exponencial" title="Link to this heading">#</a></h3>
+<p>El tiempo de vida <span class="math notranslate nohighlight">\(T\)</span>, medido en meses, sigue una distribución exponencial con media <span class="math notranslate nohighlight">\(\mu=6\)</span> meses:</p>
+<div class="math notranslate nohighlight">
+\[T\sim\operatorname{Exp}\left(\lambda=\frac{1}{6}\right).\]</div>
+<p>Calcula:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(P(T&gt;8)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(T&lt;4)\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(3&lt;T&lt;9)\)</span>.</p></li>
+<li><p>La mediana.</p></li>
+<li><p>El tiempo <span class="math notranslate nohighlight">\(t\)</span> para el cual el 90 % de las bombas todavía no ha fallado: <span class="math notranslate nohighlight">\(P(T&gt;t)=0.90\)</span>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">media_vida</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">prob_mas_de_8</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+<span class="n">prob_menos_de_4</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+<span class="n">prob_entre_3_y_9</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">expon</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+    <span class="o">-</span> <span class="n">expon</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">mediana_vida</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.50</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+
+<span class="c1"># P(T &gt; t) = 0.90 equivale a P(T &lt;= t) = 0.10.</span>
+<span class="n">tiempo_supervivencia_90</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(T &gt; 8):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_mas_de_8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(T &lt; 4):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_menos_de_4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P(3 &lt; T &lt; 9):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">prob_entre_3_y_9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mediana:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">mediana_vida</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">&quot;meses&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Tiempo para conservar 90 </span><span class="si">% s</span><span class="s2">in fallar:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">tiempo_supervivencia_90</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;meses&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P(T &gt; 8): 0.2636
+P(T &lt; 4): 0.4866
+P(3 &lt; T &lt; 9): 0.3834
+Mediana: 4.1589 meses
+Tiempo para conservar 90 % sin fallar: 0.6322 meses
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><h3 class="rubric" id="id2">🎨 Visualización proporcionada</h3>
+<p>Esta celda sombrea el área correspondiente a <span class="math notranslate nohighlight">\(P(T&gt;8)\)</span>. Su propósito es apoyar la interpretación probabilística; no debes aprender todavía todos los comandos gráficos.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<span class="n">tiempos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">densidad</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">tiempos</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tiempos</span><span class="p">,</span> <span class="n">densidad</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">tiempos</span><span class="p">,</span>
+    <span class="n">densidad</span><span class="p">,</span>
+    <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">tiempos</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Área: P(T &gt; 8)&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">media_vida</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Media&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mediana_vida</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mediana&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Tiempo de vida (meses)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Densidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución exponencial&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/65381dc96f733451c655c3fb2fc648281da1990cc98eaa37aa41ff7d4d62c6ff.png" src="../../_images/65381dc96f733451c655c3fb2fc648281da1990cc98eaa37aa41ff7d4d62c6ff.png" />
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="parte-2-cadenas-de-markov-a-tiempo-discreto">
+<h2>Parte 2 — Cadenas de Markov a tiempo discreto<a class="headerlink" href="#parte-2-cadenas-de-markov-a-tiempo-discreto" title="Link to this heading">#</a></h2>
+<p>Antes de construir una cadena, revisaremos cuatro operaciones de NumPy que utilizaremos:</p>
+<ol class="arabic simple">
+<li><p>Crear un vector.</p></li>
+<li><p>Crear una matriz.</p></li>
+<li><p>Consultar una entrada o una fila.</p></li>
+<li><p>Multiplicar un vector fila por una matriz con <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>.</p></li>
+</ol>
+<blockquote>
+<div><p>Un arreglo de NumPy se parece a una lista, pero permite realizar operaciones numéricas y matriciales de manera directa.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Vector de tres posiciones</span>
+<span class="n">vector_ejemplo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># Matriz de tres filas y tres columnas</span>
+<span class="n">matriz_ejemplo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector:&quot;</span><span class="p">,</span> <span class="n">vector_ejemplo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entrada de la fila 0, columna 1:&quot;</span><span class="p">,</span> <span class="n">matriz_ejemplo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Primera fila:&quot;</span><span class="p">,</span> <span class="n">matriz_ejemplo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suma de la primera fila:&quot;</span><span class="p">,</span> <span class="n">matriz_ejemplo</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector: [1. 0. 0.]
+Entrada de la fila 0, columna 1: 0.3
+Primera fila: [0.6 0.3 0.1]
+Suma de la primera fila: 0.9999999999999999
+</pre></div>
+</div>
+</div>
+</div>
+<section id="el-operador">
+<h3>El operador <code class="docutils literal notranslate"><span class="pre">&#64;</span></code><a class="headerlink" href="#el-operador" title="Link to this heading">#</a></h3>
+<p>En este laboratorio, las distribuciones de probabilidad se representan como <strong>vectores fila</strong>. Si <span class="math notranslate nohighlight">\(\pi(0)\)</span> es la distribución inicial y <span class="math notranslate nohighlight">\(P\)</span> es la matriz de transición, entonces:</p>
+<div class="math notranslate nohighlight">
+\[\pi(1)=\pi(0)P.\]</div>
+<p>En Python, el producto matricial se escribe con <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pi_1</span> <span class="o">=</span> <span class="n">pi_0</span> <span class="o">@</span> <span class="n">P</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <strong>no</strong> multiplica componente por componente. Cada entrada del resultado se obtiene mediante una suma de productos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resultado_ejemplo</span> <span class="o">=</span> <span class="n">vector_ejemplo</span> <span class="o">@</span> <span class="n">matriz_ejemplo</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector inicial:&quot;</span><span class="p">,</span> <span class="n">vector_ejemplo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector después de un paso:&quot;</span><span class="p">,</span> <span class="n">resultado_ejemplo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector inicial: [1. 0. 0.]
+Vector después de un paso: [0.6 0.3 0.1]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="notacion-del-curso">
+<h3>Notación del curso<a class="headerlink" href="#notacion-del-curso" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Símbolo</p></th>
+<th class="head text-left"><p>Significado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(X_n\)</span></p></td>
+<td class="text-left"><p>Estado del sistema en el periodo <span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{S}\)</span></p></td>
+<td class="text-left"><p>Espacio de estados</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(P_{ij}=P(X_{n+1}=j\mid X_n=i)\)</span></p></td>
+<td class="text-left"><p>Probabilidad de pasar de <span class="math notranslate nohighlight">\(i\)</span> a <span class="math notranslate nohighlight">\(j\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\boldsymbol{\pi}(n)=\boldsymbol{\pi}(0)P^n\)</span></p></td>
+<td class="text-left"><p>Distribución en el periodo <span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span></p></td>
+<td class="text-left"><p>Distribución estacionaria: <span class="math notranslate nohighlight">\(\boldsymbol{\pi}P=\boldsymbol{\pi}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Primero realizaremos las operaciones con NumPy. Después utilizaremos <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> para verificar los resultados.</p>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-1-regimen-del-mercado-accionario">
+<h3>Ejercicio 1 — Régimen del mercado accionario<a class="headerlink" href="#ejercicio-1-regimen-del-mercado-accionario" title="Link to this heading">#</a></h3>
+<p>El estado diario del mercado se modela mediante:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{S}=\{0=\text{Alcista},\;1=\text{Lateral},\;2=\text{Bajista}\}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=
+\begin{pmatrix}
+0.60&amp;0.30&amp;0.10\\
+0.20&amp;0.50&amp;0.30\\
+0.10&amp;0.30&amp;0.60
+\end{pmatrix}.
+\end{split}\]</div>
+<ol class="arabic simple">
+<li><p>Representa <span class="math notranslate nohighlight">\(P\)</span> como arreglo de NumPy y comprueba que cada fila suma 1.</p></li>
+<li><p>Partiendo de un mercado bajista, calcula <span class="math notranslate nohighlight">\(\pi(n)\)</span> para <span class="math notranslate nohighlight">\(n=1,\ldots,5\)</span>.</p></li>
+<li><p>Calcula una aproximación de la distribución estacionaria.</p></li>
+<li><p>Determina cuándo el cambio entre dos distribuciones consecutivas es menor que 0.001.</p></li>
+<li><p>Verifica los resultados con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">estados_mercado</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alcista&quot;</span><span class="p">,</span> <span class="s2">&quot;Lateral&quot;</span><span class="p">,</span> <span class="s2">&quot;Bajista&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">indice_fila</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_mercado</span><span class="p">)):</span>
+    <span class="n">suma_fila</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">P_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">P_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">P_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila&quot;</span><span class="p">,</span>
+        <span class="n">estados_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">],</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">suma_fila</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila Alcista - suma: 1.0
+Fila Lateral - suma: 1.0
+Fila Bajista - suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="un-paso-termino-a-termino">
+<h3>Un paso, término a término<a class="headerlink" href="#un-paso-termino-a-termino" title="Link to this heading">#</a></h3>
+<p>Si el mercado comienza en estado bajista:</p>
+<div class="math notranslate nohighlight">
+\[\pi(0)=[0,\;0,\;1].\]</div>
+<p>Para calcular la entrada <span class="math notranslate nohighlight">\(j\)</span> de <span class="math notranslate nohighlight">\(\pi(1)\)</span> usamos:</p>
+<div class="math notranslate nohighlight">
+\[\pi_j(1)=\sum_i\pi_i(0)P_{ij}.\]</div>
+<p>El siguiente doble ciclo reproduce exactamente esa suma. Después comparamos con el operador <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi0_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+
+<span class="n">pi1_mercado_manual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">estado_destino</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">suma</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">estado_origen</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">suma</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">suma</span>
+            <span class="o">+</span> <span class="n">pi0_mercado</span><span class="p">[</span><span class="n">estado_origen</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">P_mercado</span><span class="p">[</span><span class="n">estado_origen</span><span class="p">,</span> <span class="n">estado_destino</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">pi1_mercado_manual</span><span class="p">[</span><span class="n">estado_destino</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
+
+<span class="n">pi1_mercado_producto</span> <span class="o">=</span> <span class="n">pi0_mercado</span> <span class="o">@</span> <span class="n">P_mercado</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resultado término a término:&quot;</span><span class="p">,</span> <span class="n">pi1_mercado_manual</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resultado con pi0 @ P:&quot;</span><span class="p">,</span> <span class="n">pi1_mercado_producto</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultado término a término: [0.1 0.3 0.6]
+Resultado con pi0 @ P: [0.1 0.3 0.6]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Comprueba:</strong> ambos resultados deben ser iguales. A partir de ahora usaremos <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, pues ya sabemos qué operación representa.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_mercado_actual</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="n">pi_mercado_actual</span> <span class="o">=</span> <span class="n">pi_mercado_actual</span> <span class="o">@</span> <span class="n">P_mercado</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Día&quot;</span><span class="p">,</span>
+        <span class="n">dia</span><span class="p">,</span>
+        <span class="s2">&quot;- distribución:&quot;</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_mercado_actual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">pi5_mercado_manual</span> <span class="o">=</span> <span class="n">pi_mercado_actual</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(X_5 = Alcista | X_0 = Bajista):&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">pi5_mercado_manual</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Día 1 - distribución: [0.1 0.3 0.6]
+Día 2 - distribución: [0.18 0.36 0.46]
+Día 3 - distribución: [0.226 0.372 0.402]
+Día 4 - distribución: [0.2502 0.3744 0.3754]
+Día 5 - distribución: [0.2625 0.3749 0.3626]
+P(X_5 = Alcista | X_0 = Bajista): 0.2625
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="aproximacion-numerica-de-la-distribucion-estacionaria">
+<h3>Aproximación numérica de la distribución estacionaria<a class="headerlink" href="#aproximacion-numerica-de-la-distribucion-estacionaria" title="Link to this heading">#</a></h3>
+<p>Repetiremos:</p>
+<div class="math notranslate nohighlight">
+\[\pi_{\text{nueva}}=\pi_{\text{anterior}}P\]</div>
+<p>hasta que el cambio máximo sea menor que:</p>
+<div class="math notranslate nohighlight">
+\[0.000001=10^{-6}.\]</div>
+<p>Primero escribiremos por separado las diferencias de cada componente. Así puede verse qué hace el criterio de parada.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_mercado_anterior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">tolerancia_estacionaria</span> <span class="o">=</span> <span class="mf">0.000001</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="n">pi_mercado_nueva</span> <span class="o">=</span> <span class="n">pi_mercado_anterior</span> <span class="o">@</span> <span class="n">P_mercado</span>
+
+    <span class="n">diferencia_alcista</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
+        <span class="n">pi_mercado_nueva</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">diferencia_lateral</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
+        <span class="n">pi_mercado_nueva</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">diferencia_bajista</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
+        <span class="n">pi_mercado_nueva</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="n">diferencia_alcista</span><span class="p">,</span>
+        <span class="n">diferencia_lateral</span><span class="p">,</span>
+        <span class="n">diferencia_bajista</span>
+    <span class="p">)</span>
+
+    <span class="n">pi_mercado_anterior</span> <span class="o">=</span> <span class="n">pi_mercado_nueva</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_estacionaria</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">pi_mercado_estacionaria_manual</span> <span class="o">=</span> <span class="n">pi_mercado_anterior</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteraciones:&quot;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_mercado</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">estados_mercado</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span>
+        <span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">pi_mercado_estacionaria_manual</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones: 16
+Alcista : 0.275
+Lateral : 0.375
+Bajista : 0.35
+</pre></div>
+</div>
+</div>
+</div>
+<p>La expresión compacta</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pi_nueva</span> <span class="o">-</span> <span class="n">pi_anterior</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>realiza las mismas operaciones: calcula las diferencias absolutas y selecciona la mayor. La usaremos más adelante, después de haber visto su significado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_mercado_anterior</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">tolerancia_estabilizacion</span> <span class="o">=</span> <span class="mf">0.001</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">):</span>
+    <span class="n">pi_mercado_nueva</span> <span class="o">=</span> <span class="n">pi_mercado_anterior</span> <span class="o">@</span> <span class="n">P_mercado</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pi_mercado_nueva</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">pi_mercado_anterior</span> <span class="o">=</span> <span class="n">pi_mercado_nueva</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_estabilizacion</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Criterio alcanzado en el día:&quot;</span><span class="p">,</span> <span class="n">dia</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Criterio alcanzado en el día: 9
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><h3 class="rubric" id="id3">🎨 Visualización proporcionada</h3>
+<p>La siguiente celda organiza los resultados y los muestra en una gráfica. <strong>No es necesario entender todos los comandos gráficos en la primera lectura.</strong> Lo importante es identificar que las tres probabilidades se aproximan a valores estables.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<span class="n">numero_dias_grafica</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">evolucion_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numero_dias_grafica</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">pi_para_grafica</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">evolucion_mercado</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">pi_para_grafica</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_dias_grafica</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">pi_para_grafica</span> <span class="o">=</span> <span class="n">pi_para_grafica</span> <span class="o">@</span> <span class="n">P_mercado</span>
+    <span class="n">evolucion_mercado</span><span class="p">[</span><span class="n">dia</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">pi_para_grafica</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">indice_estado</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">evolucion_mercado</span><span class="p">[:,</span> <span class="n">indice_estado</span><span class="p">],</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">estados_mercado</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+        <span class="n">pi_mercado_estacionaria_manual</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span>
+        <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.9</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Día&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probabilidad&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Convergencia de la distribución del mercado&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1cca26fba1e826d120ba277f4a09c09334e229d879021244b161f04cf6282a73.png" src="../../_images/1cca26fba1e826d120ba277f4a09c09334e229d879021244b161f04cf6282a73.png" />
+</div>
+</div>
+</section>
+<section id="verificacion-con-jmarkov">
+<h3>Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#verificacion-con-jmarkov" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> recibe la matriz de transición y ofrece métodos ya programados:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">transient_probabilities(n,</span> <span class="pre">alpha)</span></code>: calcula la distribución después de <span class="math notranslate nohighlight">\(n\)</span> transiciones.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">steady_state()</span></code>: calcula una distribución estacionaria.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_ergodic()</span></code>: comprueba si la cadena es irreducible y aperiódica.</p></li>
+</ul>
+<p>No es necesario estudiar programación orientada a objetos en esta sesión. Lee, por ejemplo,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mercado</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>como: “pedirle a la cadena <code class="docutils literal notranslate"><span class="pre">mercado</span></code> su distribución estacionaria”.</p>
+<p>Matemáticamente, la distribución transitoria es:</p>
+<div class="math notranslate nohighlight">
+\[\pi(n)=\pi(0)P^n.\]</div>
+<p>En NumPy, si quisiéramos calcularla directamente, usaríamos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pi_n</span> <span class="o">=</span> <span class="n">pi_0</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">P**n</span></code> no representa la potencia matricial.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cadena_mercado</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span>
+    <span class="n">P_mercado</span><span class="p">,</span>
+    <span class="n">states</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados_mercado</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">pi5_mercado_jmarkov</span> <span class="o">=</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="n">pi0_mercado</span>
+<span class="p">)</span>
+
+<span class="n">pi_mercado_estacionaria_jmarkov</span> <span class="o">=</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;¿Es ergódica?:&quot;</span><span class="p">,</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">is_ergodic</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pi(5) con NumPy:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi5_mercado_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pi(5) con jmarkov:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi5_mercado_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Estacionaria con NumPy:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_mercado_estacionaria_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Estacionaria con jmarkov:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_mercado_estacionaria_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>¿Es ergódica?: True
+
+pi(5) con NumPy: [0.2625 0.3749 0.3626]
+pi(5) con jmarkov: [0.2625 0.3749 0.3626]
+
+Estacionaria con NumPy: [0.275 0.375 0.35 ]
+Estacionaria con jmarkov: [0.275 0.375 0.35 ]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-2-inventario-con-politica-s-s">
+<h3>Ejercicio 2 — Inventario con política <span class="math notranslate nohighlight">\((s,S)\)</span><a class="headerlink" href="#ejercicio-2-inventario-con-politica-s-s" title="Link to this heading">#</a></h3>
+<p>Una tienda utiliza la política <span class="math notranslate nohighlight">\((s=2,S=6)\)</span>.</p>
+<p>La secuencia dentro de cada día es:</p>
+<ol class="arabic simple">
+<li><p>Se observa el inventario <span class="math notranslate nohighlight">\(X_n\)</span>.</p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(X_n\leq2\)</span>, se repone inmediatamente hasta 6 unidades.</p></li>
+<li><p>Ocurre la demanda diaria <span class="math notranslate nohighlight">\(D\sim\operatorname{Poisson}(2)\)</span>.</p></li>
+<li><p>El inventario restante se convierte en <span class="math notranslate nohighlight">\(X_{n+1}\)</span>.</p></li>
+</ol>
+<p>La demanda no atendida se pierde.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X_{n+1}=\max(0,\widetilde X_n-D),
+\qquad
+\widetilde X_n=
+\begin{cases}
+6,&amp;X_n\leq2,\\
+X_n,&amp;X_n&gt;2.
+\end{cases}
+\end{split}\]</div>
+<p>El espacio de estados es:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal S=\{0,1,2,3,4,5,6\}.\]</div>
+<p>En este laboratorio llamaremos <em>stockout</em> al evento <span class="math notranslate nohighlight">\(X_n=0\)</span>. Esto no es necesariamente igual a la probabilidad de perder ventas durante todo el día.</p>
+</section>
+<section id="antes-de-programar-toda-la-matriz-construyamos-una-fila">
+<h3>Antes de programar toda la matriz: construyamos una fila<a class="headerlink" href="#antes-de-programar-toda-la-matriz-construyamos-una-fila" title="Link to this heading">#</a></h3>
+<p>Supón que al comienzo del día hay 4 unidades. Como <span class="math notranslate nohighlight">\(4&gt;s\)</span>, no se hace pedido. Entonces:</p>
+<ul class="simple">
+<li><p>Si <span class="math notranslate nohighlight">\(D=0\)</span>, el siguiente estado es 4.</p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(D=1\)</span>, el siguiente estado es 3.</p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(D=2\)</span>, el siguiente estado es 2.</p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(D=3\)</span>, el siguiente estado es 1.</p></li>
+<li><p>Si <span class="math notranslate nohighlight">\(D\geq4\)</span>, el siguiente estado es 0.</p></li>
+</ul>
+<p>La siguiente celda construye únicamente esa fila.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_demanda</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">fila_desde_4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">fila_desde_4</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tasa_demanda</span><span class="p">)</span>
+<span class="n">fila_desde_4</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tasa_demanda</span><span class="p">)</span>
+<span class="n">fila_desde_4</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tasa_demanda</span><span class="p">)</span>
+<span class="n">fila_desde_4</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">tasa_demanda</span><span class="p">)</span>
+<span class="n">fila_desde_4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">tasa_demanda</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fila de transición desde X_n = 4:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fila_desde_4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Suma:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">fila_desde_4</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila de transición desde X_n = 4:
+[0.1429 0.1804 0.2707 0.2707 0.1353 0.     0.    ]
+Suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generalizacion-a-todos-los-estados">
+<h3>Generalización a todos los estados<a class="headerlink" href="#generalizacion-a-todos-los-estados" title="Link to this heading">#</a></h3>
+<p>Ahora repetiremos la misma lógica para cada posible inventario inicial. La versión se escribe deliberadamente con <code class="docutils literal notranslate"><span class="pre">if</span></code> y <code class="docutils literal notranslate"><span class="pre">else</span></code> en varias líneas para que el flujo sea visible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">punto_reorden</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">nivel_objetivo</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">capacidad</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">P_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">inventario_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">inventario_inicial</span> <span class="o">&lt;=</span> <span class="n">punto_reorden</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">nivel_objetivo</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">inventario_disponible</span> <span class="o">=</span> <span class="n">inventario_inicial</span>
+
+    <span class="k">for</span> <span class="n">inventario_siguiente</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">inventario_siguiente</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">demanda_necesaria</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">inventario_disponible</span>
+                <span class="o">-</span> <span class="n">inventario_siguiente</span>
+            <span class="p">)</span>
+
+            <span class="n">P_inventario</span><span class="p">[</span>
+                <span class="n">inventario_inicial</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
+                <span class="n">demanda_necesaria</span><span class="p">,</span>
+                <span class="n">tasa_demanda</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">P_inventario</span><span class="p">[</span>
+                <span class="n">inventario_inicial</span><span class="p">,</span>
+                <span class="n">inventario_siguiente</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">poisson</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+                <span class="n">inventario_disponible</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">tasa_demanda</span>
+            <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">inventario_inicial</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila X =&quot;</span><span class="p">,</span>
+        <span class="n">inventario_inicial</span><span class="p">,</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">P_inventario</span><span class="p">[</span><span class="n">inventario_inicial</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila X = 0 - suma: 1.0
+Fila X = 1 - suma: 1.0
+Fila X = 2 - suma: 1.0
+Fila X = 3 - suma: 1.0
+Fila X = 4 - suma: 1.0
+Fila X = 5 - suma: 1.0
+Fila X = 6 - suma: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Pregunta de interpretación:</strong> ¿por qué las filas correspondientes a los estados 0, 1 y 2 son iguales?</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi0_inventario</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">pi0_inventario</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">pi_inventario_actual</span> <span class="o">=</span> <span class="n">pi0_inventario</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="n">pi_inventario_actual</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pi_inventario_actual</span> <span class="o">@</span> <span class="n">P_inventario</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Distribución en el día&quot;</span><span class="p">,</span>
+        <span class="n">dia</span><span class="p">,</span>
+        <span class="s2">&quot;:&quot;</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_inventario_actual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">pi3_inventario_manual</span> <span class="o">=</span> <span class="n">pi_inventario_actual</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(X_3 = 0 | X_0 = 6):&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">pi3_inventario_manual</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución en el día 1 : [0.0166 0.0361 0.0902 0.1804 0.2707 0.2707 0.1353]
+Distribución en el día 2 : [0.1159 0.1321 0.196  0.2211 0.1852 0.1119 0.0377]
+Distribución en el día 3 : [0.1118 0.1208 0.1736 0.1973 0.1857 0.1455 0.0652]
+P(X_3 = 0 | X_0 = 6): 0.1118
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_inventario_anterior</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">tolerancia_inventario</span> <span class="o">=</span> <span class="mf">0.00000001</span>
+
+<span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">):</span>
+    <span class="n">pi_inventario_nueva</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pi_inventario_anterior</span> <span class="o">@</span> <span class="n">P_inventario</span>
+    <span class="p">)</span>
+
+    <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+            <span class="n">pi_inventario_nueva</span>
+            <span class="o">-</span> <span class="n">pi_inventario_anterior</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">pi_inventario_anterior</span> <span class="o">=</span> <span class="n">pi_inventario_nueva</span>
+
+    <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_inventario</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">pi_inventario_estacionaria_manual</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pi_inventario_anterior</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">inventario_promedio</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">nivel_inventario</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">inventario_promedio</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">inventario_promedio</span>
+        <span class="o">+</span> <span class="n">pi_inventario_estacionaria_manual</span><span class="p">[</span><span class="n">nivel_inventario</span><span class="p">]</span>
+        <span class="o">*</span> <span class="n">nivel_inventario</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteraciones:&quot;</span><span class="p">,</span> <span class="n">iteracion</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;P(stockout a largo plazo):&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">pi_inventario_estacionaria_manual</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Inventario promedio a largo plazo:&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">inventario_promedio</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteraciones: 14
+P(stockout a largo plazo): 0.1077
+Inventario promedio a largo plazo: 2.934
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h3>Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code><a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>Aquí estamos <strong>evaluando una política dada</strong>, no buscando todavía los mejores valores de <span class="math notranslate nohighlight">\(s\)</span> y <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estados_inventario</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">capacidad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">estados_inventario</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;X=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nivel</span><span class="p">))</span>
+
+<span class="n">cadena_inventario</span> <span class="o">=</span> <span class="n">dtmc</span><span class="p">(</span>
+    <span class="n">P_inventario</span><span class="p">,</span>
+    <span class="n">states</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados_inventario</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">pi3_inventario_jmarkov</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_inventario</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span>
+        <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">pi0_inventario</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">pi_inventario_estacionaria_jmarkov</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cadena_inventario</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;pi(3) con NumPy:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi3_inventario_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;pi(3) con jmarkov:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi3_inventario_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Estacionaria con NumPy:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_inventario_estacionaria_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Estacionaria con jmarkov:&quot;</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_inventario_estacionaria_jmarkov</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pi(3) con NumPy: [0.1118 0.1208 0.1736 0.1973 0.1857 0.1455 0.0652]
+pi(3) con jmarkov: [0.1118 0.1208 0.1736 0.1973 0.1857 0.1455 0.0652]
+
+Estacionaria con NumPy: [0.1077 0.1187 0.174  0.2016 0.1903 0.145  0.0627]
+Estacionaria con jmarkov: [0.1077 0.1187 0.174  0.2016 0.1903 0.145  0.0627]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-abierto-degradacion-de-un-activo-industrial">
+<h2>Ejercicio abierto — Degradación de un activo industrial<a class="headerlink" href="#ejercicio-abierto-degradacion-de-un-activo-industrial" title="Link to this heading">#</a></h2>
+<p>Una empresa observa semanalmente una máquina:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal S=
+\{0=\text{Nuevo},\;1=\text{Regular},\;2=\text{Deteriorado},\;3=\text{Falla}\}.
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P=
+\begin{pmatrix}
+0.70&amp;0.25&amp;0.05&amp;0.00\\
+0.10&amp;0.55&amp;0.30&amp;0.05\\
+0.00&amp;0.15&amp;0.40&amp;0.45\\
+0.80&amp;0.20&amp;0.00&amp;0.00
+\end{pmatrix}.
+\end{split}\]</div>
+<p>Cuando la máquina falla, se reemplaza de inmediato. Por eso, la fila del estado Falla permite pasar a Nuevo o Regular: <strong>Falla no es un estado absorbente</strong>.</p>
+<p>Resuelve con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Verifica que la cadena es ergódica.</p></li>
+<li><p>Calcula la distribución en la semana 4 partiendo de una máquina nueva.</p></li>
+<li><p>Obtén la probabilidad de falla en la semana 4.</p></li>
+<li><p>Calcula la fracción de semanas en estado Falla a largo plazo.</p></li>
+<li><p>Grafica <span class="math notranslate nohighlight">\(P(X_n=\text{Falla}\mid X_0=\text{Nuevo})\)</span> para <span class="math notranslate nohighlight">\(n=0,\ldots,30\)</span>.</p></li>
+</ol>
+<section id="uso-responsable-de-ia">
+<h3>Uso responsable de IA<a class="headerlink" href="#uso-responsable-de-ia" title="Link to this heading">#</a></h3>
+<p>Puedes pedir ayuda a una herramienta de IA, pero no debes aceptar el código sin validarlo.</p>
+<ol class="arabic simple">
+<li><p><strong>Solicita el código</strong> con un prompt preciso.</p></li>
+<li><p><strong>Calcula primero un número de referencia</strong> sin <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code>.</p></li>
+<li><p><strong>Ejecuta y compara.</strong></p></li>
+<li><p>Si los valores no coinciden, revisa tanto tu cálculo como el código recibido.</p></li>
+</ol>
+<p>Errores que debes vigilar:</p>
+<ul class="simple">
+<li><p>invertir la convención fila/columna;</p></li>
+<li><p>tratar Falla como estado absorbente;</p></li>
+<li><p>usar <code class="docutils literal notranslate"><span class="pre">P**n</span></code> como si fuera potencia matricial;</p></li>
+<li><p>modificar el orden de los estados;</p></li>
+<li><p>calcular una distribución estacionaria sin verificar las propiedades de la cadena.</p></li>
+</ul>
+<section id="prompt-sugerido">
+<h4>Prompt sugerido<a class="headerlink" href="#prompt-sugerido" title="Link to this heading">#</a></h4>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Tengo una cadena de Markov a tiempo discreto en Python.
+
+Convención:
+P[i,j] = P(X_(n+1)=j | X_n=i).
+Las distribuciones son vectores fila.
+
+Estados:
+0 = Nuevo
+1 = Regular
+2 = Deteriorado
+3 = Falla
+
+Matriz de transición:
+[[0.70, 0.25, 0.05, 0.00],
+ [0.10, 0.55, 0.30, 0.05],
+ [0.00, 0.15, 0.40, 0.45],
+ [0.80, 0.20, 0.00, 0.00]]
+
+La máquina se reemplaza después de fallar; por eso Falla no es absorbente.
+
+Usa:
+from jmarkov.dtmc import dtmc
+
+Métodos:
+cadena.is_ergodic()
+cadena.steady_state()
+cadena.transient_probabilities(n, alpha)
+
+Resuelve:
+1. Verifica que la cadena es ergódica.
+2. Calcula la distribución en la semana 4 desde una máquina nueva.
+3. Reporta la probabilidad de Falla en la semana 4.
+4. Reporta la probabilidad estacionaria de Falla.
+5. Grafica la probabilidad de Falla entre las semanas 0 y 30.
+
+Separa claramente el código de cálculo del código de visualización.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verificacion-manual">
+<h3>Verificación manual<a class="headerlink" href="#verificacion-manual" title="Link to this heading">#</a></h3>
+<p>Usaremos una referencia de dos pasos, más informativa que copiar simplemente la primera fila de <span class="math notranslate nohighlight">\(P\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(X_2=\text{Falla}\mid X_0=\text{Nuevo})
+=
+\sum_i P_{0i}P_{i3}.
+\]</div>
+<p>Calcula el valor término a término y compáralo después con la respuesta de la IA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_maquina</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.40</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">estados_maquina</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Nuevo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Regular&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Deteriorado&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Falla&quot;</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">indice_fila</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_maquina</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Fila&quot;</span><span class="p">,</span>
+        <span class="n">estados_maquina</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">],</span>
+        <span class="s2">&quot;- suma:&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">P_maquina</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">prob_falla_semana_2_manual</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">estado_intermedio</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">prob_falla_semana_2_manual</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">prob_falla_semana_2_manual</span>
+        <span class="o">+</span> <span class="n">P_maquina</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">estado_intermedio</span><span class="p">]</span>
+        <span class="o">*</span> <span class="n">P_maquina</span><span class="p">[</span><span class="n">estado_intermedio</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Referencia manual P(X_2 = Falla | X_0 = Nuevo):&quot;</span><span class="p">,</span>
+    <span class="nb">round</span><span class="p">(</span><span class="n">prob_falla_semana_2_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fila Nuevo - suma: 1.0
+Fila Regular - suma: 1.0
+Fila Deteriorado - suma: 1.0
+Fila Falla - suma: 1.0
+
+Referencia manual P(X_2 = Falla | X_0 = Nuevo): 0.035
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pega y adapta aquí el código producido con ayuda de IA.</span>
+<span class="c1">#</span>
+<span class="c1"># Antes de aceptarlo:</span>
+<span class="c1"># 1. Comprueba que las filas de P sumen 1.</span>
+<span class="c1"># 2. Comprueba que Falla no haya sido tratado como absorbente.</span>
+<span class="c1"># 3. Compara P(X_2 = Falla | X_0 = Nuevo) con la referencia manual.</span>
+<span class="c1"># 4. Interpreta los resultados con tus propias palabras.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="lista-de-comprobacion-final">
+<h2>Lista de comprobación final<a class="headerlink" href="#lista-de-comprobacion-final" title="Link to this heading">#</a></h2>
+<p>Antes de terminar, asegúrate de poder explicar:</p>
+<ul class="simple">
+<li><p>qué representa una fila de la matriz de transición;</p></li>
+<li><p>por qué cada fila debe sumar 1;</p></li>
+<li><p>qué representa el vector <span class="math notranslate nohighlight">\(\pi(n)\)</span>;</p></li>
+<li><p>qué operación realiza <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">&#64;</span> <span class="pre">P</span></code>;</p></li>
+<li><p>la diferencia entre una distribución transitoria y una estacionaria;</p></li>
+<li><p>por qué <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code> se usa para verificar cálculos;</p></li>
+<li><p>por qué en el inventario estamos evaluando una política dada y no optimizándola;</p></li>
+<li><p>por qué el código de las gráficas puede ejecutarse sin dominarse todavía.</p></li>
+</ul>
+<p><small>Universidad de los Andes · Departamento de Ingeniería Industrial · Modelos de Decisión en el Tiempo</small></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/complementarias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Complementaria_0_Fundamentos_de_Python_SOLUCIONES.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Complementaria 0 — Fundamentos de Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Semana_2_Transitorio_y_Estado_Estable_v3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Semana 2 — Análisis transitorio y estado estable</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-se-espera-de-ti">Qué se espera de ti</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#antes-de-comenzar">Antes de comenzar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-de-jmarkov">Instalación de <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importaciones">Importaciones</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-1-repaso-de-distribuciones-de-probabilidad">Parte 1 — Repaso de distribuciones de probabilidad</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funciones-clave-de-scipy-stats">Funciones clave de <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-1-linea-de-produccion-distribucion-binomial">Problema 1 — Línea de producción: distribución binomial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-2-centro-de-soporte-tecnico-distribucion-poisson">Problema 2 — Centro de soporte técnico: distribución Poisson</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problema-3-vida-util-de-una-bomba-distribucion-exponencial">Problema 3 — Vida útil de una bomba: distribución exponencial</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parte-2-cadenas-de-markov-a-tiempo-discreto">Parte 2 — Cadenas de Markov a tiempo discreto</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-operador">El operador <code class="docutils literal notranslate"><span class="pre">@</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notacion-del-curso">Notación del curso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1-regimen-del-mercado-accionario">Ejercicio 1 — Régimen del mercado accionario</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-paso-termino-a-termino">Un paso, término a término</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aproximacion-numerica-de-la-distribucion-estacionaria">Aproximación numérica de la distribución estacionaria</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-con-jmarkov">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2-inventario-con-politica-s-s">Ejercicio 2 — Inventario con política <span class="math notranslate nohighlight">\((s,S)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antes-de-programar-toda-la-matriz-construyamos-una-fila">Antes de programar toda la matriz: construyamos una fila</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generalizacion-a-todos-los-estados">Generalización a todos los estados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Verificación con <code class="docutils literal notranslate"><span class="pre">jmarkov</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-abierto-degradacion-de-un-activo-industrial">Ejercicio abierto — Degradación de un activo industrial</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso-responsable-de-ia">Uso responsable de IA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-sugerido">Prompt sugerido</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-manual">Verificación manual</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lista-de-comprobacion-final">Lista de comprobación final</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Equipo Modelos de Decisión en el Tiempo | Uniandes
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
