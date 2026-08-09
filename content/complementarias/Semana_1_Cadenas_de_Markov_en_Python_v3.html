@@ -588,22 +588,42 @@ Desviación estándar: 1.2586
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generamos los posibles valores de componentes defectuosos, desde 0 hasta el total de componentes</span>
 <span class="n">valores_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numero_componentes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Calculamos la probabilidad de cada posible número de componentes defectuosos</span>
+<span class="c1"># utilizando la función de masa de probabilidad de la distribución binomial</span>
 <span class="n">probabilidades_binomiales</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span>
     <span class="n">valores_k</span><span class="p">,</span>
     <span class="n">numero_componentes</span><span class="p">,</span>
     <span class="n">probabilidad_defecto</span>
 <span class="p">)</span>
 
+<span class="c1"># Creamos una figura para la gráfica y definimos su tamaño</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+
+<span class="c1"># Representamos las probabilidades mediante un gráfico de barras</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">valores_k</span><span class="p">,</span> <span class="n">probabilidades_binomiales</span><span class="p">)</span>
+
+<span class="c1"># Añadimos una línea vertical que indica el valor de la media</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">media_defectuosos</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Media&quot;</span><span class="p">)</span>
+
+<span class="c1"># Definimos la etiqueta del eje horizontal</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes defectuosos&quot;</span><span class="p">)</span>
+
+<span class="c1"># Definimos la etiqueta del eje vertical</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probabilidad&quot;</span><span class="p">)</span>
+
+<span class="c1"># Añadimos el título de la gráfica</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución binomial&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mostramos la leyenda para identificar la línea de la media</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Añadimos una cuadrícula únicamente sobre el eje vertical</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Mostramos la gráfica</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -751,21 +771,30 @@ Tiempo para conservar 90 % sin fallar: 0.6322 meses
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generamos una secuencia de tiempos entre 0 y 30 meses</span>
 <span class="n">tiempos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># Calculamos la densidad de probabilidad de la distribución exponencial</span>
 <span class="n">densidad</span> <span class="o">=</span> <span class="n">expon</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">tiempos</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">media_vida</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tiempos</span><span class="p">,</span> <span class="n">densidad</span><span class="p">)</span>
+
+<span class="c1"># Rellenamos el área bajo la curva para los tiempos mayores que 8 meses</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
-    <span class="n">tiempos</span><span class="p">,</span>
-    <span class="n">densidad</span><span class="p">,</span>
-    <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">tiempos</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Área: P(T &gt; 8)&quot;</span>
+<span class="n">tiempos</span><span class="p">,</span>
+<span class="n">densidad</span><span class="p">,</span>
+<span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">tiempos</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">),</span>
+<span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+<span class="n">label</span><span class="o">=</span><span class="s2">&quot;Área: P(T &gt; 8)&quot;</span>
 <span class="p">)</span>
+
+<span class="c1"># Añadimos una línea vertical para señalar la media</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">media_vida</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Media&quot;</span><span class="p">)</span>
+
+<span class="c1"># Añadimos una línea vertical para señalar la mediana</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mediana_vida</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mediana&quot;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Tiempo de vida (meses)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Densidad&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución exponencial&quot;</span><span class="p">)</span>
@@ -902,15 +931,21 @@ P=
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos la matriz de transición del mercado.</span>
+<span class="c1"># Cada fila representa el estado actual y cada columna el siguiente estado.</span>
+<span class="n">P_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">]</span>
 <span class="p">])</span>
 
+<span class="c1"># Creamos una lista con los nombres de los estados del mercado.</span>
 <span class="n">estados_mercado</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alcista&quot;</span><span class="p">,</span> <span class="s2">&quot;Lateral&quot;</span><span class="p">,</span> <span class="s2">&quot;Bajista&quot;</span><span class="p">]</span>
 
+<span class="c1"># Recorremos cada una de las filas de la matriz de transición.</span>
 <span class="k">for</span> <span class="n">indice_fila</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estados_mercado</span><span class="p">)):</span>
+
+    <span class="c1"># Sumamos las probabilidades de transición de la fila correspondiente.</span>
     <span class="n">suma_fila</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">P_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="o">+</span> <span class="n">P_mercado</span><span class="p">[</span><span class="n">indice_fila</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -962,6 +997,7 @@ Fila Bajista - suma: 1.0
 
     <span class="n">pi1_mercado_manual</span><span class="p">[</span><span class="n">estado_destino</span><span class="p">]</span> <span class="o">=</span> <span class="n">suma</span>
 
+<span class="c1"># El operador @ permite realizar un producto matricial entre dos arreglos.</span>
 <span class="n">pi1_mercado_producto</span> <span class="o">=</span> <span class="n">pi0_mercado</span> <span class="o">@</span> <span class="n">P_mercado</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Resultado término a término:&quot;</span><span class="p">,</span> <span class="n">pi1_mercado_manual</span><span class="p">)</span>
@@ -981,7 +1017,8 @@ Resultado con pi0 @ P: [0.1 0.3 0.6]
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi_mercado_actual</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos una copia de la distribución inicial para poder actualizarla sin modificar pi0_mercado.</span>
+<span class="n">pi_mercado_actual</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
     <span class="n">pi_mercado_actual</span> <span class="o">=</span> <span class="n">pi_mercado_actual</span> <span class="o">@</span> <span class="n">P_mercado</span>
@@ -993,6 +1030,7 @@ Resultado con pi0 @ P: [0.1 0.3 0.6]
         <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi_mercado_actual</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
     <span class="p">)</span>
 
+<span class="c1"># Guardamos una copia de la distribución obtenida después de cinco pasos.</span>
 <span class="n">pi5_mercado_manual</span> <span class="o">=</span> <span class="n">pi_mercado_actual</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span>
@@ -1031,6 +1069,7 @@ P(X_5 = Alcista | X_0 = Bajista): 0.2625
 <span class="k">for</span> <span class="n">iteracion</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
     <span class="n">pi_mercado_nueva</span> <span class="o">=</span> <span class="n">pi_mercado_anterior</span> <span class="o">@</span> <span class="n">P_mercado</span>
 
+    <span class="c1"># Calculamos el valor absoluto de la diferencia entre las probabilidades de dos iteraciones consecutivas.</span>
     <span class="n">diferencia_alcista</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
         <span class="n">pi_mercado_nueva</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span>
@@ -1041,6 +1080,7 @@ P(X_5 = Alcista | X_0 = Bajista): 0.2625
         <span class="n">pi_mercado_nueva</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">pi_mercado_anterior</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="p">)</span>
 
+    <span class="c1"># Seleccionamos la mayor de las diferencias entre las tres probabilidades.</span>
     <span class="n">cambio_maximo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
         <span class="n">diferencia_alcista</span><span class="p">,</span>
         <span class="n">diferencia_lateral</span><span class="p">,</span>
@@ -1049,6 +1089,7 @@ P(X_5 = Alcista | X_0 = Bajista): 0.2625
 
     <span class="n">pi_mercado_anterior</span> <span class="o">=</span> <span class="n">pi_mercado_nueva</span>
 
+    <span class="c1"># Si el cambio máximo es menor que la tolerancia, detenemos el ciclo.</span>
     <span class="k">if</span> <span class="n">cambio_maximo</span> <span class="o">&lt;</span> <span class="n">tolerancia_estacionaria</span><span class="p">:</span>
         <span class="k">break</span>
 
@@ -1112,10 +1153,16 @@ Bajista : 0.35
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CÓDIGO DE VISUALIZACIÓN PROPORCIONADO</span>
+
 <span class="n">numero_dias_grafica</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="c1"># Creamos una matriz de ceros para almacenar la evolución de las probabilidades</span>
+<span class="c1"># de cada estado a lo largo de los días.</span>
 <span class="n">evolucion_mercado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numero_dias_grafica</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
 <span class="n">pi_para_grafica</span> <span class="o">=</span> <span class="n">pi0_mercado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Guardamos la distribución inicial en la primera fila de la matriz.</span>
 <span class="n">evolucion_mercado</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">pi_para_grafica</span>
 
 <span class="k">for</span> <span class="n">dia</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numero_dias_grafica</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -1129,6 +1176,9 @@ Bajista : 0.35
         <span class="n">evolucion_mercado</span><span class="p">[:,</span> <span class="n">indice_estado</span><span class="p">],</span>
         <span class="n">label</span><span class="o">=</span><span class="n">estados_mercado</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">]</span>
     <span class="p">)</span>
+
+    <span class="c1"># Añadimos una línea horizontal para mostrar la probabilidad estacionaria</span>
+    <span class="c1"># correspondiente a cada estado.</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
         <span class="n">pi_mercado_estacionaria_manual</span><span class="p">[</span><span class="n">indice_estado</span><span class="p">],</span>
         <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
@@ -1177,13 +1227,17 @@ Bajista : 0.35
     <span class="n">states</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estados_mercado</span><span class="p">)</span>
 <span class="p">)</span>
 
+<span class="c1"># Calculamos la distribución transitoria después de 5 pasos</span>
+<span class="c1"># utilizando la cadena de Markov definida con jmarkov.</span>
 <span class="n">pi5_mercado_jmarkov</span> <span class="o">=</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">transient_probabilities</span><span class="p">(</span>
     <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="n">pi0_mercado</span>
 <span class="p">)</span>
 
+<span class="c1"># Calculamos la distribución estacionaria de la cadena de Markov.</span>
 <span class="n">pi_mercado_estacionaria_jmarkov</span> <span class="o">=</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">steady_state</span><span class="p">()</span>
 
+<span class="c1"># Verificamos si la cadena de Markov es ergódica.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;¿Es ergódica?:&quot;</span><span class="p">,</span> <span class="n">cadena_mercado</span><span class="o">.</span><span class="n">is_ergodic</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pi(5) con NumPy:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi5_mercado_manual</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
