@@ -16,6 +16,7 @@ parts:
   - file: content/complementarias/Semana_4_Cadenas_Absorbentes_v3.ipynb
   - file: content/complementarias/Semana_5_Consolidacion.ipynb
   - file: content/complementarias/Repaso_Absorbentes_Básicos.ipynb
+  - file: content/complementarias/Repaso_Cadena_Indexada_con_Distribuciones.ipynb
   - file: content/complementarias/Semana_7_MDP_y_Backward_Induction_v4.ipynb
   - file: content/complementarias/Semana_8_Horizonte_Infinito_VI_PI_LP_v3.ipynb
   - file: content/complementarias/Semana_9_Horizonte_Rodante_v4_final.ipynb
