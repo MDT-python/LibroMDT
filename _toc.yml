@@ -20,7 +20,7 @@ parts:
   - file: content/complementarias/Semana_6-7_MDP_y_Backward_Induction.ipynb
   - file: content/complementarias/Semana_8_VI_PI_1.ipynb
   - file: content/complementarias/Semana_9_LP.ipynb
-  - file: content/complementarias/Semana_10_Horizonte_Rodante_v4_final.ipynb
+  - file: content/complementarias/Semana_10_Horizonte_Rodante_v8.ipynb
   - file: content/complementarias/Semana_11_Rollout_y_Benchmarking_v4_final.ipynb
   - file: content/complementarias/Semana_12_MC_y_TD0_v4_final.ipynb
   - file: content/complementarias/Semana_13_SARSA_Q_learning_v4_final.ipynb
